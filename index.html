@@ -67,12 +67,13 @@ td small{display:block;margin-top:2px}
 .ob{display:flex;flex-direction:column;gap:6px;min-width:120px}
 .ob button{height:32px;border:0;border-radius:10px;color:#fff;font-weight:700;font-size:13px;font-family:inherit}
 .g{background:#6fcf6f}.bl{background:#79a2f0}.rd{background:#d4574a}.gr{background:#697386}
+.sortw{position:relative;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border:1px solid var(--bd);border-radius:10px;background:var(--in);font-size:15px}.sortw select{position:absolute;inset:0;width:100%;height:100%;opacity:0;font-size:16px}
 .toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:9}
 .toast.on{opacity:1}.hide{display:none!important}
 /* invoice */
 #inv{background:#ddd;min-height:100vh;padding:14px 10px 40px}
 .acts{display:flex;gap:8px;max-width:620px;margin:0 auto 12px}
-.acts button{flex:1;height:44px;border-radius:10px;border:0;font-weight:700;font-size:15px;font-family:inherit;background:#5b9bd5;color:#fff}
+.acts button{flex:1;height:44px;border-radius:10px;border:0;font-weight:700;font-size:14px;font-family:inherit;background:#5b9bd5;color:#fff}
 .acts button.k{background:#777}
 .sheet{background:#fff;color:#000;max-width:620px;margin:0 auto;border-top:10px solid #000;border-bottom:10px solid #000;padding:26px 24px 36px}
 .sheet h1{font-size:26px;margin:6px 0 20px}
@@ -82,6 +83,7 @@ td small{display:block;margin-top:2px}
 .sep{border-top:3px solid #000}
 .grand{margin-top:6px;border:3px solid #000;background:#b8b8b8;padding:10px 6px}
 .grand .tr{padding:2px 4px;font-weight:700;font-size:20px}.grand small{display:block;padding:0 4px;font-size:12px}
+@media print{@page{margin:8mm}body{background:#fff}#home,#calc,#hist,.acts,.toast{display:none!important}#inv{background:#fff;padding:0;min-height:0}.sheet{max-width:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.grand{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
@@ -118,12 +120,12 @@ td small{display:block;margin-top:2px}
 
 <div id="hist" class="wrap wide hide">
   <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع ←</button></div>
-  <div class="top"><div><b id="hid" class="hide"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
+  <div class="top"><div class="sortw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h11M3 9h9M3 14h7M3 19h5M19.5 4v15M16 15.5l3.5 3.5 3.5-3.5"/></svg><span id="sl">التاريخ: الأحدث أولاً</span><select id="so" aria-label="ترتيب"><option value="date">التاريخ: من الأجدد إلى الأقدم</option><option value="hi">قيمة الفاتورة: الأعلى</option><option value="lo">قيمة الفاتورة: الأقل</option></select><b id="hid" class="hide"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
   <div class="sc"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العداد</th><th>التاريخ</th><th>سابقة</th><th>حالية</th><th>الاستهلاك</th><th>ش1</th><th>ش2</th><th>رسوم</th><th>ضريبة</th><th>إجمالي</th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
 </div>
 
 <div id="inv" class="hide">
-  <div class="acts"><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع ←</button></div>
+  <div class="acts"><button id="prn">🖨 طباعة</button><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع ←</button></div>
   <div class="sheet" id="sheet"></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -265,13 +267,20 @@ $("sv").addEventListener("click",function(){if(!last)return;commit();toast("تم
 $("mk").addEventListener("click",function(){if(!last)return;commit();showInv(cur.rd[cur.rd.length-1],"calc")});
 
 // ---- history
-function openHist(m){
+var sortBy="date",LBL={date:"التاريخ: الأحدث أولاً",hi:"قيمة الفاتورة: الأعلى",lo:"قيمة الفاتورة: الأقل"};
+function sorted(m){var a=m.rd.slice();
+ if(sortBy==="hi")a.sort(function(x,y){return y.tot-x.tot});
+ else if(sortBy==="lo")a.sort(function(x,y){return x.tot-y.tot});
+ else a.sort(function(x,y){return x.cd<y.cd?1:x.cd>y.cd?-1:y.ts-x.ts});
+ return a}
+$("so").addEventListener("change",function(){sortBy=$("so").value;openHist(cur)});
+function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
   cur=m;$("ht").textContent="🕘 سجل قراءات العداد";$("hid").textContent=m.ident;
   var h="";
-  m.rd.slice().reverse().forEach(function(r,i){
+  sorted(m).forEach(function(r,i){
     function tb(u,p){return'<span class="tb'+(u===0?' z':'')+'">'+fm(u)+'</span><small>'+p+' هللة</small>'}
-    h+='<tr class="r'+(i%4)+'"><td>'+r.no+'</td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'<small>'+hm(r.ts)+'</small></td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+f2(r.fee)+'</td><td>'+f2(r.taxp)+'%</td><td><b>'+f2(r.tot)+' ر.س</b></td>'+
-    '<td><div class="ob"><button class="g" data-a="wa" data-n="'+r.no+'">مشاركة</button><button class="bl" data-a="new">شهر جديد</button><button class="rd" data-a="inv" data-n="'+r.no+'">فاتورة / PDF</button><button class="gr" data-a="del" data-n="'+r.no+'">حذف</button></div></td></tr>';
+    h+='<tr class="r'+(i%4)+'"><td>'+r.no+'</td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'</td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+f2(r.fee)+'</td><td>'+f2(r.taxp)+'%</td><td><b>'+f2(r.tot)+' ر.س</b></td>'+
+    '<td><div class="ob"><button class="g" data-a="wa" data-n="'+r.no+'">مشاركة</button><button class="bl" data-a="new">شهر جديد</button><button class="rd" data-a="inv" data-n="'+r.no+'">طباعة الفاتورة</button><button class="gr" data-a="del" data-n="'+r.no+'">حذف</button></div></td></tr>';
   });
   $("tb").innerHTML=h||'<tr><td colspan="12" class="empty">لا توجد قراءات محفوظة</td></tr>';
   show("hist");
@@ -317,6 +326,7 @@ function share(r){
   if(navigator.share){navigator.share({text:t}).catch(function(){})}
   else{var w=window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank");if(!w){try{navigator.clipboard.writeText(t);toast("تم نسخ ملخص الفاتورة")}catch(e){toast("تعذرت المشاركة")}}}
 }
+$("prn").addEventListener("click",function(){window.print()});
 $("sh").addEventListener("click",function(){if(viewR)share(viewR)});
 function mkPdf(canvas){
   var jb=atob(canvas.toDataURL("image/jpeg",0.92).split(",")[1]),jpg=new Uint8Array(jb.length);
