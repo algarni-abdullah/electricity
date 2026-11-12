@@ -18,7 +18,7 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{--bg:#14171c;--fg:#e8ebef;--card:#18261d;--cb:#3b6b47;--bd:#364154;--in:#232b3a;--box:#1b2433;--link:#7aa2ff;--mut:#9aa6b5}
 *{box-sizing:border-box}html,body{margin:0}
 body{background:var(--bg);color:var(--fg);font-family:"Noto Sans Arabic",-apple-system,"Geeza Pro",Tahoma,sans-serif;-webkit-text-size-adjust:100%}
-.wrap{max-width:620px;margin:0 auto;padding:16px 16px 40px}.wrap.wide{max-width:1100px}#hist.wrap.wide{max-width:none}
+.wrap{max-width:620px;margin:0 auto;padding:16px 16px 40px}.wrap.wide{max-width:1100px}#hist.wrap.wide{max-width:1272px}#hist.selm.wrap.wide{max-width:1322px}
 h2{margin:6px 0 14px;font-size:21px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
 .top h2{margin:0}
@@ -57,17 +57,16 @@ details .fld{background:var(--in);color:var(--fg);font-weight:400}
 .empty{text-align:center;color:var(--mut);padding:40px 0}
 /* history */
 .sc{overflow-x:auto;background:var(--in);border:1px solid var(--bd);border-radius:16px}
-table{border-collapse:collapse;width:100%;min-width:0;font-size:14px}
-th{background:rgba(128,128,128,.12);padding:12px 14px;font-weight:700}
-td{padding:10px 14px;text-align:center;border-top:2px solid var(--bd)}
-th:nth-child(2),td:nth-child(2){width:64px;max-width:72px;word-break:break-word}
-th:nth-child(8),th:nth-child(9),td:nth-child(8),td:nth-child(9){min-width:96px;white-space:nowrap}
-th:nth-child(11){min-width:120px}
+table{border-collapse:collapse;table-layout:fixed;width:1240px;font-size:14px}#tbl.selm{width:1280px}
+th{background:rgba(128,128,128,.12);padding:12px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:2px solid var(--bd)}
+th:nth-child(1){width:90px}th:nth-child(2){width:80px}th:nth-child(3){width:110px}th:nth-child(4){width:70px}th:nth-child(5),th:nth-child(6){width:100px}th:nth-child(7),th:nth-child(8),th:nth-child(9){width:110px}th:nth-child(10){width:70px}th:nth-child(11){width:150px}th:nth-child(12){width:140px}th:nth-child(13){width:40px}
+td:nth-child(2){word-break:break-word}td:nth-child(8),td:nth-child(9){white-space:nowrap}
 .sm2{font-size:11px;font-weight:400;opacity:.85}
 .tb{display:inline-block;background:#3b5bdb;color:#fff;border-radius:14px;padding:3px 10px;font-weight:700}
 .tb.z{background:#d9534f}
 td small{display:block;margin-top:2px}
-.ob{display:flex;flex-direction:column;gap:6px;min-width:120px}
+.ob{display:flex;flex-direction:column;gap:6px}
 .ob button{height:32px;border:0;border-radius:10px;color:#fff;font-weight:700;font-size:13px;font-family:inherit}
 .g{background:#6fcf6f}.bl{background:#79a2f0}.rd{background:#d4574a}.gr{background:#697386}
 .sortw{position:relative;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border:1px solid var(--bd);border-radius:10px;background:var(--in);font-size:15px}.sortw select{position:absolute;inset:0;width:100%;height:100%;opacity:0;font-size:16px}
@@ -90,14 +89,13 @@ td small{display:block;margin-top:2px}
 .ck{display:none}.selm .ck{display:table-cell}.ck input{width:20px;height:20px}
 .selbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding:10px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--in)}.selbar b{margin-inline-end:auto}
 .sm.rdb{background:#d4574a;color:#fff;border-color:#d4574a}.br{background:#9c6a3d}
-@media (max-width:1250px){td,th{padding-left:9px;padding-right:9px}}
-@media (max-width:1000px){table{min-width:1000px}}
-.ot{background:#6a4fb3}
+.errbox{margin:10px 0;padding:16px;border:2px solid #d4574a;border-radius:14px;background:rgba(212,87,74,.12);color:#c0392b;font-weight:700;text-align:center;line-height:1.9}.errbox a{color:var(--link)}
+.ot{background:#546e7a}
 .mnu{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}
 .mbx{background:var(--bg);color:var(--fg);border-radius:18px;padding:16px;width:min(340px,100%);display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
 .mt{text-align:center;font-weight:700;margin-bottom:4px}
 .mi{height:46px;border:0;border-radius:12px;color:#fff;font-weight:700;font-size:16px;font-family:inherit}
-.mi.pr{background:#1b7f74}.mi.sh{background:#26803a}.mi.ed{background:#9c6a3d}.mi.dl{background:#c0392b}.mi.cx{background:transparent;color:var(--fg);border:1px solid var(--bd)}
+.mi.pr{background:#3b5bdb}.mi.sh{background:#26803a}.mi.ed{background:#9c6a3d}.mi.dl{background:#c0392b}.mi.cx{background:transparent;color:var(--fg);border:1px solid var(--bd)}
 </style>
 </head>
 <body>
@@ -136,7 +134,8 @@ td small{display:block;margin-top:2px}
   <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع ←</button></div>
   <div class="top"><div class="sortw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h11M3 9h9M3 14h7M3 19h5M19.5 4v15M16 15.5l3.5 3.5 3.5-3.5"/></svg><span id="sl">التاريخ: الأحدث أولاً</span><select id="so" aria-label="ترتيب"><option value="date">التاريخ: من الأجدد إلى الأقدم</option><option value="hi">قيمة الفاتورة: الأعلى</option><option value="lo">قيمة الفاتورة: الأقل</option></select><b id="hid" class="hide"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
   <div id="selbar" class="selbar hide"><b id="selcnt"></b><button class="sm" id="selall">تحديد الكل</button><button class="sm rdb" id="seldel">حذف المحدد</button><button class="sm" id="selx">إلغاء</button></div>
-  <div class="sc"><table id="tbl"><thead><tr><th>رقم<br>الفاتورة</th><th>اسم<br>العداد</th><th>تاريخ<br>القراءة</th><th>عدد أيام<br>الاستهلاك</th><th>القراءة<br>السابقة</th><th>القراءة<br>الحالية</th><th>الاستهلاك<br><span class="sm2">(بالكيلو واط)</span></th><th>شريحة ١</th><th>شريحة ٢</th><th>رسوم<br>العداد</th><th>الإجمالي<br><span class="sm2">(شامل قيمة الضريبة المضافة)</span></th><th>خيارات</th><th class="ck"></th></tr></thead><tbody id="tb"></tbody></table></div>
+  <div id="narrow" class="errbox hide">⚠️ لابد من توسعة المتصفح قليلاً لإظهار البيانات بشكل مرتب.<br><span style="font-weight:400">أو افتح <a href="mobile.html">نسخة الجوال</a>.</span></div>
+  <div class="sc" id="scw"><table id="tbl"><thead><tr><th>رقم<br>الفاتورة</th><th>اسم<br>العداد</th><th>تاريخ<br>القراءة</th><th>عدد أيام<br>الاستهلاك</th><th>القراءة<br>السابقة</th><th>القراءة<br>الحالية</th><th>الاستهلاك<br><span class="sm2">(بالكيلو واط)</span></th><th>شريحة ١</th><th>شريحة ٢</th><th>رسوم<br>العداد</th><th>الإجمالي<br><span class="sm2">(شامل قيمة الضريبة المضافة)</span></th><th>خيارات</th><th class="ck"></th></tr></thead><tbody id="tb"></tbody></table></div>
 </div>
 
 <div id="inv" class="hide">
@@ -309,9 +308,13 @@ function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
     '<td><div class="ob"><button class="bl" data-a="new">شهر جديد</button><button class="ot" data-a="more" data-n="'+r.no+'">أخرى</button></div></td><td class="ck"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></td></tr>';
   });
   $("tb").innerHTML=h||'<tr><td colspan="13" class="empty">لا توجد قراءات محفوظة</td></tr>';
-  $("tbl").classList.toggle("selm",selMode);$("selbar").classList.toggle("hide",!selMode);updSel();
-  show("hist");
+  $("tbl").classList.toggle("selm",selMode);$("hist").classList.toggle("selm",selMode);$("selbar").classList.toggle("hide",!selMode);updSel();
+  show("hist");chkW();
 }
+function chkW(){if($("hist").classList.contains("hide"))return;
+  var bad=document.documentElement.clientWidth<(selMode?1322:1272);
+  $("narrow").classList.toggle("hide",!bad);$("scw").classList.toggle("hide",bad)}
+window.addEventListener("resize",chkW);
 function updSel(){var n=Object.keys(selSet).length;$("selcnt").textContent="المحدد: "+n;$("seldel").disabled=!n;$("seldel").style.opacity=n?1:.5}
 function openEdit(r){
   editNo=r.no;$("ct").textContent="✎ تعديل فاتورة — "+cur.name;
