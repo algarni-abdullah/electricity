@@ -61,7 +61,9 @@ table{border-collapse:collapse;width:100%;min-width:980px;font-size:14px}
 th{background:rgba(128,128,128,.12);padding:12px 8px;font-weight:700}
 td{padding:10px 8px;text-align:center;border-top:2px solid var(--bd)}
 th:nth-child(2),td:nth-child(2){width:64px;max-width:72px;word-break:break-word}
-th:nth-child(7),th:nth-child(8),td:nth-child(7),td:nth-child(8){min-width:96px;white-space:nowrap}
+th:nth-child(8),th:nth-child(9),td:nth-child(8),td:nth-child(9){min-width:96px;white-space:nowrap}
+th:nth-child(11){min-width:120px}
+.sm2{font-size:11px;font-weight:400;opacity:.85}
 .tb{display:inline-block;background:#3b5bdb;color:#fff;border-radius:14px;padding:3px 10px;font-weight:700}
 .tb.z{background:#d9534f}
 td small{display:block;margin-top:2px}
@@ -122,7 +124,7 @@ td small{display:block;margin-top:2px}
 <div id="hist" class="wrap wide hide">
   <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع ←</button></div>
   <div class="top"><div class="sortw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h11M3 9h9M3 14h7M3 19h5M19.5 4v15M16 15.5l3.5 3.5 3.5-3.5"/></svg><span id="sl">التاريخ: الأحدث أولاً</span><select id="so" aria-label="ترتيب"><option value="date">التاريخ: من الأجدد إلى الأقدم</option><option value="hi">قيمة الفاتورة: الأعلى</option><option value="lo">قيمة الفاتورة: الأقل</option></select><b id="hid" class="hide"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
-  <div class="sc"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العداد</th><th>التاريخ</th><th>سابقة</th><th>حالية</th><th>الاستهلاك</th><th>شريحة ١</th><th>شريحة ٢</th><th>رسوم</th><th>ضريبة</th><th>إجمالي</th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <div class="sc"><table><thead><tr><th>رقم<br>الفاتورة</th><th>اسم<br>العداد</th><th>تاريخ<br>القراءة</th><th>عدد أيام<br>الاستهلاك</th><th>القراءة<br>السابقة</th><th>القراءة<br>الحالية</th><th>الاستهلاك<br><span class="sm2">(بالكيلو واط)</span></th><th>شريحة ١</th><th>شريحة ٢</th><th>رسوم<br>العداد</th><th>الإجمالي<br><span class="sm2">(شامل قيمة الضريبة المضافة)</span></th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
 </div>
 
 <div id="inv" class="hide">
@@ -162,7 +164,9 @@ function f2(n){return (Math.round(n*100)/100).toFixed(2)}
 function fm(n){return f2(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2000)}
 // dates: stored ISO yyyy-mm-dd, shown dd/mm/yyyy
-function dmy(i){if(!i)return "—";var p=i.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function dmy(i){if(!i)return "—";var p=i.split("-");return p[0]+"/"+p[1]+"/"+p[2]}
+function dmyIn(i){var p=i.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function invNo(r){var p=(r.cd||"").split("-");return p.length===3?"0"+p[1]+"-0"+p[0].slice(2):r.no}
 function iso(s){var m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s||"");if(!m)return null;var d=+m[1],mo=+m[2],y=+m[3],t=new Date(y,mo-1,d);
  if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d)return null;return y+"-"+("0"+mo).slice(-2)+"-"+("0"+d).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
@@ -194,7 +198,7 @@ function home(){
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
     if(l){var p=l.cd.split("-");ok=+p[0]===n.getFullYear()&&+p[1]===n.getMonth()+1}
     h+='<div class="mc"><div class="h"><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
-    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة: '+(l?f2(l.tot)+" ريال":"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة: '+(l?f2(l.tot)+" ⃁":"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
     '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
     '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم</button></div></div>';
   });
@@ -233,7 +237,7 @@ function days(){
 }
 function openCalc(m){
   cur=m;$("ct").textContent=(m.sym||"⚡")+" "+m.name;
-  $("prev").value=m.prev;$("pd").value=m.prevDate?dmy(m.prevDate):"";$("curr").value="";$("cd").value=dmy(today());
+  $("prev").value=m.prev;$("pd").value=m.prevDate?dmyIn(m.prevDate):"";$("curr").value="";$("cd").value=dmyIn(today());
   ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).value=m.s[k]});
   setDS("pd");setDS("cd");clr();days();show("calc");
 }
@@ -241,7 +245,7 @@ function clr(){$("out").classList.add("hide");$("err").classList.add("hide");las
 function err(t){clr();$("err").textContent=t;$("err").classList.remove("hide")}
 ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).addEventListener("input",function(){var v=parseFloat($(k).value);if(!isNaN(v)&&cur){cur.s[k]=v;save()}})});
 $("cb").addEventListener("click",home);
-$("rst").addEventListener("click",function(){$("curr").value="";$("cd").value=dmy(today());setDS("cd");clr();days()});
+$("rst").addEventListener("click",function(){$("curr").value="";$("cd").value=dmyIn(today());setDS("cd");clr();days()});
 $("go").addEventListener("click",function(){
   var p=parseFloat($("prev").value),c=parseFloat($("curr").value),pd=iso($("pd").value),cd=iso($("cd").value);
   if(isNaN(p)||isNaN(c))return err("أدخل القراءة السابقة والحالية");
@@ -280,7 +284,7 @@ function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
   var h="";
   sorted(m).forEach(function(r,i){
     function tb(u,p){return'<span class="tb'+(u===0?' z':'')+'">'+fm(u)+'</span><small>'+p+' هللة</small>'}
-    h+='<tr class="r'+(i%4)+'"><td>'+r.no+'</td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'</td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+f2(r.fee)+'</td><td>'+f2(r.taxp)+'%</td><td><b>'+f2(r.tot)+' ر.س</b></td>'+
+    h+='<tr class="r'+(i%4)+'"><td>'+invNo(r)+'</td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'</td><td>'+(r.days==null?"—":r.days)+'</td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+String(+r.fee)+'</td><td><b>'+f2(r.tot)+' ⃁</b></td>'+
     '<td><div class="ob"><button class="g" data-a="wa" data-n="'+r.no+'">مشاركة</button><button class="bl" data-a="new">شهر جديد</button><button class="rd" data-a="inv" data-n="'+r.no+'">طباعة الفاتورة</button><button class="gr" data-a="del" data-n="'+r.no+'">حذف</button></div></td></tr>';
   });
   $("tb").innerHTML=h||'<tr><td colspan="12" class="empty">لا توجد قراءات محفوظة</td></tr>';
@@ -292,7 +296,7 @@ $("tb").addEventListener("click",function(e){
   if(a==="new")return openCalc(cur);
   if(a==="wa")return share(cur.rd[i]);
   if(a==="inv")return showInv(cur.rd[i],"hist");
-  if(a==="del"&&confirm("حذف هذه القراءة؟")){
+  if(a==="del"&&confirm("هل أنت متأكد من حذف القراءة؟")){
     var r=cur.rd[i];cur.rd.splice(i,1);
     if(i===cur.rd.length){cur.prev=String(r.prev);cur.prevDate=r.pd||""}
     save();openHist(cur);
@@ -311,7 +315,7 @@ function showInv(r,from){
   function row(a,v,u){return'<div class="tr"><span>'+a+'</span><span class="v">'+v+'</span><span>'+u+'</span></div>'}
   $("sheet").innerHTML='<h1>فاتورة استهلاك الكهرباء</h1><div class="meta"><div class="f">اسم المشترك : '+esc(r.name)+'</div>'+
    '<div>بداية القراءة : '+dmy(r.pd)+'</div><div>عدد الأيام : '+(r.days===null?"—":r.days)+'</div><div class="f">نهاية القراءة : '+dmy(r.cd)+'</div>'+
-   '<div class="f">رقم الفاتورة : '+r.no+'</div></div>'+
+   '<div class="f">رقم الفاتورة : '+invNo(r)+'</div></div>'+
    '<div class="th"><span>الوصف</span><span>القيمة</span><span></span></div>'+
    row("القراءة السابقة",f2(r.prev),"كيلو واط")+row("القراءة الحالية",f2(r.curr),"كيلو واط")+row("الاستهلاك الإجمالي",f2(r.use),"كيلو واط")+'<div class="sep"></div>'+
    row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"ريال")+'<div class="sep"></div>'+
