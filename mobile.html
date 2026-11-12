@@ -92,12 +92,12 @@ td small{display:block;margin-top:2px}
 .sm.rdb{background:#d4574a;color:#fff;border-color:#d4574a}.br{background:#9c6a3d}
 @media (max-width:1250px){td,th{padding-left:9px;padding-right:9px}}
 @media (max-width:1000px){table{min-width:1000px}}
-.ot{background:#546e7a}
+.ot{background:#1c7f74}
 .mnu{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}
 .mbx{background:var(--bg);color:var(--fg);border-radius:18px;padding:16px;width:min(340px,100%);display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
 .mt{text-align:center;font-weight:700;margin-bottom:4px}
 .mi{height:46px;border:0;border-radius:12px;color:#fff;font-weight:700;font-size:16px;font-family:inherit}
-.mi.pr{background:#3b5bdb}.mi.sh{background:#26803a}.mi.ed{background:#9c6a3d}.mi.dl{background:#c0392b}.mi.cx{background:transparent;color:var(--fg);border:1px solid var(--bd)}
+.mi.pr{background:#6b4fb3}.mi.sh{background:#26803a}.mi.ed{background:#9c6a3d}.mi.dl{background:#c0392b}.mi.cx{background:transparent;color:var(--fg);border:1px solid var(--bd)}
 .ckl{display:none;align-items:center}.selm .ckl{display:inline-flex}.ckl input{width:24px;height:24px}
 .rc{background:var(--in);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
 .rt{display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--bd);padding-bottom:10px;margin-bottom:6px}
@@ -105,9 +105,13 @@ td small{display:block;margin-top:2px}
 .kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;font-size:15px;border-bottom:1px dashed var(--bd)}.kv span{color:var(--mut)}.kv b{direction:ltr}
 .rf{display:flex;gap:8px;margin-top:12px}.rf button{flex:1;height:46px;border:0;border-radius:12px;color:#fff;font-weight:700;font-size:16px;font-family:inherit}.rf .bl{background:#3b79d8}
 .wrap{padding-left:14px;padding-right:14px}
+.infobox{display:none;align-items:center;gap:12px;margin:10px auto;max-width:620px;padding:12px 16px;border:2px solid #3b79d8;border-radius:14px;background:rgba(59,121,216,.12);font-weight:700;line-height:1.8}
+.infobox span{flex:1}.infobox a{color:var(--link)}.infobox button{border:0;background:transparent;color:var(--fg);font-size:20px;padding:4px 8px}
+@media (min-width:1272px){.infobox{display:flex}}.infobox.dis{display:none!important}
 </style>
 </head>
 <body>
+<div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
   <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
   <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bk">⬇ نسخة احتياطية</button><button class="sm" id="rs">⬆ استرجاع نسخة</button><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
@@ -425,6 +429,7 @@ $("pdf").addEventListener("click",function(){
 try{var cv=document.createElement("canvas");cv.width=cv.height=180;var g=cv.getContext("2d"),gr=g.createLinearGradient(0,0,180,180);
  gr.addColorStop(0,"#5b9bd5");gr.addColorStop(1,"#3b6fe0");g.fillStyle=gr;g.fillRect(0,0,180,180);g.fillStyle="#ffd84d";g.beginPath();
  g.moveTo(104,22);g.lineTo(52,102);g.lineTo(84,102);g.lineTo(70,158);g.lineTo(130,74);g.lineTo(96,74);g.closePath();g.fill();$("icon").href=cv.toDataURL("image/png")}catch(e){}
+$("wx").addEventListener("click",function(){$("wideMsg").classList.add("dis")});
 save();home();
 })();
 </script>
