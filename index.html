@@ -47,7 +47,7 @@ details .fld{background:var(--in);color:var(--fg);font-weight:400}
 .mc .h{display:flex;justify-content:space-between;align-items:center;min-height:80px}
 .mc .nm{font-weight:700;font-size:18px}
 .bdg{border:1.5px solid #a8e0a8;background:#e6f8e6;color:#2d6a3a;border-radius:20px;padding:6px 14px;font-weight:700;font-size:14px}
-.bdg.w{border-color:#f0c97a;background:#fff4dc;color:#8a6310}
+.bdg.w{border-color:#f2a9a3;background:#fdeceb;color:#c0392b}
 .pill{flex:1;border:1px solid var(--bd);border-radius:14px;padding:12px;text-align:center;color:var(--mut);font-weight:700;font-size:15px;background:var(--in)}
 .nx{margin:10px 0;border:1.5px solid var(--cb);border-radius:14px;padding:10px 12px;background:rgba(120,200,120,.12);font-weight:700;font-size:14px}
 .nx span{display:block;color:var(--mut);font-size:17px;margin-top:2px;direction:ltr;text-align:right}
@@ -57,9 +57,9 @@ details .fld{background:var(--in);color:var(--fg);font-weight:400}
 .empty{text-align:center;color:var(--mut);padding:40px 0}
 /* history */
 .sc{overflow-x:auto;background:var(--in);border:1px solid var(--bd);border-radius:16px}
-table{border-collapse:collapse;width:100%;min-width:980px;font-size:14px}
-th{background:rgba(128,128,128,.12);padding:12px 8px;font-weight:700}
-td{padding:10px 8px;text-align:center;border-top:2px solid var(--bd)}
+table{border-collapse:collapse;width:100%;min-width:1120px;font-size:14px}
+th{background:rgba(128,128,128,.12);padding:12px 14px;font-weight:700}
+td{padding:10px 14px;text-align:center;border-top:2px solid var(--bd)}
 th:nth-child(2),td:nth-child(2){width:64px;max-width:72px;word-break:break-word}
 th:nth-child(8),th:nth-child(9),td:nth-child(8),td:nth-child(9){min-width:96px;white-space:nowrap}
 th:nth-child(11){min-width:120px}
@@ -166,7 +166,7 @@ function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTime
 // dates: stored ISO yyyy-mm-dd, shown dd/mm/yyyy
 function dmy(i){if(!i)return "—";var p=i.split("-");return p[0]+"/"+p[1]+"/"+p[2]}
 function dmyIn(i){var p=i.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
-function invNo(r){var p=(r.cd||"").split("-");return p.length===3?"0"+p[1]+"-0"+p[0].slice(2):r.no}
+function invNo(r){var p=(r.cd||"").split("-");return p.length===3?"0"+p[0].slice(2)+"-0"+p[1]:r.no}
 function iso(s){var m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s||"");if(!m)return null;var d=+m[1],mo=+m[2],y=+m[3],t=new Date(y,mo-1,d);
  if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d)return null;return y+"-"+("0"+mo).slice(-2)+"-"+("0"+d).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
@@ -196,9 +196,9 @@ function home(){
   var h="";
   D.meters.forEach(function(m){
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
-    if(l){var p=l.cd.split("-");ok=+p[0]===n.getFullYear()&&+p[1]===n.getMonth()+1}
+    if(l){var p=l.cd.split("-");ok=(+p[0])*12+(+p[1])>=n.getFullYear()*12+n.getMonth()+1}
     h+='<div class="mc"><div class="h"><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
-    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة: '+(l?f2(l.tot)+" ⃁":"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة:<br>'+(l?f2(l.tot)+" ⃁":"—")+'</div><div class="pill">عدد القراءات:<br>'+m.rd.length+'</div></div>'+
     '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
     '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم</button></div></div>';
   });
@@ -284,7 +284,7 @@ function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
   var h="";
   sorted(m).forEach(function(r,i){
     function tb(u,p){return'<span class="tb'+(u===0?' z':'')+'">'+fm(u)+'</span><small>'+p+' هللة</small>'}
-    h+='<tr class="r'+(i%4)+'"><td>'+invNo(r)+'</td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'</td><td>'+(r.days==null?"—":r.days)+'</td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+String(+r.fee)+'</td><td><b>'+f2(r.tot)+' ⃁</b></td>'+
+    h+='<tr class="r'+(i%4)+'"><td><span dir="ltr">'+invNo(r)+'</span></td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'</td><td>'+(r.days==null?"—":r.days)+'</td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+String(+r.fee)+'</td><td><b>'+f2(r.tot)+' ⃁</b></td>'+
     '<td><div class="ob"><button class="g" data-a="wa" data-n="'+r.no+'">مشاركة</button><button class="bl" data-a="new">شهر جديد</button><button class="rd" data-a="inv" data-n="'+r.no+'">طباعة الفاتورة</button><button class="gr" data-a="del" data-n="'+r.no+'">حذف</button></div></td></tr>';
   });
   $("tb").innerHTML=h||'<tr><td colspan="12" class="empty">لا توجد قراءات محفوظة</td></tr>';
@@ -315,7 +315,7 @@ function showInv(r,from){
   function row(a,v,u){return'<div class="tr"><span>'+a+'</span><span class="v">'+v+'</span><span>'+u+'</span></div>'}
   $("sheet").innerHTML='<h1>فاتورة استهلاك الكهرباء</h1><div class="meta"><div class="f">اسم المشترك : '+esc(r.name)+'</div>'+
    '<div>بداية القراءة : '+dmy(r.pd)+'</div><div>عدد الأيام : '+(r.days===null?"—":r.days)+'</div><div class="f">نهاية القراءة : '+dmy(r.cd)+'</div>'+
-   '<div class="f">رقم الفاتورة : '+invNo(r)+'</div></div>'+
+   '<div class="f">رقم الفاتورة : <span dir="ltr">'+invNo(r)+'</span></div></div>'+
    '<div class="th"><span>الوصف</span><span>القيمة</span><span></span></div>'+
    row("القراءة السابقة",f2(r.prev),"كيلو واط")+row("القراءة الحالية",f2(r.curr),"كيلو واط")+row("الاستهلاك الإجمالي",f2(r.use),"كيلو واط")+'<div class="sep"></div>'+
    row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"ريال")+'<div class="sep"></div>'+
