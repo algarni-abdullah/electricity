@@ -92,6 +92,12 @@ td small{display:block;margin-top:2px}
 .sm.rdb{background:#d4574a;color:#fff;border-color:#d4574a}.br{background:#9c6a3d}
 @media (max-width:1250px){td,th{padding-left:9px;padding-right:9px}}
 @media (max-width:1000px){table{min-width:1000px}}
+.ot{background:#6a4fb3}
+.mnu{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}
+.mbx{background:var(--bg);color:var(--fg);border-radius:18px;padding:16px;width:min(340px,100%);display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.mt{text-align:center;font-weight:700;margin-bottom:4px}
+.mi{height:46px;border:0;border-radius:12px;color:#fff;font-weight:700;font-size:16px;font-family:inherit}
+.mi.pr{background:#1b7f74}.mi.sh{background:#26803a}.mi.ed{background:#9c6a3d}.mi.dl{background:#c0392b}.mi.cx{background:transparent;color:var(--fg);border:1px solid var(--bd)}
 </style>
 </head>
 <body>
@@ -137,6 +143,8 @@ td small{display:block;margin-top:2px}
   <div class="acts"><button id="prn">🖨 طباعة</button><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع ←</button></div>
   <div class="sheet" id="sheet"></div>
 </div>
+<div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
+  <button class="mi pr" data-a="inv">طباعة الفاتورة</button><button class="mi sh" data-a="wa">مشاركة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -298,7 +306,7 @@ function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
   sorted(m).forEach(function(r,i){
     function tb(u,p){return'<span class="tb'+(u===0?' z':'')+'">'+fm(u)+'</span><small>'+p+' هللة</small>'}
     h+='<tr class="r'+(i%4)+'"><td><span dir="ltr">'+invNo(r)+'</span></td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'</td><td>'+(r.days==null?"—":r.days)+'</td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+String(+r.fee)+'</td><td><b>'+f2(r.tot)+' ⃁</b></td>'+
-    '<td><div class="ob"><button class="bl" data-a="new">شهر جديد</button><button class="rd" data-a="inv" data-n="'+r.no+'">طباعة الفاتورة</button><button class="g" data-a="wa" data-n="'+r.no+'">مشاركة</button><button class="br" data-a="edit" data-n="'+r.no+'">تعديل</button><button class="gr" data-a="del" data-n="'+r.no+'">حذف</button></div></td><td class="ck"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></td></tr>';
+    '<td><div class="ob"><button class="bl" data-a="new">شهر جديد</button><button class="ot" data-a="more" data-n="'+r.no+'">أخرى</button></div></td><td class="ck"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></td></tr>';
   });
   $("tb").innerHTML=h||'<tr><td colspan="13" class="empty">لا توجد قراءات محفوظة</td></tr>';
   $("tbl").classList.toggle("selm",selMode);$("selbar").classList.toggle("hide",!selMode);updSel();
@@ -316,11 +324,19 @@ function RD(no){for(var i=0;i<cur.rd.length;i++)if(cur.rd[i].no===no)return i;re
 $("tb").addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;var a=b.dataset.a,i=RD(b.dataset.n);
   if(a==="new")return openCalc(cur);
+  if(a==="more")return openMenu(b.dataset.n);
+});
+var menuNo=null;
+function act(a,no){var i=RD(no);
   if(a==="wa")return share(cur.rd[i]);
   if(a==="inv")return showInv(cur.rd[i],"hist");
   if(a==="edit")return openEdit(cur.rd[i]);
-  if(a==="del"){selMode=true;selSet={};selSet[b.dataset.n]=1;return openHist(cur)}
-});
+  if(a==="del"){selMode=true;selSet={};selSet[no]=1;return openHist(cur)}}
+function openMenu(no){menuNo=no;var r=cur.rd[RD(no)];$("mnt").textContent="فاتورة "+invNo(r)+" — "+dmy(r.cd);$("mnu").classList.remove("hide")}
+function closeMenu(){$("mnu").classList.add("hide")}
+$("mnu").addEventListener("click",function(e){
+  if(e.target===$("mnu"))return closeMenu();
+  var b=e.target.closest("button");if(!b)return;var a=b.dataset.a,no=menuNo;closeMenu();if(a==="x")return;act(a,no)});
 $("tb").addEventListener("change",function(e){var c=e.target;if(c.type!=="checkbox")return;
   if(c.checked)selSet[c.dataset.n]=1;else delete selSet[c.dataset.n];updSel()});
 $("selall").addEventListener("click",function(){var all=cur.rd.length===Object.keys(selSet).length;selSet={};
