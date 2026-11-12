@@ -59,8 +59,9 @@ details .fld{background:var(--in);color:var(--fg);font-weight:400}
 .sc{overflow-x:auto;background:var(--in);border:1px solid var(--bd);border-radius:16px}
 table{border-collapse:collapse;width:100%;min-width:980px;font-size:14px}
 th{background:rgba(128,128,128,.12);padding:12px 8px;font-weight:700}
-td{padding:10px 8px;text-align:center;border-top:1px solid var(--bd)}
-tr.r0 td{background:rgba(91,155,213,.10)}tr.r1 td{background:rgba(120,200,120,.10)}tr.r2 td{background:rgba(240,160,120,.10)}tr.r3 td{background:rgba(150,130,220,.10)}
+td{padding:10px 8px;text-align:center;border-top:2px solid var(--bd)}
+th:nth-child(2),td:nth-child(2){width:64px;max-width:72px;word-break:break-word}
+th:nth-child(7),th:nth-child(8),td:nth-child(7),td:nth-child(8){min-width:96px;white-space:nowrap}
 .tb{display:inline-block;background:#3b5bdb;color:#fff;border-radius:14px;padding:3px 10px;font-weight:700}
 .tb.z{background:#d9534f}
 td small{display:block;margin-top:2px}
@@ -121,7 +122,7 @@ td small{display:block;margin-top:2px}
 <div id="hist" class="wrap wide hide">
   <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع ←</button></div>
   <div class="top"><div class="sortw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h11M3 9h9M3 14h7M3 19h5M19.5 4v15M16 15.5l3.5 3.5 3.5-3.5"/></svg><span id="sl">التاريخ: الأحدث أولاً</span><select id="so" aria-label="ترتيب"><option value="date">التاريخ: من الأجدد إلى الأقدم</option><option value="hi">قيمة الفاتورة: الأعلى</option><option value="lo">قيمة الفاتورة: الأقل</option></select><b id="hid" class="hide"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
-  <div class="sc"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العداد</th><th>التاريخ</th><th>سابقة</th><th>حالية</th><th>الاستهلاك</th><th>ش1</th><th>ش2</th><th>رسوم</th><th>ضريبة</th><th>إجمالي</th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <div class="sc"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العداد</th><th>التاريخ</th><th>سابقة</th><th>حالية</th><th>الاستهلاك</th><th>شريحة ١</th><th>شريحة ٢</th><th>رسوم</th><th>ضريبة</th><th>إجمالي</th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
 </div>
 
 <div id="inv" class="hide">
