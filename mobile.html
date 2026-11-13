@@ -78,15 +78,15 @@ td small{display:block;margin-top:2px}
 .acts{display:flex;gap:8px;max-width:620px;margin:0 auto 12px}
 .acts button{flex:1;height:44px;border-radius:10px;border:0;font-weight:700;font-size:14px;font-family:inherit;background:#5b9bd5;color:#fff}
 .acts button.k{background:#777}
-.sheet{background:#fff;color:#000;max-width:620px;margin:0 auto;border-top:10px solid #000;border-bottom:10px solid #000;padding:26px 24px 36px}
-.sheet h1{font-size:26px;margin:6px 0 20px}
-.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:15px;margin-bottom:22px}.meta .f{grid-column:1/-1}
-.th,.tr{display:grid;grid-template-columns:1fr auto 64px;gap:8px;padding:11px 4px;font-size:15px;align-items:center}
+.sheet{background:#fff;color:#000;max-width:620px;margin:0 auto;border-top:10px solid #000;border-bottom:10px solid #000;padding:20px 24px 24px;line-height:1.5}
+.sheet h1{font-size:24px;margin:4px 0 12px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;font-size:15px;margin-bottom:12px}.meta .f{grid-column:1/-1}
+.th,.tr{display:grid;grid-template-columns:1fr 120px 64px;gap:8px;padding:6px 4px;font-size:15px;align-items:center}
 .th{font-weight:700;font-size:16px}.tr .v{direction:ltr;text-align:right}
 .sep{border-top:3px solid #000}
-.grand{margin-top:6px;border:3px solid #000;background:#b8b8b8;padding:10px 6px}
+.grand{margin:8px -9px 0;border:3px solid #000;background:#b8b8b8;padding:8px 6px}
 .grand .tr{padding:2px 4px;font-weight:700;font-size:20px}.grand small{display:block;padding:0 4px;font-size:12px}
-@media print{@page{margin:8mm}body{background:#fff}#home,#calc,#hist,.acts,.toast{display:none!important}#inv{background:#fff;padding:0;min-height:0}.sheet{max-width:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.grand{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{@page{size:A4;margin:8mm}html,body{height:auto;margin:0}body{background:#fff}#home,#calc,#hist,.acts,.toast,.mnu,.infobox{display:none!important}#inv{background:#fff;padding:0;min-height:0}.sheet{padding:10px 18px 12px;line-height:1.35;break-inside:avoid;page-break-inside:avoid}.sheet h1{font-size:22px;margin:2px 0 8px}.meta{margin-bottom:8px;gap:2px 12px;font-size:14px}.th,.tr{padding:3px 4px;font-size:14px}.sheet{max-width:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.grand{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .ck{display:none}.selm .ck{display:table-cell}.ck input{width:20px;height:20px}
 .selbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding:10px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--in)}.selbar b{margin-inline-end:auto}
 .sm.rdb{background:#d4574a;color:#fff;border-color:#d4574a}.br{background:#9c6a3d}
@@ -108,13 +108,14 @@ td small{display:block;margin-top:2px}
 .infobox{display:none;align-items:center;gap:12px;margin:10px auto;max-width:620px;padding:12px 16px;border:2px solid #3b79d8;border-radius:14px;background:rgba(59,121,216,.12);font-weight:700;line-height:1.8}
 .infobox span{flex:1}.infobox a{color:var(--link)}.infobox button{border:0;background:transparent;color:var(--fg);font-size:20px;padding:4px 8px}
 @media (min-width:1272px){.infobox{display:flex}}.infobox.dis{display:none!important}
+.fld.bad{border:2px solid #e57770}
 </style>
 </head>
 <body>
 <div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
   <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
-  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bk">⬇ نسخة احتياطية</button><button class="sm" id="rs">⬆ استرجاع نسخة</button><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
+  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
   <div class="grid" id="grid"></div>
 </div>
 
@@ -125,8 +126,8 @@ td small{display:block;margin-top:2px}
     <div><label for="cd">تاريخ القراءة الحالية</label><input id="cd" type="hidden"><div class="dsel" data-t="cd"></div></div>
   </div>
   <label>عدد الأيام</label><input id="days" class="fld days" readonly value="—">
-  <label for="prev">قراءة العداد السابقة</label><input id="prev" type="number" step="any" inputmode="decimal" class="fld prev" placeholder="0.00">
-  <label for="curr">قراءة العداد الحالية</label><input id="curr" type="number" step="any" inputmode="decimal" class="fld curr" placeholder="مثال: 2000">
+  <label for="prev">قراءة العداد السابق</label><input id="prev" type="number" step="any" inputmode="decimal" class="fld prev" placeholder="0.00">
+  <label for="curr">قراءة العداد الحالي</label><input id="curr" type="number" step="any" inputmode="decimal" class="fld curr" placeholder="مثال: 2000">
   <details>
     <summary>⚡ إعدادات شرائح الكهرباء والرسوم (قابلة للتعديل) ⌄</summary>
     <label for="p1">سعر الشريحة الأولى (هللة)</label><input id="p1" type="number" step="any" inputmode="decimal" class="fld">
@@ -155,7 +156,8 @@ td small{display:block;margin-top:2px}
   <div class="sheet" id="sheet"></div>
 </div>
 <div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
-  <button class="mi pr" data-a="inv">طباعة الفاتورة</button><button class="mi sh" data-a="wa">مشاركة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
+  <button class="mi pr" data-a="inv">طباعة الفاتورة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
+<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi cx" id="bkx">إغلاق</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -191,7 +193,8 @@ function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTime
 // dates: stored ISO yyyy-mm-dd, shown dd/mm/yyyy
 function dmy(i){if(!i)return "—";var p=i.split("-");return p[0]+"/"+p[1]+"/"+p[2]}
 function dmyIn(i){var p=i.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
-function invNo(r){var p=(r.cd||"").split("-");return p.length===3?"0"+p[0].slice(2)+"-0"+p[1]:r.no}
+function shopNo(n){var t=String(n||"").replace(/[\u0660-\u0669]/g,function(c){return c.charCodeAt(0)-1632}).replace(/[\u06F0-\u06F9]/g,function(c){return c.charCodeAt(0)-1776}),m=/\d+/.exec(t);return m?(m[0].length<2?"0"+m[0]:m[0]):"00"}
+function invNo(r){var p=(r.cd||"").split("-");return p.length===3?"0"+p[0].slice(2)+"-0"+p[1]+"-"+shopNo(r.name):r.no}
 function iso(s){var m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s||"");if(!m)return null;var d=+m[1],mo=+m[2],y=+m[3],t=new Date(y,mo-1,d);
  if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d)return null;return y+"-"+("0"+mo).slice(-2)+"-"+("0"+d).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
@@ -248,6 +251,8 @@ $("bk").addEventListener("click",function(){
   });
 });
 $("rs").addEventListener("click",function(){$("fi").click()});
+$("bkb").addEventListener("click",function(){$("bkmod").classList.remove("hide")});
+$("bkmod").addEventListener("click",function(e){if(e.target===$("bkmod")||e.target.closest("button"))$("bkmod").classList.add("hide")});
 $("fi").addEventListener("change",function(){
   var f=$("fi").files[0];if(!f)return;var rd=new FileReader();
   rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||!Array.isArray(o.meters))throw 0;
@@ -266,8 +271,13 @@ function openCalc(m){
   ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).value=m.s[k]});
   setDS("pd");setDS("cd");clr();days();show("calc");
 }
-function clr(){$("out").classList.add("hide");$("err").classList.add("hide");last=null}
+function clr(){$("out").classList.add("hide");$("err").classList.add("hide");$("curr").classList.remove("bad");last=null}
 function err(t){clr();$("err").textContent=t;$("err").classList.remove("hide")}
+function lowMsg(c,p){return "⚠️ قراءة العداد الحالي ("+c+") أقل من قراءة العداد السابق ("+p+")، تأكد من الرقم المدخل."}
+function chkCur(){var p=parseFloat($("prev").value),c=parseFloat($("curr").value),bad=!isNaN(p)&&!isNaN(c)&&c<p;
+  if(bad){err(lowMsg(c,p));$("curr").classList.add("bad")}
+  else if($("err").textContent.indexOf("أقل من قراءة العداد السابق")>-1){$("err").classList.add("hide");$("curr").classList.remove("bad")}}
+$("curr").addEventListener("input",chkCur);$("prev").addEventListener("input",chkCur);
 ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).addEventListener("input",function(){var v=parseFloat($(k).value);if(!isNaN(v)&&cur&&editNo===null){cur.s[k]=v;save()}})});
 $("cb").addEventListener("click",function(){if(editNo!==null){editNo=null;openHist(cur)}else home()});
 $("rst").addEventListener("click",function(){$("curr").value="";$("cd").value=dmyIn(today());setDS("cd");clr();days()});
@@ -276,7 +286,7 @@ $("go").addEventListener("click",function(){
   if(isNaN(p)||isNaN(c))return err("أدخل القراءة السابقة والحالية");
   if(!cd)return err("أدخل تاريخ القراءة الحالية بصيغة يوم/شهر/سنة");
   if($("pd").value&&!pd)return err("تاريخ القراءة السابقة غير صحيح (يوم/شهر/سنة)");
-  if(c<p)return err("القراءة الحالية أقل من السابقة");
+  if(c<p){err(lowMsg(c,p));$("curr").classList.add("bad");return}
   var s=editNo===null?cur.s:{p1:+$("p1").value,m1:+$("m1").value,p2:+$("p2").value,fee:+$("fee").value,tax:+$("tax").value},n=days(),use=c-p,u1=Math.min(use,s.m1),u2=Math.max(0,use-s.m1);
   var t1=u1*s.p1/100,t2=u2*s.p2/100,sub=t1+t2+s.fee,vat=sub*s.tax/100;
   last={name:editNo===null?cur.name:cur.rd[RD(editNo)].name,pd:pd||"",cd:cd,days:n,prev:p,curr:c,use:use,u1:u1,u2:u2,p1:s.p1,p2:s.p2,t1:t1,t2:t2,fee:s.fee,sub:sub,taxp:s.tax,vat:vat,tot:sub+vat,saved:false};
@@ -380,10 +390,9 @@ function showInv(r,from){
    '<div class="f">رقم الفاتورة : <span dir="ltr">'+invNo(r)+'</span></div></div>'+
    '<div class="th"><span>الوصف</span><span>القيمة</span><span></span></div>'+
    row("القراءة السابقة",f2(r.prev),"كيلو واط")+row("القراءة الحالية",f2(r.curr),"كيلو واط")+row("الاستهلاك الإجمالي",f2(r.use),"كيلو واط")+'<div class="sep"></div>'+
-   row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"ريال")+'<div class="sep"></div>'+
-   row("الشريحة الثانية: الاستهلاك",f2(r.u2),"كيلو واط")+row("الشريحة الثانية: السعر لكل كيلو واط",r.p2,"هللة")+row("الشريحة الثانية: الإجمالي",f2(r.t2),"ريال")+'<div class="sep"></div>'+
-   row("رسوم الخدمة (ثابت)",f2(r.fee),"ريال")+
-   '<div class="grand"><div class="tr"><span>الإجمالي المستحق</span><span class="v">'+f2(r.tot)+'</span><span>ريال</span></div><small>شامل ضريبة القيمة المضافة ('+r.taxp+'%): '+f2(r.vat)+' ريال</small></div>';
+   row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"⃁")+(r.t2>0?'<div class="sep"></div>'+row("الشريحة الثانية: الاستهلاك",f2(r.u2),"كيلو واط")+row("الشريحة الثانية: السعر لكل كيلو واط",r.p2,"هللة")+row("الشريحة الثانية: الإجمالي",f2(r.t2),"⃁"):'')+'<div class="sep"></div>'+
+   row("رسوم الخدمة (ثابت)",f2(r.fee),"⃁")+
+   '<div class="grand"><div class="tr"><span>الإجمالي المستحق</span><span class="v">'+f2(r.tot)+'</span><span>⃁</span></div><small>شامل ضريبة القيمة المضافة ('+r.taxp+'%): '+f2(r.vat)+' ⃁</small></div>';
   show("inv");
 }
 $("ib").addEventListener("click",function(){back==="hist"?openHist(cur):back==="calc"?openHist(cur):home()});
@@ -398,10 +407,10 @@ $("sh").addEventListener("click",function(){if(viewR)share(viewR)});
 function mkPdf(canvas){
   var jb=atob(canvas.toDataURL("image/jpeg",0.92).split(",")[1]),jpg=new Uint8Array(jb.length);
   for(var i=0;i<jb.length;i++)jpg[i]=jb.charCodeAt(i);
-  var w=canvas.width,h=canvas.height,iw=555,ih=iw*h/w,PH=Math.ceil(ih+40),parts=[],len=0,off=[];
+  var w=canvas.width,h=canvas.height,iw=555,ih=iw*h/w,PH=842,parts=[],len=0,off=[];if(ih>802){ih=802;iw=ih*w/h}var px=Math.round((595-iw)/2),py=PH-20-ih;
   function add(x){if(typeof x==="string"){var u=new Uint8Array(x.length);for(var i=0;i<x.length;i++)u[i]=x.charCodeAt(i)&255;x=u}parts.push(x);len+=x.length}
   function obj(n,head,st){off[n]=len;add(n+" 0 obj\n"+head+(st?"\nstream\n":"\n"));if(st){add(st);add("\nendstream\n")}add("endobj\n")}
-  var cs="q "+iw+" 0 0 "+ih.toFixed(2)+" 20 20 cm /Im0 Do Q";
+  var cs="q "+iw.toFixed(2)+" 0 0 "+ih.toFixed(2)+" "+px+" "+py.toFixed(2)+" cm /Im0 Do Q";
   add("%PDF-1.4\n");
   obj(1,"<< /Type /Catalog /Pages 2 0 R >>");
   obj(2,"<< /Type /Pages /Kids [3 0 R] /Count 1 >>");
