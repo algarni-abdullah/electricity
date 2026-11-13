@@ -14,8 +14,8 @@
 <style>
 :root{--bg:#f5f7fb;--fg:#2c3e50;--card:#f4fbf4;--cb:#a8e0a8;--bd:#cfd8e3;--in:#fff;--box:#eef6fd;--link:#3b6fe0;--mut:#8a94a3;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--fg:#e8ebef;--card:#18261d;--cb:#3b6b47;--bd:#364154;--in:#232b3a;--box:#1b2433;--link:#7aa2ff;--mut:#9aa6b5}}
-:root[data-theme="dark"]{--bg:#14171c;--fg:#e8ebef;--card:#18261d;--cb:#3b6b47;--bd:#364154;--in:#232b3a;--box:#1b2433;--link:#7aa2ff;--mut:#9aa6b5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--fg:#e8ebef;--card:#07130b;--cb:#3b6b47;--bd:#364154;--in:#0f1217;--box:#0c1118;--link:#7aa2ff;--mut:#9aa6b5}}
+:root[data-theme="dark"]{--bg:#000;--fg:#e8ebef;--card:#07130b;--cb:#3b6b47;--bd:#364154;--in:#0f1217;--box:#0c1118;--link:#7aa2ff;--mut:#9aa6b5}
 *{box-sizing:border-box}html,body{margin:0}
 body{background:var(--bg);color:var(--fg);font-family:"Noto Sans Arabic",-apple-system,"Geeza Pro",Tahoma,sans-serif;-webkit-text-size-adjust:100%}
 .wrap{max-width:620px;margin:0 auto;padding:16px 16px 40px}.wrap.wide{max-width:1100px}#hist.wrap.wide{max-width:none}
@@ -74,7 +74,7 @@ td small{display:block;margin-top:2px}
 .toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:9}
 .toast.on{opacity:1}.hide{display:none!important}
 /* invoice */
-#inv{background:#ddd;min-height:100vh;padding:14px 10px 40px}
+#inv{background:var(--inv);min-height:100vh;padding:14px 10px 40px}
 .acts{display:flex;gap:8px;max-width:620px;margin:0 auto 12px}
 .acts button{flex:1;height:44px;border-radius:10px;border:0;font-weight:700;font-size:14px;font-family:inherit;background:#5b9bd5;color:#fff}
 .acts button.k{background:#777}
@@ -109,6 +109,24 @@ td small{display:block;margin-top:2px}
 .infobox span{flex:1}.infobox a{color:var(--link)}.infobox button{border:0;background:transparent;color:var(--fg);font-size:20px;padding:4px 8px}
 @media (min-width:1272px){.infobox{display:flex}}.infobox.dis{display:none!important}
 .fld.bad{border:2px solid #e57770}
+
+/* ---- unified buttons, dark OLED, tooltip, misc ---- */
+:root{--btn:#fff;--btnfg:#1f2933;--btnbd:#aab4c3;--inv:#ddd;--warnfg:#a96b00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--btn:#000;--btnfg:#fff;--btnbd:#6b7686;--inv:#000;--warnfg:#ffc266}}
+:root[data-theme="dark"]{--btn:#000;--btnfg:#fff;--btnbd:#6b7686;--inv:#000;--warnfg:#ffc266}
+html{background:var(--bg)}
+.btn,.ob button,.ac button,.rf button,.acts button,.mi:not(.dl){background:var(--btn)!important;color:var(--btnfg)!important;border:1.5px solid var(--btnbd)!important}
+.sm:not(.rdb),.sortw{background:var(--btn);color:var(--btnfg);border-color:var(--btnbd)}
+#dm{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important}
+.mbx{width:min(250px,100%);padding:14px;gap:8px;border:1px solid var(--bd)}
+.mi{height:38px;border-radius:10px;font-size:14px}
+.pen{background:none;border:0;color:var(--mut);padding:2px 6px;margin-inline-start:2px;vertical-align:middle;cursor:pointer}
+.tip{display:inline-block;width:17px;height:17px;line-height:14px;text-align:center;border:1.5px solid currentColor;border-radius:50%;font-size:11px;font-weight:700;cursor:help;margin-inline-start:4px;vertical-align:middle;color:var(--link)}
+#tipbox{position:fixed;display:none;z-index:40;max-width:240px;background:#222;color:#fff;padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.7;text-align:right;box-shadow:0 4px 18px rgba(0,0,0,.4);pointer-events:none}
+.warn{margin-top:18px;padding:12px 14px;border:2px solid #e0a030;border-radius:12px;background:rgba(224,160,48,.15);color:var(--warnfg);font-weight:700;line-height:1.8}
+.th span:nth-child(2),.tr .v{text-align:right}
+.acts button svg{vertical-align:middle}
+@media print{.sheet.no2{padding:24px 24px 28px;line-height:1.5}.sheet.no2 h1{font-size:24px;margin:6px 0 20px}.sheet.no2 .meta{margin-bottom:20px;gap:6px 12px;font-size:15px}.sheet.no2 .th,.sheet.no2 .tr{padding:14px 4px;font-size:15px}.sheet.no2 .grand{margin-top:14px;padding:12px 6px}}
 </style>
 </head>
 <body>
@@ -138,7 +156,7 @@ td small{display:block;margin-top:2px}
   </details>
   <button class="btn b1" id="go">اضغط هنا للحساب</button>
   <div id="err" class="err hide"></div>
-  <div id="out" class="hide"><div class="res" id="res"></div>
+  <div id="out" class="hide"><div id="warn" class="warn hide"></div><div class="res" id="res"></div>
     <button class="btn b3" id="mk">حفظ في السجل وإصدار الفاتورة</button>
     <button class="btn b4" id="sv">حفظ في السجل فقط</button></div>
   <button class="btn b2" id="rst">إعادة تعيين</button>
@@ -152,11 +170,11 @@ td small{display:block;margin-top:2px}
 </div>
 
 <div id="inv" class="hide">
-  <div class="acts"><button id="prn">🖨 طباعة</button><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع ←</button></div>
+  <div class="acts"><button id="prn">طباعة</button><button id="pdf">حفظ PDF</button><button id="sh" aria-label="مشاركة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M7 11H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-1"/></svg></button><button id="ib" class="k">رجوع ←</button></div>
   <div class="sheet" id="sheet"></div>
 </div>
 <div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
-  <button class="mi pr" data-a="inv">طباعة الفاتورة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
+  <button class="mi pr" data-a="inv">طباعة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
 <div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi cx" id="bkx">إغلاق</button></div></div>
 <div class="toast" id="toast"></div>
 
@@ -194,6 +212,8 @@ function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTime
 function dmy(i){if(!i)return "—";var p=i.split("-");return p[0]+"/"+p[1]+"/"+p[2]}
 function dmyIn(i){var p=i.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
 function shopNo(n){var t=String(n||"").replace(/[\u0660-\u0669]/g,function(c){return c.charCodeAt(0)-1632}).replace(/[\u06F0-\u06F9]/g,function(c){return c.charCodeAt(0)-1776}),m=/\d+/.exec(t);return m?(m[0].length<2?"0"+m[0]:m[0]):"00"}
+function arN(n){return String(n).replace(/\d/g,function(d){return "٠١٢٣٤٥٦٧٨٩"[d]})}
+function tipTxt(f){return "الإجمالي يشمل ضريبة القيمة المضافة بالإضافة إلى رسوم العداد بقيمة "+arN(f)+" ⃁"}
 function invNo(r){var p=(r.cd||"").split("-");return p.length===3?"0"+p[0].slice(2)+"-0"+p[1]+"-"+shopNo(r.name):r.no}
 function iso(s){var m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s||"");if(!m)return null;var d=+m[1],mo=+m[2],y=+m[3],t=new Date(y,mo-1,d);
  if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d)return null;return y+"-"+("0"+mo).slice(-2)+"-"+("0"+d).slice(-2)}
@@ -225,10 +245,10 @@ function home(){selMode=false;selSet={};
   D.meters.forEach(function(m){
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
     if(l){var p=l.cd.split("-");ok=(+p[0])*12+(+p[1])>=n.getFullYear()*12+n.getMonth()+1}
-    h+='<div class="mc"><div class="h"><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
+    h+='<div class="mc"><div class="h"><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'<button class="pen" data-a="edit" data-id="'+m.id+'" aria-label="تعديل الاسم"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></button></span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
     '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة:<br>'+(l?f2(l.tot)+" ⃁":"—")+'</div><div class="pill">عدد القراءات:<br>'+m.rd.length+'</div></div>'+
     '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
-    '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم</button></div></div>';
+    '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button></div></div>';
   });
   $("grid").innerHTML=h||'<div class="empty">لا توجد عدادات بعد، اضغط «إضافة عداد»</div>';
   show("home");
@@ -295,6 +315,7 @@ $("go").addEventListener("click",function(){
   $("res").innerHTML=R("عدد الأيام",n===null?"—":n)+R("الفرق بين القراءتين (كيلوواط)",f2(use))+
    R("الشريحة الأولى ("+f2(u1)+" × "+(s.p1/100).toFixed(2)+")","⃁ "+f2(t1))+R("الشريحة الثانية ("+f2(u2)+" × "+(s.p2/100).toFixed(2)+")","⃁ "+f2(t2))+
    R("رسوم الخدمة","⃁ "+f2(s.fee))+R("المجموع قبل الضريبة","⃁ "+f2(sub))+R("الضريبة ("+s.tax+"%)","⃁ "+f2(vat))+R("الإجمالي المستحق","⃁ "+f2(sub+vat),1);
+  $("warn").textContent="⚠️ تنبيه: وصلت القراءة إلى الشريحة الثانية — استهلاك "+f2(u2)+" كيلو واط تجاوز حد الشريحة الأولى ("+s.m1+" كيلو واط) ويُحسب بسعر "+s.p2+" هللة.";$("warn").classList.toggle("hide",!(u2>0));
   $("out").classList.remove("hide");
 });
 function commit(){
@@ -326,9 +347,9 @@ function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
   var h="";
   sorted(m).forEach(function(r){
     function kv(a,b){return'<div class="kv"><span>'+a+'</span><b>'+b+'</b></div>'}
-    h+='<div class="rc"><div class="rt"><label class="ckl"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></label><span class="rn" dir="ltr">'+invNo(r)+'</span><span class="rtot">'+f2(r.tot)+' ⃁<small class="sm2">(شامل قيمة الضريبة المضافة)</small></span></div>'+
+    h+='<div class="rc"><div class="rt"><label class="ckl"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></label><span class="rn" dir="ltr">'+invNo(r)+'</span><span class="rtot">'+f2(r.tot)+' ⃁<span class="tip" data-tip="'+tipTxt(r.fee)+'">i</span></span></div>'+
     kv("تاريخ القراءة",dmy(r.cd))+kv("عدد أيام الاستهلاك",r.days==null?"—":r.days)+kv("القراءة السابقة",fm(r.prev))+kv("القراءة الحالية",fm(r.curr))+
-    kv('الاستهلاك <small class="sm2">(بالكيلو واط)</small>',fm(r.use))+kv("شريحة ١ ("+r.p1+" هللة)",fm(r.u1))+kv("شريحة ٢ ("+r.p2+" هللة)",fm(r.u2))+kv("رسوم العداد",String(+r.fee))+
+    kv('الاستهلاك <small class="sm2">(بالكيلو واط)</small>',fm(r.use))+kv("شريحة ١ ("+r.p1+" هللة)",fm(r.u1))+kv("شريحة ٢ ("+r.p2+" هللة)",fm(r.u2))+
     '<div class="rf"><button class="bl" data-a="new">شهر جديد</button><button class="ot" data-a="more" data-n="'+r.no+'">أخرى</button></div></div>';
   });
   $("tb").innerHTML=h||'<div class="empty">لا توجد قراءات محفوظة</div>';
@@ -390,9 +411,10 @@ function showInv(r,from){
    '<div class="f">رقم الفاتورة : <span dir="ltr">'+invNo(r)+'</span></div></div>'+
    '<div class="th"><span>الوصف</span><span>القيمة</span><span></span></div>'+
    row("القراءة السابقة",f2(r.prev),"كيلو واط")+row("القراءة الحالية",f2(r.curr),"كيلو واط")+row("الاستهلاك الإجمالي",f2(r.use),"كيلو واط")+'<div class="sep"></div>'+
-   row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"⃁")+(r.t2>0?'<div class="sep"></div>'+row("الشريحة الثانية: الاستهلاك",f2(r.u2),"كيلو واط")+row("الشريحة الثانية: السعر لكل كيلو واط",r.p2,"هللة")+row("الشريحة الثانية: الإجمالي",f2(r.t2),"⃁"):'')+'<div class="sep"></div>'+
+   row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"⃁")+(r.u2>0?'<div class="sep"></div>'+row("الشريحة الثانية: الاستهلاك",f2(r.u2),"كيلو واط")+row("الشريحة الثانية: السعر لكل كيلو واط",r.p2,"هللة")+row("الشريحة الثانية: الإجمالي",f2(r.t2),"⃁"):'')+'<div class="sep"></div>'+
    row("رسوم الخدمة (ثابت)",f2(r.fee),"⃁")+
    '<div class="grand"><div class="tr"><span>الإجمالي المستحق</span><span class="v">'+f2(r.tot)+'</span><span>⃁</span></div><small>شامل ضريبة القيمة المضافة ('+r.taxp+'%): '+f2(r.vat)+' ⃁</small></div>';
+  $("sheet").className="sheet "+(r.u2>0?"has2":"no2");
   show("inv");
 }
 $("ib").addEventListener("click",function(){back==="hist"?openHist(cur):back==="calc"?openHist(cur):home()});
@@ -439,6 +461,14 @@ try{var cv=document.createElement("canvas");cv.width=cv.height=180;var g=cv.getC
  gr.addColorStop(0,"#5b9bd5");gr.addColorStop(1,"#3b6fe0");g.fillStyle=gr;g.fillRect(0,0,180,180);g.fillStyle="#ffd84d";g.beginPath();
  g.moveTo(104,22);g.lineTo(52,102);g.lineTo(84,102);g.lineTo(70,158);g.lineTo(130,74);g.lineTo(96,74);g.closePath();g.fill();$("icon").href=cv.toDataURL("image/png")}catch(e){}
 $("wx").addEventListener("click",function(){$("wideMsg").classList.add("dis")});
+var tipEl=document.createElement("div");tipEl.id="tipbox";document.body.appendChild(tipEl);
+function showTip(t){var r=t.getBoundingClientRect();tipEl.textContent=t.getAttribute("data-tip");tipEl.style.display="block";
+ var w=tipEl.offsetWidth,x=Math.min(Math.max(8,r.left+r.width/2-w/2),document.documentElement.clientWidth-w-8);
+ tipEl.style.left=x+"px";tipEl.style.top=(r.bottom+8)+"px"}
+function hideTip(){tipEl.style.display="none"}
+document.addEventListener("mouseover",function(e){var t=e.target.closest&&e.target.closest(".tip");if(t)showTip(t)});
+document.addEventListener("mouseout",function(e){if(e.target.closest&&e.target.closest(".tip"))hideTip()});
+document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest(".tip");if(t)showTip(t);else hideTip()});
 save();home();
 })();
 </script>
