@@ -152,27 +152,34 @@ html{background:var(--bg)}
 .acts #prn,.acts #pdf{display:none!important}
 
 .sheet.yr .sub{font-size:2.3cqw;color:#555;margin-top:.8cqw}
-.sheet.yr .stg{display:grid;grid-template-columns:1fr 1fr;gap:2cqw;margin:2.4cqw 0}
-.sheet.yr .st{border:.3cqw solid #d5d9df;border-top:.9cqw solid #1c7f74;border-radius:1.4cqw;padding:1.6cqw 2cqw;background:#fafafa}
-.sheet.yr .st.mx{border-top-color:#c0392b}.sheet.yr .st.mn{border-top-color:#2e86c1}.sheet.yr .st.pd{border-top-color:#6b4fb3}
+.sheet.yr .stg{display:grid;grid-template-columns:1fr 1fr;gap:2cqw;margin:3.4cqw 0 4.4cqw}
+.sheet.yr .st{border:.3cqw solid #d5d9df;border-top:.9cqw solid #3d4452;border-radius:1.4cqw;padding:1.6cqw 2cqw;background:#fafafa}
 .sheet.yr .st small{display:block;font-size:2.1cqw;color:#666}
 .sheet.yr .st b{font-size:4.4cqw;direction:ltr;unicode-bidi:isolate;display:inline-block;line-height:1.3}
 .sheet.yr .st .un{font-size:2.1cqw;margin-inline-start:1cqw;color:#444}
 .sheet.yr .st em{display:block;font-style:normal;font-size:2cqw;color:#444;margin-top:.6cqw}
-.sheet.yr .ch h3{font-size:2.6cqw;margin:0 0 1cqw}
+.sheet.yr .ch h3{font-size:2.6cqw;margin:0 0 2.6cqw}
 .sheet.yr .lgd{display:flex;gap:3cqw;font-size:1.9cqw;color:#555;margin-top:1cqw;flex-wrap:wrap}
 .sheet.yr .lgd i{display:inline-block;width:1.8cqw;height:1.8cqw;border-radius:.4cqw;margin-inline-end:.8cqw;vertical-align:middle}
 .sheet.yr .ft{margin-top:2.4cqw;font-size:1.9cqw;color:#777;text-align:left}
 .yrb{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--box);border:2px solid #1c7f74;border-radius:12px;padding:8px 14px}
 .yrbtn{background:var(--btn);color:var(--btnfg);border:1.5px solid var(--btnbd);border-radius:10px;height:34px;padding:0 14px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
 tr.yrw td{padding:10px 8px;border-top:3px solid #1c7f74}
+
+.sheet.yr .hd{margin-bottom:5cqw}
+.lbk{font-size:12px;color:var(--mut);align-self:center;margin-inline-start:4px}
+.mbx.wd{width:min(300px,100%)}
+.cmr{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}.cmr b{direction:ltr}
+.cmd{display:flex;justify-content:space-between;align-items:center;padding:12px 0 4px;font-weight:700;font-size:15px}
+.cmd .dv{display:inline-flex;align-items:center;gap:6px}.cmd .dv b{direction:ltr}
+.cmd.up .dv{color:#c0392b}.cmd.dn .dv{color:#1e8449}.cmd.eq .dv{color:var(--mut)}
 </style>
 </head>
 <body>
 <div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
   <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
-  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
+  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><span id="lbk" class="lbk"></span><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
   <div class="grid" id="grid"></div>
 </div>
 
@@ -213,8 +220,9 @@ tr.yrw td{padding:10px 8px;border-top:3px solid #1c7f74}
   <div class="sheet" id="sheet"></div>
 </div>
 <div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
-  <button class="mi pr" data-a="inv">طباعة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
+  <button class="mi pr" data-a="inv">طباعة</button><button class="mi" id="mcmp" data-a="cmp">مقارنة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
 <div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi cx" id="bkx">إغلاق</button></div></div>
+<div id="cmp" class="mnu hide"><div class="mbx wd"><div class="mt" id="cmpt"></div><div id="cmpb"></div><button class="mi cx" id="cmpx">إغلاق</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -285,7 +293,7 @@ function M(id){for(var i=0;i<D.meters.length;i++)if(D.meters[i].id===id)return D
 function show(v){["home","calc","hist","inv"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
 
 // ---- home
-function home(){selMode=false;selSet={};
+function home(){selMode=false;selSet={};updLbk();
   var h="";
   D.meters.forEach(function(m){
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
@@ -312,12 +320,13 @@ $("addM").addEventListener("click",function(){
 $("bk").addEventListener("click",function(){
   (window.claude?claude.use("downloads"):Promise.resolve(null)).then(function(d){
     if(!d)return toast("الحفظ غير متاح هنا");
-    return d.save({filename:"elec-backup-"+today()+".json",data:JSON.stringify(D)}).then(function(){toast("تم حفظ النسخة")},function(e){if(!e||e.code!=="declined")toast("تعذر الحفظ")});
+    return d.save({filename:bkName(),data:JSON.stringify(D)}).then(function(){try{localStorage.setItem("elec_lastbk_v1",String(Date.now()))}catch(e){}updLbk();toast("تم حفظ النسخة")},function(e){if(!e||e.code!=="declined")toast("تعذر الحفظ")});
   });
 });
 $("rs").addEventListener("click",function(){$("fi").click()});
 $("bkb").addEventListener("click",function(){$("bkmod").classList.remove("hide")});
 $("bkmod").addEventListener("click",function(e){if(e.target===$("bkmod")||e.target.closest("button"))$("bkmod").classList.add("hide")});
+$("cmp").addEventListener("click",function(e){if(e.target===$("cmp")||e.target.closest("button"))$("cmp").classList.add("hide")});
 $("fi").addEventListener("change",function(){
   var f=$("fi").files[0];if(!f)return;var rd=new FileReader();
   rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||!Array.isArray(o.meters))throw 0;
@@ -387,18 +396,19 @@ function sorted(m){var a=m.rd.slice();
  else a.sort(function(x,y){return x.cd<y.cd?1:x.cd>y.cd?-1:y.ts-x.ts});
  return a}
 $("so").addEventListener("change",function(){sortBy=$("so").value;openHist(cur)});
-function yearBand(y){return '<div class="yrb" style="margin:6px 0 12px"><b>عام '+y+'</b><button class="yrbtn" data-a="year" data-y="'+y+'">ملخص سنة '+y+'</button></div>'}
+function yearBand(y){return '<div class="yrb" style="margin:6px 0 12px"><b>ملخص عام '+ar(y)+'</b><button class="yrbtn" data-a="year" data-y="'+y+'">استعراض</button></div>'}
 function openHist(m){$("so").value=sortBy;$("sl").textContent=LBL[sortBy];
   cur=m;$("ht").textContent="🕘 سجل قراءات العداد";$("hid").textContent=m.ident;
   var h="";
   var py="",dec=decYears(m);
-  sorted(m).forEach(function(r){var yy=r.cd.slice(0,4);if(sortBy==="date"&&yy!==py){py=yy;if(dec[yy])h+=yearBand(yy)}
+  sorted(m).forEach(function(r){var yy=r.cd.slice(0,4);if(sortBy==="date"&&py&&yy!==py&&dec[py])h+=yearBand(py);py=yy;
     function kv(a,b){return'<div class="kv"><span>'+a+'</span><b>'+b+'</b></div>'}
     h+='<div class="rc"><div class="rt"><label class="ckl"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></label><span class="rn" dir="ltr">'+invNo(r)+'</span><span class="rtot">'+f2(r.tot)+' ⃁<span class="tip" data-tip="'+tipTxt(r.fee)+'">i</span></span></div>'+
     kv("تاريخ القراءة",dmy(r.cd))+kv("عدد أيام الاستهلاك",r.days==null?"—":r.days)+kv("القراءة السابقة",fm(r.prev))+kv("القراءة الحالية",fm(r.curr))+
     kv('الاستهلاك <small class="sm2">(بالكيلو واط)</small>',fm(r.use))+kv("شريحة ١ ("+r.p1+" هللة)",fm(r.u1))+kv("شريحة ٢ ("+r.p2+" هللة)",fm(r.u2))+
     '<div class="rf"><button class="bl" data-a="new">شهر جديد</button><button class="ot" data-a="more" data-n="'+r.no+'">أخرى</button></div></div>';
   });
+  if(sortBy==="date"&&py&&dec[py])h+=yearBand(py);
   $("tb").innerHTML=h||'<div class="empty">لا توجد قراءات محفوظة</div>';
   $("tbl").classList.toggle("selm",selMode);$("selbar").classList.toggle("hide",!selMode);updSel();
   show("hist");
@@ -418,12 +428,12 @@ $("tb").addEventListener("click",function(e){
   if(a==="more")return openMenu(b.dataset.n);
 });
 var menuNo=null;
-function act(a,no){var i=RD(no);
+function act(a,no){var i=RD(no);if(a==="cmp")return openCmp(no);
   if(a==="wa")return share(cur.rd[i]);
   if(a==="inv")return showInv(cur.rd[i],"hist");
   if(a==="edit")return openEdit(cur.rd[i]);
   if(a==="del"){selMode=true;selSet={};selSet[no]=1;return openHist(cur)}}
-function openMenu(no){menuNo=no;var r=cur.rd[RD(no)];var p=r.cd.split("-");$("mnt").innerHTML="فاتورة "+esc(r.name)+"<br>لشهر "+MN[+p[1]-1]+" "+p[0];$("mnu").classList.remove("hide")}
+function openMenu(no){menuNo=no;var r=cur.rd[RD(no)];$("mcmp").classList.toggle("hide",!hasPrevYear(r));var p=r.cd.split("-");$("mnt").innerHTML="فاتورة "+esc(r.name)+"<br>لشهر "+MN[+p[1]-1]+" "+p[0];$("mnu").classList.remove("hide")}
 function closeMenu(){$("mnu").classList.add("hide")}
 $("mnu").addEventListener("click",function(e){
   if(e.target===$("mnu"))return closeMenu();
@@ -450,16 +460,31 @@ $("dm").addEventListener("click",function(){
 
 // ---- invoice
 var back="home";
+function ar(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩".charAt(d)})}
+function pad2(n){return("0"+n).slice(-2)}
+function bkName(){var d=new Date();return "elec backup "+pad2(d.getDate())+"-"+pad2(d.getMonth()+1)+"-"+String(d.getFullYear()).slice(2)+"_"+pad2(d.getHours())+"\uA789"+pad2(d.getMinutes())+".json"}
+function updLbk(){var el=$("lbk");if(!el)return;var t=null;try{t=localStorage.getItem("elec_lastbk_v1")}catch(e){}
+  if(!t){el.textContent="آخر نسخة احتياطية: لا يوجد";return}
+  var d=new Date(+t);el.textContent="آخر نسخة احتياطية: "+dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())}
+function monthUse(y,mo){var t=0,f=false;cur.rd.forEach(function(r){if(r.cd.slice(0,4)===String(y)&&r.cd.slice(5,7)===mo){t+=r.use;f=true}});return f?t:null}
+function hasPrevYear(r){return monthUse(+r.cd.slice(0,4)-1,r.cd.slice(5,7))!==null}
+var ARUP='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',ARDN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
+function openCmp(no){
+  var r=cur.rd[RD(no)],y=+r.cd.slice(0,4),mo=r.cd.slice(5,7),a=monthUse(y,mo),b=monthUse(y-1,mo);
+  if(a==null||b==null)return;
+  var d=a-b,cls=d>0?"up":d<0?"dn":"eq",nm=MN[+mo-1];
+  $("cmpt").innerHTML="مقارنة استهلاك شهر<br>"+nm;
+  $("cmpb").innerHTML='<div class="cmr"><span>'+nm+' '+y+'</span><b>'+fm(a)+' كيلو واط</b></div><div class="cmr"><span>'+nm+' '+(y-1)+'</span><b>'+fm(b)+' كيلو واط</b></div>'+
+   '<div class="cmd '+cls+'"><span>الفرق</span><span class="dv">'+(d>0?ARUP:d<0?ARDN:"")+'<b>'+(d===0?"لا يوجد فرق":fm(Math.abs(d))+' كيلو واط')+'</b></span></div>';
+  $("cmp").classList.remove("hide")}
 function decYears(m){var d={};m.rd.forEach(function(r){if(r.cd.slice(5,7)==="12")d[r.cd.slice(0,4)]=1});return d}
-function chartSvg(arr,mxI,mnI){
+function chartSvg(arr){
   var vals=arr.map(function(v){return v==null?0:v}),M=Math.max.apply(null,vals)||1,
-  mag=Math.pow(10,Math.floor(Math.log10(M))),f=M/mag,nice=f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10,top=nice*mag,
-  L=8,R=548,B=220,T=22,H=B-T,slot=(R-L)/12,bw=slot*.6,k,i,o='<svg viewBox="0 0 600 246" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans Arabic,Tahoma,sans-serif">';
-  for(k=0;k<=4;k++){var y=B-H*k/4;o+='<line x1="'+L+'" x2="'+R+'" y1="'+y+'" y2="'+y+'" stroke="#d9dde3" stroke-width="1"/><text x="596" y="'+(y+4)+'" font-size="11" fill="#666" text-anchor="end">'+Math.round(top*k/4)+'</text>'}
+  L=6,R=594,B=222,T=26,H=B-T,slot=(R-L)/12,bw=slot*.74,i,o='<svg viewBox="0 0 600 252" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans Arabic,Tahoma,sans-serif">';
   for(i=0;i<12;i++){var cx=R-(i+.5)*slot,v=arr[i];
-    if(v!=null){var h=Math.max(2,H*v/top),col=i===mxI?"#c0392b":i===mnI?"#2e86c1":"#1c7f74";
-      o+='<rect x="'+(cx-bw/2)+'" y="'+(B-h)+'" width="'+bw+'" height="'+h+'" rx="3" fill="'+col+'"/><text x="'+cx+'" y="'+(B-h-5)+'" font-size="10" font-weight="700" fill="#222" text-anchor="middle">'+Math.round(v)+'</text>'}
-    o+='<text x="'+cx+'" y="'+(B+17)+'" font-size="11" fill="#444" text-anchor="middle">'+(i+1)+'</text>'}
+    if(v!=null){var h=Math.max(3,H*v/M);
+      o+='<rect x="'+(cx-bw/2)+'" y="'+(B-h)+'" width="'+bw+'" height="'+h+'" rx="4" fill="#1c7f74"/><text x="'+cx+'" y="'+(B-h-6)+'" font-size="12" font-weight="700" fill="#222" text-anchor="middle">'+Math.round(v)+'</text>'}
+    o+='<text x="'+cx+'" y="'+(B+21)+'" font-size="14" fill="#333" text-anchor="middle">'+(i+1)+'</text>'}
   return o+'<line x1="'+L+'" x2="'+R+'" y1="'+B+'" y2="'+B+'" stroke="#999" stroke-width="1.2"/></svg>'}
 function openYear(y){
   y=String(y);var mo=[],am=[],n=0,i;for(i=0;i<12;i++){mo.push(null);am.push(0)}
@@ -472,7 +497,7 @@ function openYear(y){
   $("sheet").innerHTML='<div class="bar"></div><div class="sin"><div class="hd"><div><h1>ملخص عام '+y+'</h1><div class="sub">'+esc(cur.name)+' · عدد الأشهر المسجلة: '+n+'</div></div><img class="lg" alt="" src="'+LOGO+'"></div>'+
    '<div class="stg">'+st("","إجمالي الاستهلاك",fm(tu),"كيلو واط","")+st("pd","إجمالي المبالغ المدفوعة",fm(tp),S,"")+
    st("mx","أعلى استهلاك",fm(mo[mx]),"كيلو واط","شهر "+MN[mx]+" · "+fm(am[mx])+" "+S)+st("mn","أدنى استهلاك",fm(mo[mn]),"كيلو واط","شهر "+MN[mn]+" · "+fm(am[mn])+" "+S)+'</div>'+
-   '<div class="ch"><h3>الاستهلاك الشهري (كيلو واط)</h3>'+chartSvg(mo,mx,mn)+'<div class="lgd"><span><i style="background:#c0392b"></i>الأعلى</span><span><i style="background:#2e86c1"></i>الأدنى</span><span><i style="background:#1c7f74"></i>بقية الأشهر</span><span>أرقام الأعمدة = رقم الشهر</span></div></div>'+
+   '<div class="ch"><h3>الاستهلاك الشهري (كيلو واط)</h3>'+chartSvg(mo,mx,mn)+'</div>'+
    '<div class="ft">تاريخ الإصدار: '+dmy(today())+'</div></div><div class="bar"></div>';
   $("sheet").className="sheet yr";
   viewR={kind:"year",y:y,name:cur.name,tu:tu,tp:tp};back="hist";
