@@ -126,7 +126,7 @@ html{background:var(--bg)}
 .sheet h1{font-size:4cqw;margin:0}
 .sheet .lg{width:10cqw;height:10cqw;object-fit:contain;flex:none}
 .sheet .meta{display:grid;grid-template-columns:1fr 1fr;gap:.6cqw 2cqw;font-size:2.4cqw;margin-bottom:2.2cqw}.sheet .meta .f{grid-column:1/-1}
-.sheet .th,.sheet .tr{display:grid;grid-template-columns:1fr 11cqw 10cqw;gap:.3cqw;padding:1cqw .6cqw;font-size:2.4cqw;align-items:center}
+.sheet .th,.sheet .tr{display:grid;grid-template-columns:1fr 11cqw 10cqw;gap:2.1cqw;padding:1cqw .6cqw;font-size:2.4cqw;align-items:center}
 .sheet .th{font-weight:700;font-size:2.6cqw}
 .sheet .th span:nth-child(2),.sheet .tr .v{text-align:left;direction:ltr}
 .sheet .sep{border-top:.5cqw solid #000}
@@ -139,10 +139,17 @@ html{background:var(--bg)}
 #home,#calc,#hist,.acts,.toast,.mnu,.infobox,#tipbox{display:none!important}
 #inv{background:#fff;padding:0;min-height:0}
 .sheet{max-width:none;break-inside:avoid;page-break-inside:avoid}.sheet,.sheet *{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-.sheet .sar{font-size:1.7em;line-height:.8;vertical-align:-.12em}
+.sheet .sar{font-size:1.3em;line-height:.9;vertical-align:-.08em}
 .sheet .t2box{background:#ececec;margin:.3cqw -1.4cqw;padding:.3cqw 1.4cqw}
-.mi.cx{margin-top:8px}
+.mi.cx{margin-top:16px}
 @media screen and (max-width:700px){#inv{padding-top:46px}}
+
+:root{--cls:#dde4ee;--clsfg:#1f2933;--clsbd:#aab6c8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cls:#4a5670;--clsfg:#fff;--clsbd:#66748f}}
+:root[data-theme="dark"]{--cls:#4a5670;--clsfg:#fff;--clsbd:#66748f}
+.mi.cx{background:var(--cls)!important;color:var(--clsfg)!important;border:1.5px solid var(--clsbd)!important}
+@media print{.acts,.acts *,#inv .acts{display:none!important;visibility:hidden!important}}
+.acts #prn,.acts #pdf{display:none!important}
 </style>
 </head>
 <body>
@@ -398,7 +405,7 @@ function act(a,no){var i=RD(no);
   if(a==="inv")return showInv(cur.rd[i],"hist");
   if(a==="edit")return openEdit(cur.rd[i]);
   if(a==="del"){selMode=true;selSet={};selSet[no]=1;return openHist(cur)}}
-function openMenu(no){menuNo=no;var r=cur.rd[RD(no)];var p=r.cd.split("-");$("mnt").innerHTML="فاتورة "+esc(r.name)+" لشهر<br>"+MN[+p[1]-1]+" "+p[0];$("mnu").classList.remove("hide")}
+function openMenu(no){menuNo=no;var r=cur.rd[RD(no)];var p=r.cd.split("-");$("mnt").innerHTML="فاتورة "+esc(r.name)+"<br>لشهر "+MN[+p[1]-1]+" "+p[0];$("mnu").classList.remove("hide")}
 function closeMenu(){$("mnu").classList.add("hide")}
 $("mnu").addEventListener("click",function(e){
   if(e.target===$("mnu"))return closeMenu();
@@ -439,7 +446,7 @@ function showInv(r,from){
    row("رسوم الخدمة (ثابت)",f2(r.fee),"⃁")+
    '<div class="grand"><div class="tr"><span>الإجمالي المستحق</span><span class="v">'+f2(r.tot)+'</span><span><span class="sar">⃁</span></span></div><small>شامل ضريبة القيمة المضافة ('+r.taxp+'%): '+f2(r.vat)+' <span class="sar">⃁</span></small></div></div><div class="bar"></div>';
   $("sheet").className="sheet "+(r.u2>0?"has2":"no2");
-  show("inv");
+  show("inv");prepPdf(r);
 }
 $("ib").addEventListener("click",function(){back==="hist"?openHist(cur):back==="calc"?openHist(cur):home()});
 function txt(r){return"فاتورة استهلاك الكهرباء\nالمشترك: "+r.name+"\nمن "+dmy(r.pd)+" إلى "+dmy(r.cd)+" ("+(r.days===null?"—":r.days)+" يوم)\nالاستهلاك: "+f2(r.use)+" كيلو واط\nالإجمالي المستحق: "+f2(r.tot)+" ريال (شامل الضريبة)"}
@@ -449,7 +456,15 @@ function share(r){
   else{var w=window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank");if(!w){try{navigator.clipboard.writeText(t);toast("تم نسخ ملخص الفاتورة")}catch(e){toast("تعذرت المشاركة")}}}
 }
 $("prn").addEventListener("click",function(){window.print()});
-$("sh").addEventListener("click",function(){if(viewR)share(viewR)});
+var pdfBlob=null,pdfFor=null;
+function prepPdf(r){pdfBlob=null;pdfFor=r;setTimeout(function(){if(pdfFor!==r)return;buildPdf().then(function(b){if(pdfFor===r)pdfBlob=b},function(){})},450)}
+$("sh").addEventListener("click",function(){
+  if(!viewR)return;
+  if(!pdfBlob||pdfFor!==viewR){toast("جارٍ تجهيز الفاتورة، اضغط مرة أخرى بعد لحظة");return}
+  var f=null;try{f=new File([pdfBlob],invFile(viewR)+".pdf",{type:"application/pdf"})}catch(e){}
+  if(f&&navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(function(e){if(!e||e.name!=="AbortError")share(viewR)});
+  else share(viewR);
+});
 function mkPdf(canvas){
   var jb=atob(canvas.toDataURL("image/jpeg",0.92).split(",")[1]),jpg=new Uint8Array(jb.length);
   for(var i=0;i<jb.length;i++)jpg[i]=jb.charCodeAt(i);
@@ -467,6 +482,14 @@ function mkPdf(canvas){
   for(var k=1;k<=5;k++)add(("0000000000"+off[k]).slice(-10)+" 00000 n \n");
   add("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xr+"\n%%EOF");
   return new Blob(parts,{type:"application/pdf"});
+}
+function buildPdf(){
+  return new Promise(function(res,rej){
+    if(!window.html2canvas)return rej(new Error("no-html2canvas"));
+    var wrap=document.createElement("div");wrap.style.cssText="position:fixed;left:0;top:0;z-index:-1;width:700px;background:#fff";
+    var cl=$("sheet").cloneNode(true);cl.removeAttribute("id");cl.style.maxWidth="none";cl.style.width="700px";wrap.appendChild(cl);document.body.appendChild(wrap);
+    html2canvas(cl,{scale:2.5,backgroundColor:"#ffffff",scrollX:0,scrollY:0}).then(function(cv){wrap.remove();res(mkPdf(cv))},function(e){wrap.remove();rej(e)});
+  });
 }
 $("pdf").addEventListener("click",function(){
   if(!viewR)return;
