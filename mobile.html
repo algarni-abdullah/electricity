@@ -345,7 +345,7 @@ $("addM").addEventListener("click",function(){
 $("bk").addEventListener("click",function(){
   (window.claude?claude.use("downloads"):Promise.resolve(null)).then(function(d){
     if(!d)return toast("الحفظ غير متاح هنا");
-    return d.save({filename:bkName(),data:JSON.stringify(D)}).then(function(){try{localStorage.setItem("elec_lastbk_v1",String(Date.now()))}catch(e){}updLbk();toast("تم حفظ النسخة")},function(e){if(!e||e.code!=="declined")toast("تعذر الحفظ")});
+    var ts=Date.now(),src=srcName();return d.save({filename:bkName(),data:JSON.stringify(Object.assign({},D,{lastbk:ts,lastbkSrc:src}))}).then(function(){try{localStorage.setItem("elec_lastbk_v1",String(ts));localStorage.setItem("elec_lastbk_src_v1",src)}catch(e){}updLbk();toast("تم حفظ النسخة")},function(e){if(!e||e.code!=="declined")toast("تعذر الحفظ")});
   });
 });
 $("rs").addEventListener("click",function(){$("fi").click()});
@@ -355,7 +355,7 @@ $("cmp").addEventListener("click",function(e){if(e.target===$("cmp")||e.target.c
 $("fi").addEventListener("change",function(){
   var f=$("fi").files[0];if(!f)return;var rd=new FileReader();
   rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||!Array.isArray(o.meters))throw 0;
-    if(!confirm("استبدال البيانات الحالية بالنسخة المحددة؟"))return;D=o;save();home();toast("تم الاسترجاع")}catch(e){toast("ملف غير صالح")}};
+    if(!confirm("استبدال البيانات الحالية بالنسخة المحددة؟"))return;D=o;adoptBk(o);delete D.lastbk;delete D.lastbkSrc;save();home();toast("تم الاسترجاع")}catch(e){toast("ملف غير صالح")}};
   rd.readAsText(f);$("fi").value="";
 });
 // ---- calc
@@ -484,9 +484,13 @@ var back="home";
 function ar(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩".charAt(d)})}
 function pad2(n){return("0"+n).slice(-2)}
 function bkName(){var d=new Date();return "elec backup "+pad2(d.getDate())+"-"+pad2(d.getMonth()+1)+"-"+String(d.getFullYear()).slice(2)+"_"+pad2(d.getHours())+"\uA789"+pad2(d.getMinutes())+".json"}
+function srcName(){return /iPhone|iPad|iPod/.test(navigator.userAgent)?"الجوال":"الكمبيوتر"}
+function adoptBk(o){try{var t=+o.lastbk,cur0=+(localStorage.getItem("elec_lastbk_v1")||0);
+  if(t&&t>cur0){localStorage.setItem("elec_lastbk_v1",String(t));if(o.lastbkSrc)localStorage.setItem("elec_lastbk_src_v1",String(o.lastbkSrc))}}catch(e){}}
 function updLbk(){var el=$("lbk");if(!el)return;var t=null;try{t=localStorage.getItem("elec_lastbk_v1")}catch(e){}
   if(!t){el.textContent="آخر نسخة احتياطية: لا يوجد";return}
-  var d=new Date(+t);el.textContent="آخر نسخة احتياطية: "+dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())}
+  var sr=null;try{sr=localStorage.getItem("elec_lastbk_src_v1")}catch(e){}
+  var d=new Date(+t);el.textContent="آخر نسخة احتياطية: "+dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())+(sr?" · "+sr:"")}
 function monthUse(y,mo){var t=0,f=false;cur.rd.forEach(function(r){if(r.cd.slice(0,4)===String(y)&&r.cd.slice(5,7)===mo){t+=r.use;f=true}});return f?t:null}
 function hasPrevYear(r){return monthUse(+r.cd.slice(0,4)-1,r.cd.slice(5,7))!==null}
 var ARUP='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',ARDN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
