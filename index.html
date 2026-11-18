@@ -177,12 +177,17 @@ tr.yrw td{padding:10px 8px}
 .ytabs{display:flex;gap:8px;overflow-x:auto;margin:6px 0 12px;padding-bottom:4px}
 .yc{flex:none;height:36px;padding:0 18px;border-radius:18px;border:1.5px solid var(--btnbd);background:var(--btn);color:var(--btnfg);font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
 .yc.on{background:#1c7f74;color:#fff;border-color:#1c7f74}
+label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8px 0 3px}
+.fld.sy{background:var(--in);color:var(--fg);font-weight:400;font-size:16px;height:42px;text-align:left;direction:ltr}
+.mbx.wd.sy{width:min(340px,100%);max-height:88vh;overflow:auto}
+.synote{font-size:12px;color:var(--mut);line-height:1.7;margin-top:6px;text-align:center}
+.bkcol{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 </style>
 </head>
 <body>
 <div id="home" class="wrap wide">
   <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
-  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><span id="lbk" class="lbk"></span><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
+  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><span id="lbk" class="lbk"></span><div class="bkcol"><button class="sm" id="synb">المزامنة</button><span id="sstat" class="lbk"></span></div><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
   <div class="grid" id="grid"></div>
 </div>
 
@@ -230,6 +235,26 @@ tr.yrw td{padding:10px 8px}
 <div id="cmp" class="mnu hide"><div class="mbx wd"><div class="mt" id="cmpt"></div><div id="cmpb"></div><button class="mi cx" id="cmpx">إغلاق</button></div></div>
 <div id="bkrem" class="mnu hide"><div class="mbx wd"><div class="mt">تذكير بالنسخ الاحتياطي</div><div id="bkremt" style="text-align:center;font-size:14px;line-height:1.8"></div><button class="mi pr" id="bkremgo">نسخ احتياطي الآن</button><button class="mi cx" id="bkremx">إلغاء</button></div></div>
 <div id="dwarn" class="mnu hide"><div class="mbx wd"><div class="mt">⚠️ التاريخ غير صحيح</div><div id="dwarnt" style="text-align:center;font-size:14px;line-height:1.8"></div><button class="mi pr" id="dwarnok">حسناً</button></div></div>
+<div id="syncm" class="mnu hide"><div class="mbx wd sy">
+  <div class="mt">المزامنة التلقائية</div>
+  <div id="sy_s" style="text-align:center;font-size:13px;line-height:1.8"></div>
+  <div id="sy_form">
+    <label class="syl" for="sy_o">اسم حسابك في GitHub</label><input id="sy_o" class="fld sy" autocomplete="off" autocapitalize="none" spellcheck="false" value="algarni-abdullah">
+    <label class="syl" for="sy_r">اسم المستودع الخاص</label><input id="sy_r" class="fld sy" autocomplete="off" autocapitalize="none" spellcheck="false" value="electricity-data">
+    <label class="syl" for="sy_t">مفتاح الوصول (Token)</label><input id="sy_t" type="password" class="fld sy" autocomplete="off" autocapitalize="none" spellcheck="false">
+    <label class="syl" for="sy_p">كلمة سر التشفير</label><input id="sy_p" type="password" class="fld sy" autocomplete="off">
+    <label class="syl" for="sy_p2">تأكيد كلمة السر (عند أول إعداد فقط)</label><input id="sy_p2" type="password" class="fld sy" autocomplete="off">
+    <button class="mi pr" id="sy_go" style="margin-top:12px">حفظ وبدء المزامنة</button>
+    <div class="synote">المفتاح يُخزَّن على هذا الجهاز. كلمة السر لا تُخزَّن، ويُحفظ منها مفتاح تشفير لا يمكن استخراجه.</div>
+  </div>
+  <div id="sy_acts" class="hide">
+    <button class="mi pr" id="sy_now">مزامنة الآن</button>
+    <label class="syl" for="sy_pw">إذا طلب التطبيق كلمة السر</label><input id="sy_pw" type="password" class="fld sy" autocomplete="off">
+    <button class="mi" id="sy_pwgo">حفظ كلمة السر</button>
+    <button class="mi dl" id="sy_off" style="margin-top:8px">إيقاف المزامنة على هذا الجهاز</button>
+  </div>
+  <button class="mi cx" id="sy_x">إغلاق</button>
+</div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -266,7 +291,35 @@ try{var raw=localStorage.getItem(K);
  else{var o=localStorage.getItem("elec_meters_v1");
   if(o)JSON.parse(o).meters.forEach(function(m){D.meters.push({id:m.id,name:m.name,sym:"⚡",ident:rid(),prev:m.prev||"",prevDate:m.prevDate||"",s:m.s||JSON.parse(JSON.stringify(DEF)),rd:[]})})}
 }catch(e){}
-function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}}
+/*SYNC-TOP*/
+var SY={cfg:null,key:null,saltB64:null,busy:false,timer:null,base:null,last:0,err:""};
+try{SY.cfg=JSON.parse(localStorage.getItem("elec_sync_cfg_v1")||"null")}catch(e){}
+try{SY.base=JSON.parse(localStorage.getItem("elec_sync_base_v1")||"null")}catch(e){}
+try{SY.last=+(localStorage.getItem("elec_sync_last_v1")||0)}catch(e){}
+function syOn(){return !!(SY.cfg&&SY.cfg.token)}
+function nid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function legacyId(m,r){return "L"+m.id+"-"+r.cd+"-"+r.prev+"-"+r.curr}
+function ensureIds(){D.tomb=D.tomb||{};D.mtomb=D.mtomb||{};
+  D.meters.forEach(function(m){m.mu=m.mu||0;m.rd=m.rd||[];
+    m.rd.forEach(function(r){if(!r.id)r.id=(r.no&&!/^\d+$/.test(String(r.no)))?String(r.no):legacyId(m,r);r.no=r.id})})}
+function msig(m){return JSON.stringify([m.name,m.sym,m.ident,m.s,(m.rd&&m.rd.length)?null:[m.prev,m.prevDate]])}
+function rsig(r){var c={};for(var k in r)if(k!=="u")c[k]=r[k];return JSON.stringify(c)}
+function stampChanges(){var now=Date.now(),B=SY.base||{meters:[]},bm={};
+  D.tomb=D.tomb||{};D.mtomb=D.mtomb||{};
+  B.meters.forEach(function(m){bm[m.id]=m});
+  D.meters.forEach(function(m){var o=bm[m.id];
+    if(!o||msig(o)!==msig(m))m.mu=now;else if(m.mu==null)m.mu=o.mu||0;
+    var br={};(o?o.rd:[]).forEach(function(r){br[r.id]=r});
+    var ids={};
+    m.rd.forEach(function(r){ids[r.id]=1;var x=br[r.id];
+      if(!x||rsig(x)!==rsig(r))r.u=now;else if(r.u==null)r.u=x.u||0});
+    (o?o.rd:[]).forEach(function(r){if(!ids[r.id])D.tomb[r.id]=now})});
+  var have={};D.meters.forEach(function(m){have[m.id]=1});
+  B.meters.forEach(function(m){if(!have[m.id])D.mtomb[m.id]=now})}
+function persist(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}}
+function save(){if(syOn())stampChanges();persist();if(syOn())schedSync(3000)}
+ensureIds();
+/*SYNC-TOP-END*/
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function f2(n){return (Math.round(n*100)/100).toFixed(2)}
 function fm(n){return f2(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")}
@@ -340,7 +393,7 @@ $("cmp").addEventListener("click",function(e){if(e.target===$("cmp")||e.target.c
 $("fi").addEventListener("change",function(){
   var f=$("fi").files[0];if(!f)return;var rd=new FileReader();
   rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||!Array.isArray(o.meters))throw 0;
-    if(!confirm("استبدال البيانات الحالية بالنسخة المحددة؟"))return;D=o;adoptBk(o);delete D.lastbk;delete D.lastbkSrc;save();home();toast("تم الاسترجاع")}catch(e){toast("ملف غير صالح")}};
+    if(!confirm("استبدال البيانات الحالية بالنسخة المحددة؟"))return;D=o;ensureIds();adoptBk(o);delete D.lastbk;delete D.lastbkSrc;save();home();toast("تم الاسترجاع")}catch(e){toast("ملف غير صالح")}};
   rd.readAsText(f);$("fi").value="";
 });
 // ---- calc
@@ -386,12 +439,12 @@ function commit(){
   if(!last||last.saved)return last;
   if(editNo!==null){
     var ei=RD(editNo),old=cur.rd[ei];
-    last.no=old.no;last.ts=old.ts;last.saved=true;
+    last.no=old.no;last.id=old.id||old.no;last.ts=old.ts;last.saved=true;
     var e=JSON.parse(JSON.stringify(last));delete e.saved;cur.rd[ei]=e;
     var L=cur.rd.slice().sort(function(x,y){return x.cd<y.cd?1:x.cd>y.cd?-1:y.ts-x.ts})[0];
     cur.prev=String(L.curr);cur.prevDate=L.cd;editNo=null;save();return last;
   }
-  D.no=(D.no||0)+1;last.no=String(D.no).padStart(6,"0");last.ts=Date.now();last.saved=true;
+  last.no=nid();last.id=last.no;last.ts=Date.now();last.saved=true;
   var r=JSON.parse(JSON.stringify(last));delete r.saved;cur.rd.push(r);
   cur.prev=String(last.curr);cur.prevDate=last.cd;save();return last;
 }
@@ -619,14 +672,150 @@ $("bkremx").addEventListener("click",function(){$("bkrem").classList.add("hide")
     if(dx>90&&dy<60&&Date.now()-t0<700&&$("bkmod").classList.contains("hide")&&$("mnu").classList.contains("hide")){
       home();var hm=$("home");hm.style.animation="none";void hm.offsetWidth;hm.style.animation="slin .25s ease-out"}},{passive:true});
 })();
-(function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn"].every(function(i){return $(i).classList.contains("hide")})}
+/*SYNC-CORE*/
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function mergeData(a,b){
+  var out={v:3,meters:[],tomb:{},mtomb:{}},k;
+  [a.tomb,b.tomb].forEach(function(t){for(k in (t||{}))out.tomb[k]=Math.max(out.tomb[k]||0,t[k])});
+  [a.mtomb,b.mtomb].forEach(function(t){for(k in (t||{}))out.mtomb[k]=Math.max(out.mtomb[k]||0,t[k])});
+  var A={},B2={},order=[];
+  a.meters.forEach(function(m){A[m.id]=m;order.push(m.id)});
+  b.meters.forEach(function(m){B2[m.id]=m;if(!A[m.id])order.push(m.id)});
+  order.forEach(function(id){
+    var ma=A[id],mb=B2[id],mu=Math.max(ma?ma.mu||0:0,mb?mb.mu||0:0);
+    if(out.mtomb[id]&&out.mtomb[id]>=mu)return;
+    var src=!mb?ma:!ma?mb:((ma.mu||0)>=(mb.mu||0)?ma:mb);
+    var m={id:id,name:src.name,sym:src.sym,ident:src.ident,prev:src.prev,prevDate:src.prevDate,s:clone(src.s),mu:mu,rd:[]};
+    var rm={};
+    (ma?ma.rd:[]).forEach(function(r){rm[r.id]=r});
+    (mb?mb.rd:[]).forEach(function(r){var x=rm[r.id];if(!x||(r.u||0)>(x.u||0))rm[r.id]=r});
+    Object.keys(rm).forEach(function(rid){var r=rm[rid];if(out.tomb[rid]&&out.tomb[rid]>=(r.u||0))return;m.rd.push(r)});
+    m.rd.sort(function(x,y){return x.cd<y.cd?-1:x.cd>y.cd?1:(x.ts||0)-(y.ts||0)});
+    if(m.rd.length){var l=m.rd[m.rd.length-1];m.prev=String(l.curr);m.prevDate=l.cd}
+    out.meters.push(m)});
+  return out}
+function canon(d){var t=function(o){var r={};Object.keys(o||{}).sort().forEach(function(k){r[k]=o[k]});return r};
+  var byId=function(x,y){return x.id<y.id?-1:x.id>y.id?1:0};
+  return JSON.stringify({meters:d.meters.slice().sort(byId).map(function(m){var c=t(m);c.s=t(m.s);c.rd=m.rd.slice().sort(byId).map(t);return c}),tomb:t(d.tomb),mtomb:t(d.mtomb)})}
+function exportState(){return{v:3,meters:clone(D.meters),tomb:clone(D.tomb||{}),mtomb:clone(D.mtomb||{})}}
+function persistBase(){try{localStorage.setItem("elec_sync_base_v1",JSON.stringify(SY.base))}catch(e){}}
+function applyMerged(m){D.meters=m.meters;D.tomb=m.tomb;D.mtomb=m.mtomb;ensureIds();persist();SY.base=clone(m);persistBase();refreshAfterSync()}
+/* --- crypto (AES-GCM, key from passphrase via PBKDF2) --- */
+function b64e(u){var s="";for(var i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)}
+function b64d(s){var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+async function deriveKey(pass,saltB64){var base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pass),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(saltB64),iterations:200000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function encJson(obj,key,saltB64){var iv=crypto.getRandomValues(new Uint8Array(12)),
+  ct=await crypto.subtle.encrypt({name:"AES-GCM",iv:iv},key,new TextEncoder().encode(JSON.stringify(obj)));
+  return JSON.stringify({v:1,salt:saltB64,iv:b64e(iv),ct:b64e(new Uint8Array(ct))})}
+async function decJson(text,key){var o=JSON.parse(text),pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(o.iv)},key,b64d(o.ct));return JSON.parse(new TextDecoder().decode(pt))}
+/* --- the derived key lives in IndexedDB as a non-extractable CryptoKey (the passphrase itself is never stored) --- */
+function idb(){return new Promise(function(res,rej){var q=indexedDB.open("elecsync",1);q.onupgradeneeded=function(){q.result.createObjectStore("k")};q.onsuccess=function(){res(q.result)};q.onerror=function(){rej(q.error)}})}
+async function idbGet(k){var d=await idb();return new Promise(function(res,rej){var r=d.transaction("k").objectStore("k").get(k);r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}})}
+async function idbSet(k,v){var d=await idb();return new Promise(function(res,rej){var t=d.transaction("k","readwrite");t.objectStore("k").put(v,k);t.oncomplete=function(){res()};t.onerror=function(){rej(t.error)}})}
+async function idbDel(k){var d=await idb();return new Promise(function(res){var t=d.transaction("k","readwrite");t.objectStore("k").delete(k);t.oncomplete=function(){res()};t.onerror=function(){res()}})}
+async function getKey(salt){if(SY.key&&SY.saltB64===salt)return SY.key;
+  try{var o=await idbGet("key");if(o&&o.salt===salt&&o.key){SY.key=o.key;SY.saltB64=salt;return o.key}}catch(e){}
+  throw new Error("NEEDPASS")}
+async function setPass(pass,salt){var k=await deriveKey(pass,salt);SY.key=k;SY.saltB64=salt;try{await idbSet("key",{salt:salt,key:k})}catch(e){}return k}
+/* --- GitHub contents API --- */
+function httpErr(s){var e=new Error("HTTP "+s);e.status=s;return e}
+function ghUrl(){var c=SY.cfg;return "https://api.github.com/repos/"+encodeURIComponent(c.owner)+"/"+encodeURIComponent(c.repo)+"/contents/"+(c.path||"elec-data.json")}
+function ghHead(){return{"Authorization":"Bearer "+SY.cfg.token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}}
+async function ghGet(){var r=await fetch(ghUrl()+"?t="+Date.now(),{headers:ghHead(),cache:"no-store"});
+  if(r.status===404)return null;if(!r.ok)throw httpErr(r.status);
+  var j=await r.json();return{sha:j.sha,text:atob((j.content||"").replace(/\s/g,""))}}
+async function ghPut(text,sha){var body={message:"sync "+new Date().toISOString(),content:btoa(text)};if(sha)body.sha=sha;
+  var h=ghHead();h["Content-Type"]="application/json";
+  var r=await fetch(ghUrl(),{method:"PUT",headers:h,body:JSON.stringify(body)});if(!r.ok)throw httpErr(r.status);return r.json()}
+function errText(e){var s=e&&e.status,m=e&&e.message,n=e&&e.name;
+  if(s===401)return "المفتاح غير صالح أو منتهي";
+  if(s===403)return "رُفض الطلب (صلاحية المفتاح أو حد الاستخدام)";
+  if(s===404)return "المستودع غير موجود أو المفتاح بلا صلاحية عليه";
+  if(s===409||s===422)return "تعارض متكرر في المزامنة، حاول لاحقاً";
+  if(m==="NEEDPASS")return "أدخل كلمة السر في إعدادات المزامنة";
+  if(m==="PUBLIC")return "هذا المستودع عام، استخدم مستودعاً خاصاً";
+  if(n==="OperationError")return "كلمة السر غير صحيحة";
+  if(n==="TypeError")return "لا يوجد اتصال بالإنترنت";
+  return "تعذرت المزامنة"}
+function schedSync(ms){clearTimeout(SY.timer);SY.timer=setTimeout(syncNow,ms==null?2000:ms)}
+async function syncNow(){
+  if(!syOn()||SY.busy)return;
+  if(!$("calc").classList.contains("hide")||!$("inv").classList.contains("hide")||selMode){schedSync(6000);return}
+  if(typeof navigator!=="undefined"&&navigator.onLine===false){SY.err="لا يوجد اتصال";updSStat();return}
+  SY.busy=true;SY.err="";setSStat("جارٍ المزامنة...");
+  try{
+    for(var at=0;at<3;at++){
+      var rem=await ghGet(),remData=null,salt=null,key=null;
+      if(rem){var ro=JSON.parse(rem.text);salt=ro.salt;key=await getKey(salt);remData=await decJson(rem.text,key)}
+      else{key=SY.key;salt=SY.saltB64;if(!key||!salt)throw new Error("NEEDPASS")}
+      stampChanges();
+      var local=exportState(),merged=remData?mergeData(local,remData):local;
+      if(canon(merged)!==canon(local))applyMerged(merged);
+      else{SY.base=clone(merged);persistBase()}
+      persist();
+      if(!remData||canon(merged)!==canon(remData)){
+        try{await ghPut(await encJson(merged,key,salt),rem?rem.sha:undefined)}
+        catch(e){if(e&&(e.status===409||e.status===422)){SY.err=errText(e);continue}throw e}
+      }
+      SY.err="";break}
+    if(!SY.err){SY.last=Date.now();try{localStorage.setItem("elec_sync_last_v1",String(SY.last))}catch(e){}}
+  }catch(e){SY.err=errText(e)}
+  SY.busy=false;updSStat()}
+/*SYNC-CORE-END*/
+/* --- sync UI --- */
+function fmtDT(ts){var d=new Date(ts);return dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())}
+function setSStat(t){var a=$("sstat"),b=$("sy_s");if(a)a.textContent=t;if(b)b.textContent=t}
+function updSStat(){var t;if(!syOn())t="المزامنة: غير مفعّلة";else if(SY.err)t="⚠️ "+SY.err;else if(SY.last)t="آخر مزامنة: "+fmtDT(SY.last);else t="المزامنة مفعّلة";setSStat(t)}
+function refreshAfterSync(){if(cur)cur=M(cur.id);
+  if(!$("home").classList.contains("hide"))home();
+  else if(!$("hist").classList.contains("hide")){if(cur)openHist(cur);else home()}}
+function renderSync(){var on=syOn();$("sy_form").classList.toggle("hide",on);$("sy_acts").classList.toggle("hide",!on);updSStat()}
+function sySay(t){$("sy_s").textContent=t}
+$("synb").addEventListener("click",function(){renderSync();$("syncm").classList.remove("hide")});
+$("sy_x").addEventListener("click",function(){$("syncm").classList.add("hide")});
+$("sy_now").addEventListener("click",function(){SY.err="";schedSync(0)});
+$("sy_go").addEventListener("click",async function(){
+  var o=$("sy_o").value.trim(),r=$("sy_r").value.trim(),t=$("sy_t").value.trim(),p=$("sy_p").value;
+  if(!o||!r||!t||!p)return sySay("أكمل كل الحقول");
+  var prev=SY.cfg;SY.cfg={owner:o,repo:r,path:"elec-data.json",token:t};sySay("جارٍ التحقق...");
+  try{
+    var rr=await fetch("https://api.github.com/repos/"+encodeURIComponent(o)+"/"+encodeURIComponent(r),{headers:ghHead(),cache:"no-store"});
+    if(!rr.ok)throw httpErr(rr.status);
+    var rj=await rr.json();if(rj.private!==true)throw new Error("PUBLIC");
+    var rem=await ghGet(),salt;
+    if(rem){salt=JSON.parse(rem.text).salt;var k=await setPass(p,salt),rd=await decJson(rem.text,k);
+      var nr=rd.meters.reduce(function(a,m){return a+m.rd.length},0);
+      if(!confirm("في السحابة "+rd.meters.length+" عداد و"+nr+" قراءة. سيتم دمجها مع بيانات هذا الجهاز. متابعة؟")){SY.cfg=prev;return sySay("أُلغي الإعداد")}}
+    else{if($("sy_p2").value!==p){SY.cfg=prev;return sySay("لا يوجد ملف في السحابة بعد، أعد كتابة كلمة السر في خانة التأكيد")}
+      salt=b64e(crypto.getRandomValues(new Uint8Array(16)));await setPass(p,salt)}
+    try{localStorage.setItem("elec_sync_cfg_v1",JSON.stringify(SY.cfg))}catch(e){}
+    SY.base={meters:[]};persistBase();SY.err="";
+    $("sy_t").value="";$("sy_p").value="";$("sy_p2").value="";renderSync();schedSync(100)
+  }catch(e){SY.cfg=prev;sySay("⚠️ "+errText(e))}});
+$("sy_pwgo").addEventListener("click",async function(){
+  var p=$("sy_pw").value;if(!p)return;
+  try{var rem=await ghGet();if(!rem)return sySay("لا يوجد ملف في السحابة");
+    var salt=JSON.parse(rem.text).salt,k=await setPass(p,salt);await decJson(rem.text,k);
+    $("sy_pw").value="";SY.err="";sySay("تم حفظ كلمة السر");schedSync(100)}catch(e){SY.key=null;sySay("⚠️ "+errText(e))}});
+$("sy_off").addEventListener("click",async function(){
+  if(!confirm("إيقاف المزامنة على هذا الجهاز؟ تبقى بياناتك محفوظة كما هي."))return;
+  clearTimeout(SY.timer);
+  try{localStorage.removeItem("elec_sync_cfg_v1");localStorage.removeItem("elec_sync_base_v1");localStorage.removeItem("elec_sync_last_v1")}catch(e){}
+  SY.cfg=null;SY.base=null;SY.key=null;SY.saltB64=null;SY.err="";SY.last=0;try{await idbDel("key")}catch(e){}
+  renderSync()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&syOn())schedSync(800)});
+window.addEventListener("online",function(){if(syOn())schedSync(500)});
+setInterval(function(){if(!document.hidden&&syOn())schedSync(100)},90000);
+function syncInit(){updSStat();if(syOn())schedSync(1500)}
+(function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn","syncm"].every(function(i){return $(i).classList.contains("hide")})}
   function sw(el,fn){var x0=null,y0=0,t0=0;
     el.addEventListener("touchstart",function(e){if(e.touches.length!==1||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
     el.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=Math.abs(t.clientY-y0);x0=null;
       if(dx>90&&dy<60&&Date.now()-t0<700&&noModal()){fn();["home","calc","hist","inv"].forEach(function(i){var v=$(i);if(!v.classList.contains("hide")){v.style.animation="none";void v.offsetWidth;v.style.animation="slin .25s ease-out"}})}},{passive:true})}
   sw($("calc"),function(){$("cb").click()});sw($("inv"),function(){$("ib").click()});
 })();
-save();home();chkBk();
+save();home();chkBk();syncInit();
 })();
 </script>
 </body>
