@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-title" content="الكهرباء">
 <meta name="theme-color" content="#5b9bd5">
 <title>حاسبة الكهرباء</title>
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png?v=2">
+<link rel="icon" type="image/png" href="icon.png?v=2">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -180,6 +180,7 @@ tr.yrw td{padding:10px 8px;border-top:3px solid #1c7f74}
 .sheet.yr .st.mn{border-top-color:#4ab264}.sheet.yr .st.mn b{color:#4ab264}
 @keyframes slin{from{transform:translateX(-26px);opacity:.35}to{transform:none;opacity:1}}
 .bkcol{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.bkcol .lbk{align-self:flex-start;margin:0;text-align:start}
 .sheet.yr .st{display:flex;align-items:center;justify-content:space-between;gap:1.6cqw}
 .sheet.yr .stx{flex:1;min-width:0}
 .sheet.yr .cir{width:5.3cqw;height:5.3cqw;flex:none}
@@ -201,7 +202,7 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 <div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
   <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
-  <div class="top" style="justify-content:flex-start;flex-wrap:wrap;align-items:flex-start"><button class="sm" id="addM">＋ إضافة عداد</button><div class="bkcol"><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><span id="sstat" class="lbk"></span><span id="lbk" class="lbk"></span></div><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
+  <div class="top" style="justify-content:flex-start;flex-wrap:wrap;align-items:center"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><div class="bkcol"><span id="sstat" class="lbk"></span><span id="lbk" class="lbk"></span></div><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
   <div class="grid" id="grid"></div>
 </div>
 
