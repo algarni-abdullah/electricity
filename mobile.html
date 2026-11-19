@@ -8,9 +8,8 @@
 <meta name="apple-mobile-web-app-title" content="الكهرباء">
 <meta name="theme-color" content="#5b9bd5">
 <title>حاسبة الكهرباء</title>
-<link rel="apple-touch-icon" id="ati" href="icon.png">
-<link rel="icon" type="image/png" href="icon.png" media="(prefers-color-scheme: light)">
-<link rel="icon" type="image/png" href="icon-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -202,7 +201,7 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 <div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
   <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
-  <div class="top" style="justify-content:flex-start;flex-wrap:wrap;align-items:flex-start"><button class="sm" id="addM">＋ إضافة عداد</button><div class="bkcol"><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><span id="lbk" class="lbk"></span></div><div class="bkcol"><button class="sm" id="synb">المزامنة</button><span id="sstat" class="lbk"></span></div><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
+  <div class="top" style="justify-content:flex-start;flex-wrap:wrap;align-items:flex-start"><button class="sm" id="addM">＋ إضافة عداد</button><div class="bkcol"><button class="sm" id="bkb">💾 النسخ الاحتياطي</button><span id="sstat" class="lbk"></span><span id="lbk" class="lbk"></span></div><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
   <div class="grid" id="grid"></div>
 </div>
 
@@ -245,7 +244,7 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 </div>
 <div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
   <button class="mi pr" data-a="inv">طباعة</button><button class="mi" id="mcmp" data-a="cmp">مقارنة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
-<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi cx" id="bkx">إغلاق</button></div></div>
+<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi" id="synb">🔄 المزامنة</button><button class="mi cx" id="bkx">إغلاق</button></div></div>
 <div id="cmp" class="mnu hide"><div class="mbx wd"><div class="mt" id="cmpt"></div><div id="cmpb"></div><button class="mi cx" id="cmpx">إغلاق</button></div></div>
 <div id="bkrem" class="mnu hide"><div class="mbx wd"><div class="mt">تذكير بالنسخ الاحتياطي</div><div id="bkremt" style="text-align:center;font-size:14px;line-height:1.8"></div><button class="mi pr" id="bkremgo">نسخ احتياطي الآن</button><button class="mi cx" id="bkremx">إلغاء</button></div></div>
 <div id="dwarn" class="mnu hide"><div class="mbx wd"><div class="mt">⚠️ التاريخ غير صحيح</div><div id="dwarnt" style="text-align:center;font-size:14px;line-height:1.8"></div><button class="mi pr" id="dwarnok">حسناً</button></div></div>
@@ -263,8 +262,8 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
   </div>
   <div id="sy_acts" class="hide">
     <button class="mi pr" id="sy_now">مزامنة الآن</button>
-    <label class="syl" for="sy_pw">إذا طلب التطبيق كلمة السر</label><input id="sy_pw" type="password" class="fld sy" autocomplete="off">
-    <button class="mi" id="sy_pwgo">حفظ كلمة السر</button>
+    <div id="sy_pwbox" class="hide"><label class="syl" for="sy_pw">أدخل كلمة السر</label><input id="sy_pw" type="password" class="fld sy" autocomplete="off">
+    <button class="mi" id="sy_pwgo">حفظ كلمة السر</button></div>
     <button class="mi dl" id="sy_off" style="margin-top:8px">إيقاف المزامنة على هذا الجهاز</button>
   </div>
   <button class="mi cx" id="sy_x">إغلاق</button>
@@ -291,9 +290,7 @@ if(!window.claude){window.claude={use:function(n){
   setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},4000);res({status:"saved"});
  })}})}}}
 if("serviceWorker" in navigator)window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});
-(function(){var mq=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)");
- function ap(){var a=document.getElementById("ati");if(a)a.href=(mq&&mq.matches)?"icon-dark.png":"icon.png"}
- ap();if(mq){if(mq.addEventListener)mq.addEventListener("change",ap);else if(mq.addListener)mq.addListener(ap)}})();
+
 </script>
 <script>
 (function(){
@@ -541,8 +538,7 @@ function adoptBk(o){try{var t=+o.lastbk,cur0=+(localStorage.getItem("elec_lastbk
   if(t&&t>cur0){localStorage.setItem("elec_lastbk_v1",String(t));if(o.lastbkSrc)localStorage.setItem("elec_lastbk_src_v1",String(o.lastbkSrc))}}catch(e){}}
 function updLbk(){var el=$("lbk");if(!el)return;var t=null;try{t=localStorage.getItem("elec_lastbk_v1")}catch(e){}
   if(!t){el.textContent="آخر نسخة احتياطية: لا يوجد";return}
-  var sr=null;try{sr=localStorage.getItem("elec_lastbk_src_v1")}catch(e){}
-  var d=new Date(+t);el.textContent="آخر نسخة احتياطية: "+dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())+(sr?" · "+sr:"")}
+    var d=new Date(+t);el.textContent="آخر نسخة احتياطية: "+dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())}
 function monthUse(y,mo){var t=0,f=false;cur.rd.forEach(function(r){if(r.cd.slice(0,4)===String(y)&&r.cd.slice(5,7)===mo){t+=r.use;f=true}});return f?t:null}
 function hasPrevYear(r){return monthUse(+r.cd.slice(0,4)-1,r.cd.slice(5,7))!==null}
 var ARUP='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',ARDN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
@@ -764,7 +760,7 @@ async function syncNow(){
   if(!syOn()||SY.busy)return;
   if(!$("calc").classList.contains("hide")||!$("inv").classList.contains("hide")||selMode){schedSync(6000);return}
   if(typeof navigator!=="undefined"&&navigator.onLine===false){SY.err="لا يوجد اتصال";updSStat();return}
-  SY.busy=true;SY.err="";setSStat("جارٍ المزامنة...");
+  SY.busy=true;SY.err="";
   try{
     for(var at=0;at<3;at++){
       var rem=await ghGet(),remData=null,salt=null,key=null;
@@ -786,16 +782,16 @@ async function syncNow(){
 /*SYNC-CORE-END*/
 /* --- sync UI --- */
 function fmtDT(ts){var d=new Date(ts);return dmy(d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()))+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())}
-function setSStat(t){var a=$("sstat"),b=$("sy_s");if(a)a.textContent=t;if(b)b.textContent=t}
+function setSStat(t){var a=$("sstat"),b=$("sy_s"),p=$("sy_pwbox");if(a)a.textContent=t;if(b)b.textContent=t;if(p)p.classList.toggle("hide",!(SY.err&&SY.err.indexOf("كلمة السر")>=0))}
 function updSStat(){var t;if(!syOn())t="المزامنة: غير مفعّلة";else if(SY.err)t="⚠️ "+SY.err;else if(SY.last)t="آخر مزامنة: "+fmtDT(SY.last);else t="المزامنة مفعّلة";setSStat(t)}
 function refreshAfterSync(){if(cur)cur=M(cur.id);
   if(!$("home").classList.contains("hide"))home();
   else if(!$("hist").classList.contains("hide")){if(cur)openHist(cur);else home()}}
 function renderSync(){var on=syOn();$("sy_form").classList.toggle("hide",on);$("sy_acts").classList.toggle("hide",!on);updSStat()}
 function sySay(t){$("sy_s").textContent=t}
-$("synb").addEventListener("click",function(){renderSync();$("syncm").classList.remove("hide")});
+$("synb").addEventListener("click",function(){$("bkmod").classList.add("hide");renderSync();$("syncm").classList.remove("hide")});
 $("sy_x").addEventListener("click",function(){$("syncm").classList.add("hide")});
-$("sy_now").addEventListener("click",function(){SY.err="";schedSync(0)});
+$("sy_now").addEventListener("click",function(){SY.err="";sySay("جارٍ المزامنة...");schedSync(0)});
 $("sy_go").addEventListener("click",async function(){
   var o=$("sy_o").value.trim(),r=$("sy_r").value.trim(),t=$("sy_t").value.trim(),p=$("sy_p").value;
   if(!o||!r||!t||!p)return sySay("أكمل كل الحقول");
@@ -818,7 +814,7 @@ $("sy_pwgo").addEventListener("click",async function(){
   var p=$("sy_pw").value;if(!p)return;
   try{var rem=await ghGet();if(!rem)return sySay("لا يوجد ملف في السحابة");
     var salt=JSON.parse(rem.text).salt,k=await setPass(p,salt);await decJson(rem.text,k);
-    $("sy_pw").value="";SY.err="";sySay("تم حفظ كلمة السر");schedSync(100)}catch(e){SY.key=null;sySay("⚠️ "+errText(e))}});
+    $("sy_pw").value="";SY.err="";$("sy_pwbox").classList.add("hide");sySay("تم حفظ كلمة السر");schedSync(100)}catch(e){SY.key=null;sySay("⚠️ "+errText(e))}});
 $("sy_off").addEventListener("click",async function(){
   if(!confirm("إيقاف المزامنة على هذا الجهاز؟ تبقى بياناتك محفوظة كما هي."))return;
   clearTimeout(SY.timer);
@@ -827,7 +823,7 @@ $("sy_off").addEventListener("click",async function(){
   renderSync()});
 document.addEventListener("visibilitychange",function(){if(!document.hidden&&syOn())schedSync(800)});
 window.addEventListener("online",function(){if(syOn())schedSync(500)});
-setInterval(function(){if(!document.hidden&&syOn())schedSync(100)},90000);
+setInterval(function(){if(!document.hidden&&syOn())schedSync(100)},10000);
 function syncInit(){updSStat();if(syOn())schedSync(1500)}
 (function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn","syncm"].every(function(i){return $(i).classList.contains("hide")})}
   function sw(el,fn){var x0=null,y0=0,t0=0;
