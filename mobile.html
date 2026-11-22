@@ -1106,12 +1106,15 @@ function read(canvas){
  var n=W*H,best=-1,ba=0,a,x,y,s;
  for(a=-8;a<=8.01;a+=.5){var R=rot(B,W,H,a*Math.PI/180),sc=0;for(y=0;y<H;y++){s=0;for(x=Math.floor(W*.3);x<W;x++)s+=R[y*W+x];sc+=s*s}if(sc>best){best=sc;ba=a}}
  var Yr=rotY(gray(img,W,H),W,H,ba*Math.PI/180),Dr=dmap(Yr,W,H);B=otsu(Dr,W,H);if(!B)return null;
- var my=Math.floor(H*.06),mx=Math.floor(W*.04);
+ var my=Math.floor(H*.1),mx=Math.floor(W*.04);
  for(y=0;y<H;y++)for(x=0;x<W;x++)if(y<my||y>=H-my||x<mx||x>=W-mx)B[y*W+x]=0;
  var rp=new Float64Array(H),mxr=0;for(y=0;y<H;y++){s=0;for(x=Math.floor(W*.3);x<W;x++)s+=B[y*W+x];rp[y]=s;if(s>mxr)mxr=s}
  if(!mxr)return null;var rr=runs(rp,mxr*.12);if(!rr.length)return null;
- var bd=rr[0],i;for(i=1;i<rr.length;i++)if(rr[i][1]-rr[i][0]>bd[1]-bd[0])bd=rr[i];
- var pad=Math.floor((bd[1]-bd[0])*.06),y0=Math.max(0,bd[0]-pad),y1=Math.min(H,bd[1]+pad),hh=y1-y0,bk=0,bs=-1,k;
+ function attempt(f,trim){var mgr=[rr[0].slice()],i,ml=0,y,x,k;for(i=0;i<rr.length;i++)ml=Math.max(ml,rr[i][1]-rr[i][0]);
+ for(i=1;i<rr.length;i++){if(rr[i][0]-mgr[mgr.length-1][1]<=f*ml)mgr[mgr.length-1][1]=rr[i][1];else mgr.push(rr[i].slice())}
+ var bd=mgr[0];for(i=1;i<mgr.length;i++)if(mgr[i][1]-mgr[i][0]>bd[1]-bd[0])bd=mgr[i];
+ var ta=bd[0],tb=bd[1];if(trim){while(ta<tb-1&&rp[ta]<.25*mxr)ta++;while(tb>ta+1&&rp[tb-1]<.25*mxr)tb--;bd=[ta,tb]}
+ var pad=Math.floor((bd[1]-bd[0])*.06),y0=Math.max(0,bd[0]-pad),y1=Math.min(H,bd[1]+pad),hh=y1-y0,bk=0,bs=-1;
  for(k=-.4;k<=.401;k+=.025){var S0=shear(B,W,y0,y1,k),c=colsum(S0,W,hh),sc2=0;for(x=0;x<W;x++)sc2+=c[x]*c[x];if(sc2>bs){bs=sc2;bk=k}}
  var S=shear(B,W,y0,y1,bk),big=mergeRuns(colRuns(S,W,hh,.06*hh)),cand=[];
  for(i=0;i<big.length;i++)if(big[i][0]>W*.25)cand.push(big[i]);
@@ -1121,14 +1124,19 @@ function read(canvas){
  if(!digs.length)return null;
  var yy0=1e9,yy1=-1;for(i=0;i<digs.length;i++){yy0=Math.min(yy0,digs[i][2]);yy1=Math.max(yy1,digs[i][3]+1)}
  dots=dots.filter(function(d){return d[2]>=yy0+.55*(yy1-yy0)});
+ /* a decimal point glued to the next digit widens its run: split it off */
+ var ws=digs.map(function(r){return r[1]-r[0]}).filter(function(v){return v>.3*mh}).sort(function(a,b){return a-b}),med=ws.length?ws[Math.floor(ws.length/2)]:0,glued={};
+ if(med)for(i=0;i<digs.length;i++){var wd=digs[i][1]-digs[i][0];if(wd>1.25*med&&wd<2*med){digs[i]=[digs[i][1]-med,digs[i][1],digs[i][2],digs[i][3]];glued[i]=1}}
  var txt="",j;
- for(i=0;i<digs.length;i++){var r2=digs[i];txt+=cls(zones(S,W,r2[0],r2[1],r2[2],r2[3]+1));
+ var dz=[];for(i=0;i<digs.length;i++){var r2=digs[i],zz=zones(S,W,r2[0],r2[1],r2[2],r2[3]+1);dz.push(r2.join(",")+"|"+zz.map(function(v){return v.toFixed(2)}).join(" "));if(glued[i]&&txt.charAt(txt.length-1)!==".")txt+=".";txt+=cls(zz);
   for(j=0;j<dots.length;j++){var dt=dots[j];if(Math.abs(dt[0]-r2[1])<.6*(r2[1]-r2[0]+10)&&dt[0]>=r2[1]-2&&i+1<digs.length&&dt[1]<=digs[i+1][0]+2){txt+=".";break}}}
  var lab=label(B,W,H,digs[0][0]-.15*(yy1-yy0),yy1-yy0);
  var geo={d0:digs[0][0],yb:y0+yy1,mh:yy1-yy0},m=match(Dr,W,H,geo);
- return {text:txt,label:lab,geo:geo,Dr:Dr,W:W,H:H,match:m}}
+ return {text:txt,dbg:dz.join("\n")+"\nDOTS "+JSON.stringify(dots)+"\nBAND "+y0+"-"+y1+" k="+bk,label:lab,geo:geo,Dr:Dr,W:W,H:H,match:m?m.m8:null,eight:m?m.eight:null}}
+ function score(r){if(!r)return -1;var t=r.text,q=(t.match(/\?/g)||[]).length;return(clean(t)?100:0)+t.length-3*q}
+ var r1=attempt(.2,false),r2=attempt(.45,true);return score(r2)>score(r1)?r2:r1}
 
-var TW=48,TH=36,TMPL=null;
+var TW=48,TH=36,TMPL=null,TMPL7=null;
 function sampleD(D,W,H,d0,yb,mh,ox,oy,sc){var o=new Float32Array(TW*TH),m=mh*sc,x0=d0-1.75*m+ox,x1=d0-.75*m+ox,y0=yb-.78*m+oy,y1=yb+.05*m+oy,i,j;
  for(j=0;j<TH;j++){var ys=y0+(y1-y0)*j/(TH-1);for(i=0;i<TW;i++){var xs=x0+(x1-x0)*i/(TW-1);
   if(xs<0)xs=0;if(ys<0)ys=0;if(xs>W-1)xs=W-1;if(ys>H-1)ys=H-1;
@@ -1137,9 +1145,15 @@ function sampleD(D,W,H,d0,yb,mh,ox,oy,sc){var o=new Float32Array(TW*TH),m=mh*sc,
  return o}
 function ncc(a,b){var n=a.length,ma=0,mb=0,i;for(i=0;i<n;i++){ma+=a[i];mb+=b[i]}ma/=n;mb/=n;var sab=0,saa=0,sbb=0;
  for(i=0;i<n;i++){var x=a[i]-ma,y=b[i]-mb;sab+=x*y;saa+=x*x;sbb+=y*y}return sab/(Math.sqrt(saa*sbb)+1e-9)}
-function match(D,W,H,g){if(!TMPL)return null;var best=-1,ox,oy,sc,sl=[.92,1,1.08];
- for(var q=0;q<3;q++){sc=sl[q];for(ox=-6;ox<=6;ox+=2)for(oy=-6;oy<=6;oy+=2){var v=ncc(sampleD(D,W,H,g.d0,g.yb,g.mh,ox,oy,sc),TMPL);if(v>best)best=v}}return best}
-function setTemplate(b64){var bin=atob(b64),a=new Float32Array(bin.length),i;for(i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);TMPL=a}
+function reg(a,x0,x1,y0,y1){var s=0,n=0,x,y;for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++){s+=a[y*TW+x];n++}return s/n}
+function match(D,W,H,g){if(!TMPL)return null;var b8=-1,bs=null,ox,oy,sc,sl=[.92,1,1.08];
+ for(var q=0;q<3;q++){sc=sl[q];for(ox=-6;ox<=6;ox+=2)for(oy=-6;oy<=6;oy+=2){var smp=sampleD(D,W,H,g.d0,g.yb,g.mh,ox,oy,sc),v=ncc(smp,TMPL);if(v>b8){b8=v;bs=smp}}}
+ /* is the middle digit an 8 (left verticals present) or a 7 (absent)? */
+ var left=(reg(bs,17,21,8,16)+reg(bs,17,21,23,30))/2,right=(reg(bs,25,29,8,16)+reg(bs,25,29,23,30))/2;
+ return {m8:b8,eight:right>0?left/right:0}}
+function setTemplate(b64){var bin=atob(b64),a=new Float32Array(bin.length),i,x,y;for(i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);TMPL=a;
+ /* 1.7.0 = same label with the middle 8 turned into 7 (segments d,e,f,g off) */
+ TMPL7=new Float32Array(a);for(y=0;y<TH;y++)for(x=0;x<TW;x++){var off=(x>=16&&x<=22)||(x>=16&&x<=30&&((y>=18&&y<=21)||y>=31));if(off)TMPL7[y*TW+x]=0}}
 function makeTemplate(canvas){var r=read(canvas);if(!r)return null;var T=sampleD(r.Dr,r.W,r.H,r.geo.d0,r.geo.yb,r.geo.mh,0,0,1),mx=0,i;for(i=0;i<T.length;i++)if(T[i]>mx)mx=T[i];
  var s="";for(i=0;i<T.length;i++)s+=String.fromCharCode(Math.round(T[i]/mx*255));return btoa(s)}
 /* clean the digit text: strip leading zeros, require digits only with one dot */
@@ -1167,9 +1181,17 @@ function openCam(){
 /* find the bright green LCD; returns box in canvas pixels */
 function locate(cv){
  var sc=Math.min(1,480/cv.width),w=Math.max(1,Math.round(cv.width*sc)),h=Math.max(1,Math.round(cv.height*sc)),t=document.createElement("canvas");t.width=w;t.height=h;
- var x=t.getContext("2d");x.drawImage(cv,0,0,w,h);var d=x.getImageData(0,0,w,h).data,xs=[],ys=[],i,px,py;
- for(i=0;i<w*h;i++){var r=d[i*4],gg=d[i*4+1],b=d[i*4+2];if(gg>170&&gg-r>35&&gg-b>35){xs.push(i%w);ys.push(Math.floor(i/w))}}
- if(xs.length<w*h*.01)return null;
+ var x=t.getContext("2d");x.drawImage(cv,0,0,w,h);var d=x.getImageData(0,0,w,h).data,i,m=new Uint8Array(w*h);
+ for(i=0;i<w*h;i++){var r=d[i*4],gg=d[i*4+1],b=d[i*4+2];if(gg>170&&gg-r>35&&gg-b>35)m[i]=1}
+ /* biggest connected green blob = the lit LCD */
+ var lab=new Int32Array(w*h),bestN=0,bestL=0,L=0,st=[];
+ for(i=0;i<w*h;i++){if(!m[i]||lab[i])continue;L++;var cnt=0;st.length=0;st.push(i);lab[i]=L;
+  while(st.length){var q=st.pop();cnt++;var qx=q%w,qy=(q-qx)/w;
+   if(qx>0&&m[q-1]&&!lab[q-1]){lab[q-1]=L;st.push(q-1)}if(qx<w-1&&m[q+1]&&!lab[q+1]){lab[q+1]=L;st.push(q+1)}
+   if(qy>0&&m[q-w]&&!lab[q-w]){lab[q-w]=L;st.push(q-w)}if(qy<h-1&&m[q+w]&&!lab[q+w]){lab[q+w]=L;st.push(q+w)}}
+  if(cnt>bestN){bestN=cnt;bestL=L}}
+ if(bestN<w*h*.01)return null;
+ var xs=[],ys=[];for(i=0;i<w*h;i++)if(lab[i]===bestL){xs.push(i%w);ys.push(Math.floor(i/w))}
  xs.sort(function(a,b){return a-b});ys.sort(function(a,b){return a-b});
  var q=function(a,p){return a[Math.min(a.length-1,Math.floor(a.length*p))]};
  var x0=q(xs,.02),x1=q(xs,.98),y0=q(ys,.02),y1=q(ys,.98),bw=x1-x0,bh=y1-y0;
@@ -1181,16 +1203,18 @@ function process(cv){
  var b=locate(cv)||[0,0,cv.width,cv.height],W=340,H=Math.max(40,Math.round(b[3]*W/b[2])),c=document.createElement("canvas");c.width=W;c.height=H;
  var x=c.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(cv,b[0],b[1],b[2],b[3],0,0,W,H);
  var r=null;try{r=MOCR.read(c)}catch(e){}
- var num=r?MOCR.clean(r.text):null,ok=!!(num&&r.match!=null&&r.match>=.45);
- cur={num:num,ok:ok};show(c,num,ok,r)}
-function show(c,num,ok,r){
+ var num=r?MOCR.clean(r.text):null,st="c";
+ if(r&&r.match!=null){if(r.match>=.45&&r.eight>=.3)st="a";else if(r.match>=.35&&r.eight<.2)st="b"}
+ cur={num:num,ok:st==="a"&&!!num};show(c,num,st,r)}
+function show(c,num,st,r){
  stop();g("mcam").classList.add("hide");
  var pv=g("mpv");pv.width=c.width;pv.height=c.height;pv.getContext("2d").drawImage(c,0,0);
  var tag=g("mtag"),n=g("mnum"),why=g("mwhy"),use=g("muse");
- if(ok){tag.className="";tag.textContent="\u2713 1.8.0";n.className="mn";n.textContent=num;why.textContent="";use.disabled=false}
+ if(st==="a"&&num){tag.className="";tag.textContent="\u2713 1.8.0";n.className="mn";n.textContent=num;why.textContent="";use.disabled=false}
+ else if(st==="b"){tag.className="w";tag.textContent="\u26a0 الرمز 1.7.0";n.className="mn off";n.textContent="\u2014";why.textContent="اضغط زر العداد حتى يظهر الرمز 1.8.0 ثم صوّر من جديد.";use.disabled=true}
  else{tag.className="w";tag.textContent=num?"\u26a0 لم أتأكد أن الشاشة على 1.8.0":"\u26a0 لم أستطع قراءة الرقم";
   n.className="mn off";n.textContent=num||"\u2014";
-  why.textContent=num?"اضغط زر العداد حتى يظهر الرمز 1.8.0، أو قرّب الكاميرا وقلّل انعكاس الضوء، ثم صوّر من جديد.":"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد.";use.disabled=true}
+  why.textContent=num?"الرمز الصغير غير واضح. قرّب الكاميرا أو قلّل انعكاس الضوء ثم صوّر من جديد.":"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد.";use.disabled=true}
  g("mres").classList.remove("hide")}
 function setCurr(v){var i=g("curr");i.value=v;i.dispatchEvent(new Event("input",{bubbles:true}))}
 g("camb").addEventListener("click",openCam);
