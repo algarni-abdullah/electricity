@@ -60,7 +60,8 @@ label{display:block;text-align:center;font-weight:700;margin:16px 0 8px;font-siz
 .mcam .mx{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:14px;width:44px;height:44px;border:0;background:rgba(0,0,0,.45);color:#fff;border-radius:50%;font-size:24px;line-height:1}
 .mcam .msh{position:absolute;bottom:calc(30px + env(safe-area-inset-bottom,0px));left:50%;margin-left:-34px;width:68px;height:68px;border-radius:50%;border:5px solid #fff;background:transparent;padding:0}.mcam .msh i{display:block;width:50px;height:50px;border-radius:50%;background:#fff;margin:auto}
 .mres{position:fixed;inset:0;z-index:61;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center}
-.mres .ms{width:min(100%,460px);background:var(--in,#fff);color:var(--fg,#2c3e50);border-radius:24px 24px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+.mres .ms{position:relative;width:min(100%,460px);background:var(--in,#fff);color:var(--fg,#2c3e50);border-radius:24px 24px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+.mres .mxx{position:absolute;left:26px;top:26px;width:34px;height:34px;border-radius:50%;border:0;padding:0;background:rgba(20,30,20,.45);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.4);cursor:pointer}
 .mres canvas{display:block;width:100%;max-width:340px;margin:0 auto 12px;border-radius:12px;border:1px solid var(--bd,#ccc);background:#fff}
 .mres .mt{text-align:center}.mres .mt span{display:inline-block;border-radius:20px;padding:3px 12px;font-size:14px;font-weight:700;background:#e4f6df;color:#1d6b2b}.mres .mt span.w{background:#fff1d6;color:#9a5b00}
 .mres .mn{font-size:44px;font-weight:800;text-align:center;direction:ltr;letter-spacing:1px;line-height:1.3}.mres .mn.off{color:#b9b9b9}
@@ -370,7 +371,7 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 <div class="mh">ضع الشاشة الخضراء داخل الإطار<br><span style="font-size:14px;font-weight:400">وتأكد أن الرمز الصغير 1.8.0 ظاهر</span></div>
 <div class="mh2">اضغط زر العداد حتى يظهر 1.8.0</div>
 <button type="button" class="mx" id="mcx" aria-label="إغلاق">✕</button><button type="button" class="msh" id="msh" aria-label="التقاط"><i></i></button></div>
-<div id="mres" class="mres hide"><div class="ms"><canvas id="mpv"></canvas><div class="mt"><span id="mtag"></span></div><div class="mn" id="mnum"></div><div class="mw" id="mwhy"></div>
+<div id="mres" class="mres hide"><div class="ms"><button type="button" id="mxx" class="mxx" aria-label="إلغاء"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><canvas id="mpv"></canvas><div class="mt"><span id="mtag"></span></div><div class="mn" id="mnum"></div><div class="mw" id="mwhy"></div>
 <div class="mb"><button type="button" id="mre">إعادة التصوير</button><button type="button" id="mman">تعديل يدوي</button><button type="button" class="p" id="muse">استخدام القراءة</button></div></div></div>
 <input type="file" id="mfile" accept="image/*" capture="environment" class="hide"><input type="file" id="malb" accept="image/*" class="hide">
 <div class="toast" id="toast"></div>
@@ -1228,6 +1229,8 @@ function setCurr(v){var i=g("curr");i.value=v;i.dispatchEvent(new Event("input",
 g("camb").addEventListener("click",openCam);
 g("albb").addEventListener("click",function(){g("malb").value="";g("malb").click()});
 g("mcx").addEventListener("click",closeAll);
+g("mxx").addEventListener("click",closeAll);
+g("mres").addEventListener("click",function(e){if(e.target===this)closeAll()});
 g("msh").addEventListener("click",function(){var v=g("mvid");if(!v.videoWidth)return;var c=document.createElement("canvas");c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);process(c)});
 function onFile(){var f=this.files&&this.files[0];if(!f)return;var u=URL.createObjectURL(f),im=new Image();
  im.onload=function(){var s=Math.min(1,2000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);process(c)};
