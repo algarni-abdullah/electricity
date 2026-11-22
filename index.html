@@ -49,8 +49,9 @@ label{display:block;text-align:center;font-weight:700;margin:16px 0 8px;font-siz
 .fld.prev{background:linear-gradient(135deg,#e2e2e2,#c4c4c4);color:#666}
 
 /* ---- meter camera ---- */
-.cw{position:relative}.cw .fld{padding-inline:46px}
+.cw{position:relative}.cw .fld{padding-inline:90px}
 .camb{position:absolute;left:6px;top:6px;width:36px;height:36px;border-radius:10px;border:1.5px solid #8fb97c;background:#fff;color:#1f5d2b;display:grid;place-items:center;padding:0;cursor:pointer}
+.camb.alb{left:48px}
 .mcam{position:fixed;inset:0;z-index:60;background:#000;color:#fff;display:flex;flex-direction:column}
 .mcam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .mcam .mfr{position:absolute;left:50%;top:38%;width:min(86vw,440px);aspect-ratio:2.6/1;transform:translate(-50%,-50%);border:3px solid #ffd60a;border-radius:12px;box-shadow:0 0 0 100vmax rgba(0,0,0,.55)}
@@ -275,7 +276,7 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
   </div>
   <label>عدد الأيام</label><input id="days" class="fld days" readonly value="—">
   <label for="prev">قراءة العداد السابق</label><input id="prev" type="text" inputmode="decimal" autocomplete="off" class="fld prev" placeholder="0.00">
-  <label for="curr">قراءة العداد الحالي</label><div class="cw"><input id="curr" type="text" inputmode="decimal" autocomplete="off" class="fld curr" placeholder="مثال: 2000"><button type="button" id="camb" class="camb" aria-label="تصوير العداد"></button></div>
+  <label for="curr">قراءة العداد الحالي</label><div class="cw"><input id="curr" type="text" inputmode="decimal" autocomplete="off" class="fld curr" placeholder="مثال: 2000"><button type="button" id="camb" class="camb" aria-label="تصوير العداد"></button><button type="button" id="albb" class="camb alb" aria-label="اختيار صورة من الألبوم"></button></div>
   <details>
     <summary><svg class="bolt" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f5a623"/></svg> إعدادات شرائح الكهرباء والرسوم (قابلة للتعديل) ⌄</summary>
     <label for="p1">سعر الشريحة الأولى (هللة)</label><input id="p1" type="text" inputmode="decimal" autocomplete="off" class="fld">
@@ -347,7 +348,7 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 <button type="button" class="mx" id="mcx" aria-label="إغلاق">✕</button><button type="button" class="msh" id="msh" aria-label="التقاط"><i></i></button></div>
 <div id="mres" class="mres hide"><div class="ms"><canvas id="mpv"></canvas><div class="mt"><span id="mtag"></span></div><div class="mn" id="mnum"></div><div class="mw" id="mwhy"></div>
 <div class="mb"><button type="button" id="mre">إعادة التصوير</button><button type="button" id="mman">تعديل يدوي</button><button type="button" class="p" id="muse">استخدام القراءة</button></div></div></div>
-<input type="file" id="mfile" accept="image/*" capture="environment" class="hide">
+<input type="file" id="mfile" accept="image/*" capture="environment" class="hide"><input type="file" id="malb" accept="image/*" class="hide">
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1099,7 +1100,7 @@ function read(canvas){
   for(j=0;j<dots.length;j++){var dt=dots[j];if(Math.abs(dt[0]-r2[1])<.6*(r2[1]-r2[0]+10)&&dt[0]>=r2[1]-2&&i+1<digs.length&&dt[1]<=digs[i+1][0]+2){txt+=".";break}}}
  var lab=label(B,W,H,digs[0][0]-.15*(yy1-yy0),yy1-yy0);
  var geo={d0:digs[0][0],yb:y0+yy1,mh:yy1-yy0},m=match(Dr,W,H,geo);
- return {text:txt,dbg:dz.join("\n")+"\nDOTS "+JSON.stringify(dots)+"\nBAND "+y0+"-"+y1+" k="+bk,label:lab,geo:geo,Dr:Dr,W:W,H:H,match:m?m.m8:null,eight:m?m.eight:null}}
+ return {text:txt,dbg:dz.join("\n")+"\nDOTS "+JSON.stringify(dots)+"\nBAND "+y0+"-"+y1+" k="+bk,label:lab,geo:geo,Dr:Dr,W:W,H:H,match:m?m.m8:null,eight:m?m.eight:null,zero:m?m.zero:null}}
  function score(r){if(!r)return -1;var t=r.text,q=(t.match(/\?/g)||[]).length;return(clean(t)?100:0)+t.length-3*q}
  var r1=attempt(.2,false),r2=attempt(.45,true);return score(r2)>score(r1)?r2:r1}
 
@@ -1117,7 +1118,8 @@ function match(D,W,H,g){if(!TMPL)return null;var b8=-1,bs=null,ox,oy,sc,sl=[.92,
  for(var q=0;q<3;q++){sc=sl[q];for(ox=-6;ox<=6;ox+=2)for(oy=-6;oy<=6;oy+=2){var smp=sampleD(D,W,H,g.d0,g.yb,g.mh,ox,oy,sc),v=ncc(smp,TMPL);if(v>b8){b8=v;bs=smp}}}
  /* is the middle digit an 8 (left verticals present) or a 7 (absent)? */
  var left=(reg(bs,17,21,8,16)+reg(bs,17,21,23,30))/2,right=(reg(bs,25,29,8,16)+reg(bs,25,29,23,30))/2;
- return {m8:b8,eight:right>0?left/right:0}}
+ var rb=(reg(bs,40,43,8,16)+1e-6),zero=Math.min(reg(bs,33,36,8,16),reg(bs,40,43,23,30))/rb;
+ return {m8:b8,eight:right>0?left/right:0,zero:zero}}
 function setTemplate(b64){var bin=atob(b64),a=new Float32Array(bin.length),i,x,y;for(i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);TMPL=a;
  /* 1.7.0 = same label with the middle 8 turned into 7 (segments d,e,f,g off) */
  TMPL7=new Float32Array(a);for(y=0;y<TH;y++)for(x=0;x<TW;x++){var off=(x>=16&&x<=22)||(x>=16&&x<=30&&((y>=18&&y<=21)||y>=31));if(off)TMPL7[y*TW+x]=0}}
@@ -1135,7 +1137,7 @@ return {read:read,clean:clean,labelState:labelState,setTemplate:setTemplate,make
 var g=function(i){return document.getElementById(i)},T0="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";MOCR.setTemplate(T0);
 var stream=null,cur=null;
 var CAMSVG='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
-g("camb").innerHTML=CAMSVG;
+g("camb").innerHTML=CAMSVG;g("albb").innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>';
 function stop(){if(stream){stream.getTracks().forEach(function(t){t.stop()});stream=null}g("mvid").srcObject=null}
 function closeAll(){stop();g("mcam").classList.add("hide");g("mres").classList.add("hide")}
 function fine(){return window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches}
@@ -1146,10 +1148,11 @@ function openCam(){
   stream=s;var v=g("mvid");v.srcObject=s;g("mcam").classList.remove("hide");g("mres").classList.add("hide");var p=v.play();if(p&&p.catch)p.catch(function(){})
  }).catch(function(){pick()})}
 /* find the bright green LCD; returns box in canvas pixels */
-function locate(cv){
+function core(cv,strict){
  var sc=Math.min(1,480/cv.width),w=Math.max(1,Math.round(cv.width*sc)),h=Math.max(1,Math.round(cv.height*sc)),t=document.createElement("canvas");t.width=w;t.height=h;
  var x=t.getContext("2d");x.drawImage(cv,0,0,w,h);var d=x.getImageData(0,0,w,h).data,i,m=new Uint8Array(w*h);
- for(i=0;i<w*h;i++){var r=d[i*4],gg=d[i*4+1],b=d[i*4+2];if(gg>170&&gg-r>35&&gg-b>35)m[i]=1}
+ var tg=strict?170:140,td=strict?35:25;
+ for(i=0;i<w*h;i++){var r=d[i*4],gg=d[i*4+1],b=d[i*4+2];if(gg>tg&&gg-r>td&&gg-b>td)m[i]=1}
  /* biggest connected green blob = the lit LCD */
  var lab=new Int32Array(w*h),bestN=0,bestL=0,L=0,st=[];
  for(i=0;i<w*h;i++){if(!m[i]||lab[i])continue;L++;var cnt=0;st.length=0;st.push(i);lab[i]=L;
@@ -1157,39 +1160,46 @@ function locate(cv){
    if(qx>0&&m[q-1]&&!lab[q-1]){lab[q-1]=L;st.push(q-1)}if(qx<w-1&&m[q+1]&&!lab[q+1]){lab[q+1]=L;st.push(q+1)}
    if(qy>0&&m[q-w]&&!lab[q-w]){lab[q-w]=L;st.push(q-w)}if(qy<h-1&&m[q+w]&&!lab[q+w]){lab[q+w]=L;st.push(q+w)}}
   if(cnt>bestN){bestN=cnt;bestL=L}}
- if(bestN<w*h*.01)return null;
+ if(bestN<w*h*.006)return null;
  var xs=[],ys=[];for(i=0;i<w*h;i++)if(lab[i]===bestL){xs.push(i%w);ys.push(Math.floor(i/w))}
  xs.sort(function(a,b){return a-b});ys.sort(function(a,b){return a-b});
  var q=function(a,p){return a[Math.min(a.length-1,Math.floor(a.length*p))]};
  var x0=q(xs,.02),x1=q(xs,.98),y0=q(ys,.02),y1=q(ys,.98),bw=x1-x0,bh=y1-y0;
- if(bw<w*.12||bh<h*.04)return null;
- x0-=bw*.05;x1+=bw*.05;y0-=bh*.09;y1+=bh*.09;
- x0=Math.max(0,x0);y0=Math.max(0,y0);x1=Math.min(w,x1);y1=Math.min(h,y1);
- return [x0/sc,y0/sc,(x1-x0)/sc,(y1-y0)/sc]}
-function process(cv){
- var b=locate(cv)||[0,0,cv.width,cv.height],W=340,H=Math.max(40,Math.round(b[3]*W/b[2])),c=document.createElement("canvas");c.width=W;c.height=H;
+ if(bw<w*.1||bh<h*.03||bw/bh<1.6||bw/bh>5.5)return null;
+ return [x0/sc,y0/sc,bw/sc,bh/sc]}
+function expand(b,mx,my,cv){var x0=Math.max(0,b[0]-b[2]*mx),y0=Math.max(0,b[1]-b[3]*my),x1=Math.min(cv.width,b[0]+b[2]*(1+mx)),y1=Math.min(cv.height,b[1]+b[3]*(1+my));return [x0,y0,x1-x0,y1-y0]}
+function readBox(cv,b){var W=340,H=Math.max(40,Math.round(b[3]*W/b[2])),c=document.createElement("canvas");c.width=W;c.height=H;
  var x=c.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(cv,b[0],b[1],b[2],b[3],0,0,W,H);
  var r=null;try{r=MOCR.read(c)}catch(e){}
  var num=r?MOCR.clean(r.text):null,st="c";
- if(r&&r.match!=null){if(r.match>=.45&&r.eight>=.3)st="a";else if(r.match>=.35&&r.eight<.2)st="b"}
- cur={num:num,ok:st==="a"&&!!num};show(c,num,st,r)}
+ if(r&&r.match!=null){if(r.match>=.45&&r.eight>=.3){st=r.zero>=.25?"a":(r.zero<.12?"d":"c")}else if(r.match>=.35&&r.eight<.2)st="b"}
+ var sc=(st==="a"&&num?1000+r.match:(st==="b"||st==="d")?500+r.match:num?200+r.match:(r?r.text.replace(/[^0-9]/g,"").length:0));
+ return {c:c,num:num,st:st,r:r,sc:sc}}
+function process(cv){
+ var cands=[],ms=[[.02,.04],[.05,.09],[.1,.14]];
+ [true,false].forEach(function(s){var b=core(cv,s);if(b)ms.forEach(function(m){cands.push(expand(b,m[0],m[1],cv))})});
+ if(!cands.length)cands.push([0,0,cv.width,cv.height]);
+ var best=null,i;for(i=0;i<cands.length;i++){var o=readBox(cv,cands[i]);if(!best||o.sc>best.sc)best=o;if(best.sc>=1000&&best.r&&best.r.match>.8)break}
+ cur={num:best.num,ok:best.st==="a"&&!!best.num};show(best.c,best.num,best.st,best.r)}
 function show(c,num,st,r){
  stop();g("mcam").classList.add("hide");
  var pv=g("mpv");pv.width=c.width;pv.height=c.height;pv.getContext("2d").drawImage(c,0,0);
  var tag=g("mtag"),n=g("mnum"),why=g("mwhy"),use=g("muse");
  if(st==="a"&&num){tag.className="";tag.textContent="\u2713 1.8.0";n.className="mn";n.textContent=num;why.textContent="";use.disabled=false}
- else if(st==="b"){tag.className="w";tag.textContent="\u26a0 الرمز 1.7.0";n.className="mn off";n.textContent="\u2014";why.textContent="اضغط زر العداد حتى يظهر الرمز 1.8.0 ثم صوّر من جديد.";use.disabled=true}
+ else if(st==="b"||st==="d"){tag.className="w";tag.textContent=st==="b"?"\u26a0 الرمز 1.7.0":"\u26a0 الرمز ليس 1.8.0";n.className="mn off";n.textContent="\u2014";why.textContent="اضغط زر العداد حتى يظهر الرمز 1.8.0 ثم صوّر من جديد.";use.disabled=true}
  else{tag.className="w";tag.textContent=num?"\u26a0 لم أتأكد أن الشاشة على 1.8.0":"\u26a0 لم أستطع قراءة الرقم";
   n.className="mn off";n.textContent=num||"\u2014";
   why.textContent=num?"الرمز الصغير غير واضح. قرّب الكاميرا أو قلّل انعكاس الضوء ثم صوّر من جديد.":"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد.";use.disabled=true}
  g("mres").classList.remove("hide")}
 function setCurr(v){var i=g("curr");i.value=v;i.dispatchEvent(new Event("input",{bubbles:true}))}
 g("camb").addEventListener("click",openCam);
+g("albb").addEventListener("click",function(){g("malb").value="";g("malb").click()});
 g("mcx").addEventListener("click",closeAll);
 g("msh").addEventListener("click",function(){var v=g("mvid");if(!v.videoWidth)return;var c=document.createElement("canvas");c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);process(c)});
-g("mfile").addEventListener("change",function(){var f=this.files&&this.files[0];if(!f)return;var u=URL.createObjectURL(f),im=new Image();
+function onFile(){var f=this.files&&this.files[0];if(!f)return;var u=URL.createObjectURL(f),im=new Image();
  im.onload=function(){var s=Math.min(1,2000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);process(c)};
- im.onerror=function(){URL.revokeObjectURL(u)};im.src=u});
+ im.onerror=function(){URL.revokeObjectURL(u)};im.src=u}
+g("mfile").addEventListener("change",onFile);g("malb").addEventListener("change",onFile);
 g("mre").addEventListener("click",function(){g("mres").classList.add("hide");openCam()});
 g("muse").addEventListener("click",function(){if(cur&&cur.ok){setCurr(cur.num);closeAll()}});
 g("mman").addEventListener("click",function(){closeAll();if(cur&&cur.num)setCurr(cur.num);var i=g("curr");i.focus();try{i.select()}catch(e){}});
