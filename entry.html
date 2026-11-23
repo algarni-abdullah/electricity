@@ -34,6 +34,12 @@ input.fld{direction:ltr;background:linear-gradient(135deg,#b3d6a6,#aee89a);color
 .lgs button{height:84px;border-radius:18px;border:2px solid var(--bd);background:var(--in);color:var(--fg);font:inherit;font-size:28px;font-weight:800;cursor:pointer}
 .lgs button.sug{border-color:#1f7a3a}
 .lgt{position:absolute;top:10px;inset-inline-start:12px;border:1.5px solid var(--bd);background:var(--in);color:var(--fg);border-radius:12px;height:36px;padding:0 12px;font:inherit;font-size:14px;cursor:pointer}
+.cst{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;border-radius:20px;padding:6px 14px;margin:14px auto 0;width:fit-content;max-width:92%}
+.cst i{width:10px;height:10px;border-radius:50%;flex:none}
+.cst.ok{background:rgba(62,207,142,.18);color:#1c7f4a}.cst.ok i{background:#3ecf8e}
+.cst.bad{background:rgba(239,83,80,.15);color:#c0392b}.cst.bad i{background:#ef5350}
+.cst.wait{background:rgba(245,166,35,.2);color:#9a5b00}.cst.wait i{background:#f5a623}
+.q{margin-top:14px;border:1.5px dashed #f5a623;background:rgba(245,166,35,.12);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.8}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:99}.toast.on{opacity:1}
 body.ltr .wrap{direction:ltr}
 .cw{position:relative}.cw .fld{padding-inline:90px}
@@ -61,6 +67,7 @@ body.ltr .wrap{direction:ltr}
 </style>
 </head>
 <body>
+<div id="cst" class="cst ok hide"><i></i><span id="cst_t"></span></div>
 <div id="vlang" class="wrap hide"><h1 style="margin-top:60px">اختر اللغة · ভাষা বেছে নিন</h1><div class="lgs"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div></div>
 <div id="vbad" class="wrap hide"><div class="err" id="bad" style="margin-top:80px"></div></div>
 <div id="vmain" class="wrap hide" style="position:relative">
@@ -72,7 +79,9 @@ body.ltr .wrap{direction:ltr}
  <div class="big2"><button type="button" id="camb" class="camb"></button><button type="button" id="albb" class="albb"></button></div>
  <div id="err" class="err hide"></div>
  <button class="send" id="send"></button>
+ <div id="qn" class="q hide"></div>
 </div>
+<div id="vpend" class="wrap hide"><div class="ok"><div class="tick" style="background:#f5a623">&#8987;</div><h2 id="t_ph"></h2><p id="t_pd" style="margin-bottom:6px"></p><p id="t_pp"></p><button class="send" id="pnow" style="margin-top:0"></button></div></div>
 <div id="vok" class="wrap hide"><div class="ok"><div class="tick">&#10003;</div><h2 id="t_okh"></h2><p id="t_okp"></p><button class="send" id="again" style="margin-top:0"></button></div></div>
 
 <div id="mcam" class="mcam hide"><video id="mvid" playsinline muted autoplay></video><div class="mfr"></div>
@@ -85,7 +94,7 @@ body.ltr .wrap{direction:ltr}
 <div class="toast" id="toast"></div>
 <script>
 var TX={
-ar:{ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
+ar:{onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا توجد صلاحية",pendn:"بانتظار الإرسال ({n})",qn:"إذا ضغطت «إرسال» الآن تُحفظ القراءة في جهازك وتُرسل تلقائياً حين يعود الاتصال",ph:"حُفظت القراءة",pp:"ستُرسل تلقائياً عند عودة الاتصال، ولا تحتاج أن تفعل شيئاً",pnow:"إرسال الآن",okauto:"أُرسلت تلقائياً بعد عودة الاتصال",ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
  okh:"تم إرسال القراءة",okp:"شكراً لك",again:"إرسال قراءة أخرى",lg:"বাংলা",bad:"الرابط غير صالح. اطلب من صاحب العمل رابطاً جديداً.",
  need:"أدخل القراءة أولاً",net:"تعذر الإرسال. تأكد من الإنترنت وحاول مرة أخرى.",deny:"لا توجد صلاحية للإرسال. أخبر صاحب العمل.",
  mh:"ضع الشاشة الخضراء داخل الإطار",mh1:"وتأكد أن الرمز الصغير 1.8.0 ظاهر",mh2:"اضغط زر العداد حتى يظهر 1.8.0",
@@ -94,7 +103,7 @@ ar:{ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العد
  tun:"\u26a0 لم أتأكد أن الشاشة على 1.8.0",tno:"\u26a0 لم أستطع قراءة الرقم",
  w2:"الرمز الصغير غير واضح. قرّب الكاميرا أو قلّل انعكاس الضوء ثم صوّر من جديد.",
  w3:"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد."},
-bn:{ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
+bn:{onl:"সংযুক্ত",offl:"সংযোগ নেই",denyl:"অনুমতি নেই",pendn:"পাঠানোর অপেক্ষায় ({n})",qn:"এখন «পাঠান» চাপলে রিডিং এই ফোনে সংরক্ষণ হবে এবং সংযোগ ফিরলে নিজে থেকে পাঠানো হবে",ph:"রিডিং সংরক্ষিত হয়েছে",pp:"সংযোগ ফিরলে নিজে থেকেই পাঠানো হবে, আপনাকে কিছু করতে হবে না",pnow:"এখনই পাঠান",okauto:"সংযোগ ফিরে আসার পর নিজে থেকে পাঠানো হয়েছে",ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
  okh:"রিডিং পাঠানো হয়েছে",okp:"ধন্যবাদ",again:"আরেকটি রিডিং পাঠান",lg:"العربية",bad:"লিংকটি সঠিক নয়। মালিকের কাছ থেকে নতুন লিংক নিন।",
  need:"আগে রিডিং লিখুন",net:"পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",deny:"পাঠানোর অনুমতি নেই। মালিককে জানান।",
  mh:"সবুজ স্ক্রিনটি ফ্রেমের ভেতরে রাখুন",mh1:"ছোট কোড 1.8.0 দেখা যাচ্ছে কিনা নিশ্চিত করুন",mh2:"মিটারের বোতাম চেপে 1.8.0 আনুন",
@@ -114,13 +123,13 @@ function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
     try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
   if(!CFG){try{CFG=JSON.parse(localStorage.getItem("elec_entry_cfg")||"null")}catch(e){}}
   if(CFG&&!(CFG.t&&CFG.o&&CFG.r&&CFG.e&&Array.isArray(CFG.m)))CFG=null})();
-function view(v){["vlang","vbad","vmain","vok"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
+function view(v){["vlang","vbad","vmain","vok","vpend"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad");window.scrollTo(0,0)}
 function applyLang(){var t=TX[LANG];document.documentElement.lang=LANG;document.documentElement.dir=LANG==="bn"?"ltr":"rtl";document.body.classList.toggle("ltr",LANG==="bn");
   $("t_ttl").textContent=t.ttl;$("t_hi").textContent=t.hi.replace("{n}",CFG?CFG.n:"");$("t_met").textContent=t.met;$("t_rd").textContent=t.rd;
   $("camt").textContent=t.cam;$("albt").textContent=t.alb;$("send").textContent=t.send;$("lgt").textContent=t.lg;
   $("t_okh").textContent=t.okh;$("t_okp").textContent=t.okp;$("again").textContent=t.again;
   $("t_mh").textContent=t.mh;$("t_mh1").textContent=t.mh1;$("t_mh2").textContent=t.mh2;$("mre").textContent=t.re;$("mman").textContent=t.man;$("muse").textContent=t.use;
-  $("bad").textContent=t.bad}
+  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;if(typeof updCst==="function")updCst()}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2200)}
 </script>
 <script>
@@ -262,21 +271,43 @@ document.querySelector("#vlang .lgs").addEventListener("click",function(e){var b
 $("lgt").addEventListener("click",function(){setLang(LANG==="bn"?"ar":"bn")});
 function showErr(t){var e=$("err");e.textContent=t;e.classList.remove("hide")}
 $("curr").addEventListener("input",function(){$("err").classList.add("hide")});
+var NET="ok",FL=false,QK="elec_entry_q";
+function qGet(){try{return JSON.parse(localStorage.getItem(QK)||"[]")}catch(e){return[]}}
+function qSet(a){try{localStorage.setItem(QK,JSON.stringify(a))}catch(e){}}
+function gh(p){return "https://api.github.com/repos/"+encodeURIComponent(CFG.o)+"/"+encodeURIComponent(CFG.r)+p}
+function ghH(){return{"Authorization":"Bearer "+CFG.t,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"}}
+function putFile(name,json){return fetch(gh("/contents/in/"+name),{method:"PUT",headers:ghH(),body:JSON.stringify({message:"in",content:b64e(json)})})}
+function updCst(){if(!CFG)return;var q=qGet().length,c,t;
+  if(q){c="wait";t=T("pendn").replace("{n}",q)}else if(NET==="bad"){c="bad";t=T("offl")}else if(NET==="deny"){c="bad";t=T("denyl")}else{c="ok";t=T("onl")}
+  $("cst").className="cst "+c+($("cst").classList.contains("hide")?" hide":"");$("cst_t").textContent=t;$("qn").classList.toggle("hide",NET!=="bad")}
+async function chk(){if(!CFG)return;try{var r=await fetch(gh("")+"?t="+Date.now(),{headers:ghH(),cache:"no-store"});
+    NET=(r.status===401||r.status===403||r.status===404)?"deny":r.ok?"ok":"bad"}catch(e){NET="bad"}
+  updCst();if(NET==="ok")flush()}
+async function flush(){if(FL)return;FL=true;var q=qGet(),sent=0;
+  while(q.length){try{var r=await putFile(q[0].n,q[0].b);if(r.ok||r.status===422){q.shift();qSet(q);sent++}else break}catch(e){break}}
+  FL=false;if(sent)NET="ok";updCst();
+  if(sent&&!q.length&&!$("vpend").classList.contains("hide")){$("t_okp").textContent=T("okauto");view("vok")}}
+async function ping(){if(!CFG)return;var last=0;try{last=+(localStorage.getItem("elec_entry_ping")||0)}catch(e){}
+  if(Date.now()-last<36e5)return;var ts=Date.now(),name="open-"+CFG.e+"-"+ts+"-"+Math.random().toString(36).slice(2,6)+".json";
+  try{var r=await putFile(name,JSON.stringify({v:1,k:"open",e:CFG.e,t:ts}));if(r.ok){try{localStorage.setItem("elec_entry_ping",String(ts))}catch(e){}}}catch(e){}}
+function netInit(){if(!CFG)return;NET=navigator.onLine===false?"bad":"ok";updCst();
+  window.addEventListener("online",chk);window.addEventListener("offline",function(){NET="bad";updCst()});
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)chk()});setInterval(function(){if(!document.hidden)chk()},30000);
+  chk();ping();try{if(navigator.serviceWorker)navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}}
 $("send").addEventListener("click",async function(){
   var v=$("curr").value.trim().replace(",",".").replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}),n=parseFloat(v);
   if(!v||isNaN(n)||n<=0)return showErr(T("need"));
   var mid=$("msel").value,mn=$("msel").options[$("msel").selectedIndex].text,img="";
   try{if(window.EIMG)img=window.EIMG.toDataURL("image/jpeg",.6)}catch(e){}
-  var ts=Date.now(),body={v:1,e:CFG.e,n:CFG.n,m:mid,mn:mn,r:String(n),t:ts,img:img},
+  var ts=Date.now(),json=JSON.stringify({v:1,e:CFG.e,n:CFG.n,m:mid,mn:mn,r:String(n),t:ts,img:img}),
   name=CFG.e+"-"+ts+"-"+Math.random().toString(36).slice(2,6)+".json",btn=$("send");btn.disabled=true;btn.textContent=T("sending");$("err").classList.add("hide");
-  try{var r=await fetch("https://api.github.com/repos/"+encodeURIComponent(CFG.o)+"/"+encodeURIComponent(CFG.r)+"/contents/in/"+name,{method:"PUT",
-      headers:{"Authorization":"Bearer "+CFG.t,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"},
-      body:JSON.stringify({message:"in "+ts,content:b64e(JSON.stringify(body))})});
-    if(r.status===401||r.status===403||r.status===404){showErr(T("deny"))}
-    else if(!r.ok){showErr(T("net"))}
-    else{window.EIMG=null;view("vok")}}
-  catch(e){showErr(T("net"))}
+  try{var r=await putFile(name,json);
+    if(r.status===401||r.status===403||r.status===404){NET="deny";updCst();showErr(T("deny"))}
+    else if(r.ok){NET="ok";updCst();window.EIMG=null;$("t_okp").textContent=T("okp");view("vok")}
+    else throw 0}
+  catch(e){var q=qGet();q.push({n:name,b:json});qSet(q);NET="bad";window.EIMG=null;$("t_pd").textContent=n+" · "+mn;updCst();view("vpend")}
   btn.disabled=false;btn.textContent=T("send")});
+$("pnow").addEventListener("click",async function(){await flush();if(qGet().length)toast(T("net"))});
 $("again").addEventListener("click",function(){$("curr").value="";window.EIMG=null;view("vmain")});
 (function(){
 var g=function(i){return document.getElementById(i)},T0="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";MOCR.setTemplate(T0);
@@ -353,6 +384,7 @@ g("mman").addEventListener("click",function(){closeAll();if(cur&&cur.num)setCurr
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&(!g("mcam").classList.contains("hide")||!g("mres").classList.contains("hide")))closeAll()});
 })()
 start();
+netInit();
 </script>
 </body>
 </html>
