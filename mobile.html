@@ -48,6 +48,8 @@ label{display:block;text-align:center;font-weight:700;margin:16px 0 8px;font-siz
 .fld{width:100%;height:48px;border-radius:12px;border:1px solid var(--bd);font-weight:600;font-size:19px;font-family:inherit;text-align:center;color:#2c3e50;outline:none}
 .fld.prev{background:linear-gradient(135deg,#e2e2e2,#c4c4c4);color:#666}
 
+.vtag{text-align:center;font-size:12px;color:#9aa4b2;margin-top:10px;direction:ltr}
+.vtag2{display:block;font-size:11px;font-weight:600;color:#9aa4b2;line-height:1.2;margin-top:1px;direction:ltr;text-align:right}
 /* ---- meter camera ---- */
 .cw{position:relative}.cw .fld{padding-inline:90px}
 .camb{position:absolute;left:6px;top:6px;width:36px;height:36px;border-radius:10px;border:1.5px solid #8fb97c;background:#fff;color:#1f5d2b;display:grid;place-items:center;padding:0;cursor:pointer}
@@ -283,12 +285,50 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 .pgb{height:12px;border-radius:6px;background:rgba(192,57,43,.22);overflow:hidden}.pgb i{display:block;height:100%;width:100%;background:#c0392b;border-radius:6px;margin-right:0;margin-left:auto}
 .mbx .wr{color:#c0392b;font-weight:700}
 .hbt{display:flex;align-items:center;gap:20px;flex:none}
+
+/*V4*/
+.tbar .ib:not(#mbtn){display:none!important}
+#mbtn{display:inline-flex}
+.mdot{position:absolute;bottom:7px;right:7px;width:11px;height:11px;border-radius:50%;border:2px solid var(--bg);display:none;box-sizing:content-box}
+.mdot.g{display:block;background:#3ecf8e}.mdot.o{display:block;background:#f5a623}
+.mbad{position:absolute;top:2px;left:2px;min-width:18px;height:18px;border-radius:10px;background:#e53935;color:#fff;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--bg);box-sizing:content-box;line-height:1}
+.mbad.on{display:inline-flex}
+.amn{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
+.ash{background:var(--bg);color:var(--fg);width:min(520px,100%);border-radius:20px 20px 0 0;padding:8px 14px calc(16px + env(safe-area-inset-bottom,0px));max-height:88vh;overflow:auto;box-shadow:0 -10px 40px rgba(0,0,0,.35)}
+.ash:before{content:"";display:block;width:40px;height:4px;border-radius:2px;background:var(--bd);margin:6px auto 8px}
+@media (hover:hover) and (pointer:fine) and (min-width:700px){.amn{background:transparent;align-items:flex-start;justify-content:flex-start}.ash{position:fixed;width:300px;border-radius:16px;border:1px solid var(--bd);box-shadow:0 12px 36px rgba(0,0,0,.28);padding:6px 10px 10px}.ash:before{display:none}}
+.ams{font-size:12px;color:var(--mut);font-weight:700;margin:10px 6px 4px}
+.ami{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:6px 10px;border:0;background:transparent;color:var(--fg);font:inherit;font-size:16px;font-weight:600;border-radius:12px;text-align:start;cursor:pointer}
+.ami:hover,.ami:active{background:rgba(128,128,128,.14)}
+.ami svg{flex:none;color:var(--mut)}
+.ami .tx{flex:1;display:flex;flex-direction:column;min-width:0}.ami small{font-size:12px;color:var(--mut);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.amc{background:var(--bd);color:var(--fg);border-radius:11px;min-width:22px;padding:0 7px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.amc.red{background:#e53935;color:#fff}
+.stsel{appearance:auto;-webkit-appearance:menulist;background:var(--in);color:var(--fg);font-weight:600;font-size:17px;text-align-last:center}
+.fld.stf{background:var(--in);color:var(--fg)}
+.fld.dif{border:2px solid #f5a623!important;background:rgba(245,166,35,.16)!important}
+.stn{text-align:center;font-weight:700;margin:6px 0 0;color:var(--mut)}
+.tline{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--box);border:1px solid var(--bd);font-size:13px;line-height:1.9;color:var(--mut);text-align:center}
+.ibn{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(63,157,107,.15);border:1.5px solid #3f9d6b;font-size:14px;font-weight:700;text-align:center}
+.eh{display:flex;justify-content:space-between;align-items:center}
+.est{font-size:12px;font-weight:700;padding:2px 10px;border-radius:10px;background:rgba(62,207,142,.2);color:#1c7f4a}.est.x{background:rgba(239,83,80,.18);color:#c0392b}
+.chp{display:inline-block;padding:8px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--in);color:var(--fg);margin:3px;cursor:pointer;font:inherit;font-size:14px}
+.chp.on{background:#3f9d6b;color:#fff;border-color:#3f9d6b}
+.mbx .ifl .chs{display:flex;flex-wrap:wrap}
+.big{display:flex;gap:10px;margin:12px 0 4px}
+.bb{flex:1;height:64px;border-radius:14px;border:1.5px solid var(--btnbd);background:var(--btn);color:var(--btnfg);font:inherit;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.bb.g{background:#26803a;color:#fff;border-color:#26803a}
+.lkn{font-size:12px;color:var(--mut);text-align:center;line-height:1.7;margin:8px 0 0}
+.ibimg{width:100%;max-height:220px;object-fit:contain;border-radius:12px;background:#000;margin:8px 0}
+.ibr{font-size:30px;font-weight:800;text-align:center;direction:ltr}
+.ibh{font-size:14px;color:var(--mut);margin-bottom:2px}
+.ibt{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:rgba(245,166,35,.2);color:#a85f00;margin-inline-start:6px}
+.tmr{display:flex;gap:8px;margin:6px 0}.tmr input{flex:1;height:40px;border-radius:10px;border:1px solid var(--bd);background:var(--in);color:var(--fg);padding:0 10px;font:inherit;direction:ltr;text-align:left;min-width:0}
 </style>
 </head>
 <body>
 <div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
-  <div class="top"><h2 class="ttl"><svg class="bolt" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f5a623"/></svg><span>عدادات الكهرباء</span></h2><div class="tbar"><button class="ib hide" id="trb" aria-label="سلة المحذوفات" title="سلة المحذوفات"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span class="tcnt" id="tcnt"></span></button><button class="ib off" id="synic" aria-label="المزامنة" title="المزامنة"><svg class="" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><g class="arr" stroke-width="1.5"><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2"/></g></svg></button><button class="ib" id="bkb" aria-label="النسخ الاحتياطي"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg><span class="bgx" id="bkdot"></span></button><button class="ib" id="addM" aria-label="إضافة عداد" title="إضافة عداد"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+  <div class="top"><h2 class="ttl"><svg class="bolt" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f5a623"/></svg><span>عدادات الكهرباء<small class="vtag2">V4.0</small></span></h2><div class="tbar"><button class="ib hide" id="trb" aria-label="سلة المحذوفات" title="سلة المحذوفات"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span class="tcnt" id="tcnt"></span></button><button class="ib off" id="synic" aria-label="المزامنة" title="المزامنة"><svg class="" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><g class="arr" stroke-width="1.5"><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2"/></g></svg></button><button class="ib" id="bkb" aria-label="النسخ الاحتياطي"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg><span class="bgx" id="bkdot"></span></button><button class="ib" id="addM" aria-label="إضافة عداد" title="إضافة عداد"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button><button class="ib" id="mbtn" aria-label="القائمة" aria-haspopup="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mdot" id="mdot"></span><span class="mbad" id="mbad"></span></button></div></div>
   <input type="file" id="fi" accept=".json,application/json" class="hide">
   <div class="grid" id="grid"></div>
 </div>
@@ -302,7 +342,8 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
   <label>عدد الأيام</label><input id="days" class="fld days" readonly value="—">
   <label for="prev">قراءة العداد السابق</label><input id="prev" type="text" inputmode="decimal" autocomplete="off" class="fld prev" placeholder="0.00">
   <label for="curr">قراءة العداد الحالي</label><div class="cw"><input id="curr" type="text" inputmode="decimal" autocomplete="off" class="fld curr" placeholder="مثال: 2000"><button type="button" id="camb" class="camb" aria-label="تصوير العداد"></button><button type="button" id="albb" class="camb alb" aria-label="اختيار صورة من الألبوم"></button></div>
-  <details>
+  <div id="ibn" class="ibn hide"></div><div id="tline" class="tline hide"></div>
+  <details id="tdet">
     <summary><svg class="bolt" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f5a623"/></svg> إعدادات شرائح الكهرباء والرسوم (قابلة للتعديل) ⌄</summary>
     <label for="p1">سعر الشريحة الأولى (هللة)</label><input id="p1" type="text" inputmode="decimal" autocomplete="off" class="fld">
     <label for="m1">أقصى استهلاك للشريحة الأولى (كيلوواط)</label><input id="m1" type="text" inputmode="decimal" autocomplete="off" class="fld">
@@ -326,14 +367,20 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
   <div id="tbl"><div id="tb"></div></div>
 </div>
 
+<div id="sett" class="wrap hide"><div class="top"><h2 class="ttl2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>شرائح الكهرباء والرسوم</span></h2><button class="sm bkb" id="stk" aria-label="رجوع"><svg width="22" height="22" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M320 125L190 255L320 385"/></svg></button></div><label for="st_m">العداد</label><select id="st_m" class="fld stsel"></select><div class="stn" id="st_n"></div><label for="s_p1">سعر الشريحة الأولى (هللة)</label><input id="s_p1" type="text" inputmode="decimal" autocomplete="off" class="fld stf"><label for="s_m1">أقصى استهلاك للشريحة الأولى (كيلوواط)</label><input id="s_m1" type="text" inputmode="decimal" autocomplete="off" class="fld stf"><label for="s_p2">سعر الشريحة الثانية (هللة)</label><input id="s_p2" type="text" inputmode="decimal" autocomplete="off" class="fld stf"><label for="s_fee">رسوم خدمة العداد</label><input id="s_fee" type="text" inputmode="decimal" autocomplete="off" class="fld stf"><label for="s_tax">الضريبة (%)</label><input id="s_tax" type="text" inputmode="decimal" autocomplete="off" class="fld stf"><div id="st_cw"><label for="st_c">نسخ الأسعار من عداد آخر</label><select id="st_c" class="fld stsel"></select></div><p class="tnote" style="margin-top:14px;text-align:center">الحقول البرتقالية تختلف عن الأسعار الافتراضية (20 · 6000 · 30 · 10 · 15). الفواتير المحفوظة سابقاً لا تتغير.</p><button class="btn b2" id="st_rs">إعادة الأسعار الافتراضية</button></div>
+<!--TEAM--><div id="team" class="wrap hide"><div class="top"><h2 class="ttl2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5a3 3 0 010 6M18 14c2 .6 3.5 2.6 3.5 6"/></svg><span>الموظفون</span></h2><button class="sm bkb" id="tmk" aria-label="رجوع"><svg width="22" height="22" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M320 125L190 255L320 385"/></svg></button></div><div id="tm_list"></div><button class="btn b3" id="tm_add">＋ إضافة موظف</button><p class="tnote" style="margin-top:18px">مستودع الوارد (خاص على GitHub) تصله قراءات الموظفين:</p><div class="tmr"><input id="tm_own" placeholder="اسم الحساب" autocomplete="off" autocapitalize="off"><input id="tm_repo" placeholder="electricity-inbox" autocomplete="off" autocapitalize="off"></div><p class="tnote">يجب أن يشمل مفتاح المزامنة الخاص بك هذا المستودع (قراءة وكتابة). بيانات الموظفين تُحفظ على هذا الجهاز فقط ولا تدخل النسخ الاحتياطي ولا المزامنة.</p></div>
+<div id="inbox" class="wrap hide"><div class="top"><h2 class="ttl2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 2h6l1-2h5"/></svg><span>صندوق الوارد</span></h2><button class="sm bkb" id="ibk" aria-label="رجوع"><svg width="22" height="22" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M320 125L190 255L320 385"/></svg></button></div><div id="ib_msg" class="tnote"></div><div id="ib_list"></div><button class="btn b1" id="ib_rf">تحديث</button></div>
+<div id="empm" class="mnu hide"><div class="mbx wd sy"><div class="mt" id="emt">موظف جديد</div><label class="ifl">اسم الموظف<input id="em_n" maxlength="40" autocomplete="off"></label><div class="ifl">لغة صفحة الموظف<div class="chs" id="em_l"></div></div><div class="ifl">العدادات المسموحة<div class="chs" id="em_m"></div></div><label class="ifl">مفتاح الموظف (توكن)<input id="em_t" dir="ltr" autocomplete="off" autocapitalize="off" spellcheck="false" style="text-align:left"></label><button class="mi pr" id="em_ok">حفظ</button><button class="mi cx" id="em_x">إلغاء</button></div></div>
+<div id="lnkm" class="mnu hide"><div class="mbx wd"><div class="mt" id="lk_t"></div><div class="big"><button class="bb" id="lk_c"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></svg><span>نسخ</span></button><button class="bb g" id="lk_s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M7 11H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-1"/></svg><span>مشاركة</span></button></div><p class="lkn">الرابط يحمل صلاحية الموظف، ولذلك لا يُعرض هنا</p><button class="mi cx" id="lk_x" style="margin-top:12px">إغلاق</button></div></div><!--TEAM-END-->
 <div id="trash" class="wrap hide"><div class="top"><h2 class="ttl2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span>سلة المحذوفات</span></h2><button class="sm bkb" id="trk" aria-label="رجوع"><svg width="22" height="22" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M320 125L190 255L320 385"/></svg></button></div><p class="tnote">العدادات المحذوفة تبقى هنا بقراءاتها كاملة حتى تستعيدها أو تحذفها نهائياً.</p><div id="tlist"></div></div>
 <div id="inv" class="hide">
     <div class="sheet" id="sheet"></div>
   <div class="acts"><button id="prn" class="ic" aria-label="طباعة" title="طباعة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V4.5A1.5 1.5 0 018.5 3h7A1.5 1.5 0 0117 4.5V8"/><path d="M7 17H4.5A1.5 1.5 0 013 15.5v-6A1.5 1.5 0 014.5 8h15A1.5 1.5 0 0121 9.5v6a1.5 1.5 0 01-1.5 1.5H17"/><rect x="7" y="14" width="10" height="7" rx="1.5"/><path d="M10 17h4M10 19h3M16 11h1.5"/></svg></button><button id="pdf" class="ic" aria-label="حفظ PDF" title="حفظ PDF"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h10.5L21 7.5V18a3 3 0 01-3 3H6a3 3 0 01-3-3V6a3 3 0 013-3z"/><path d="M7 3v4.5A1.5 1.5 0 008.5 9h6A1.5 1.5 0 0016 7.5V3"/><path d="M7 21v-6a1.5 1.5 0 011.5-1.5h7A1.5 1.5 0 0117 15v6"/></svg></button><button id="sh" class="ic" aria-label="مشاركة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M7 11H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-1"/></svg></button><div class="lgw"><button id="lgb" class="lgb" aria-haspopup="menu" aria-label="لغة الفاتورة"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.8 4 6 4 9.5s-1.4 6.7-4 9.5c-2.6-2.8-4-6-4-9.5s1.4-6.7 4-9.5z"/></svg><span id="lgn">العربية</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div id="lgm" class="lgm" role="menu"></div></div><button id="ib" class="k ic" aria-label="رجوع"><svg width="22" height="22" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M320 125L190 255L320 385"/></svg></button></div>
 </div>
+<div id="amenu" class="amn hide"><div class="ash" id="ash"><div class="ams">العدادات</div><button class="ami" data-t="addM"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="tx">إضافة عداد</span></button><button class="ami hide" data-t="trb" id="am_tr"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span class="tx">سلة المحذوفات</span><span class="amc" id="am_trc"></span></button><div class="ams">البيانات</div><button class="ami" data-t="bkb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg><span class="tx">النسخ الاحتياطي<small id="am_bk"></small></span></button><!--SYROW--><button class="ami" data-t="synic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2" stroke-width="1.5"/></svg><span class="tx">المزامنة<small id="am_sy"></small></span></button><!--SYROW-END--><!--TEAM--><div class="ams">الفريق</div><button class="ami" data-t="emp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5a3 3 0 010 6M18 14c2 .6 3.5 2.6 3.5 6"/></svg><span class="tx">الموظفون<small id="am_em"></small></span></button><button class="ami" data-t="inb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 2h6l1-2h5"/></svg><span class="tx">صندوق الوارد</span><span class="amc red hide" id="am_ic"></span></button><!--TEAM-END--><div class="ams">الإعدادات</div><button class="ami" data-t="set"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="tx">شرائح الكهرباء والرسوم</span></button></div></div>
 <div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
   <button class="mi pr" data-a="inv">طباعة</button><button class="mi" id="mcmp" data-a="cmp">مقارنة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
-<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><div class="bki"><div class="bln" id="bl1"><i class="dt"></i><span id="sstat"></span></div><div class="bln" id="bl2"><i class="dt"></i><span id="lbk"></span></div></div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi" id="synb"><svg class="" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2" stroke-width="1.5"/></svg><span>المزامنة</span></button><button class="mi cx" id="bkx">إغلاق</button></div></div>
+<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><div class="bki"><div class="bln" id="bl1"><i class="dt"></i><span id="sstat"></span></div><div class="bln" id="bl2"><i class="dt"></i><span id="lbk"></span></div></div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi" id="synb"><svg class="" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2" stroke-width="1.5"/></svg><span>المزامنة</span></button><button class="mi cx" id="bkx">إغلاق</button><div class="vtag">V4.0</div></div></div>
 <div id="minfo" class="mnu hide"><div class="mbx wd"><div class="mt" id="mit"></div><div id="mib"></div><button class="mi cx" id="mix">إغلاق</button></div></div>
 <div id="medit" class="mnu hide"><div class="mbx wd"><div class="mt">تعديل العداد</div>
 <label class="ifl">اسم العداد<input id="me_n" maxlength="60"></label>
@@ -479,7 +526,7 @@ initDS("pd");initDS("cd");
 
 var cur=null,last=null,viewR=null,editNo=null,selMode=false,selSet={},histYear=null;
 function M(id){for(var i=0;i<D.meters.length;i++)if(D.meters[i].id===id)return D.meters[i];return null}
-function show(v){["home","calc","hist","inv","trash"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
+function show(v){["home","calc","hist","inv","trash","sett"/*TEAM*/,"team","inbox"/*TEAM-END*/].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
 
 // ---- home
 function home(){selMode=false;selSet={};updLbk();updTrb();
@@ -582,7 +629,7 @@ function days(){
 function openCalc(m){
   cur=m;editNo=null;$("mk").textContent="حفظ في السجل وإصدار الفاتورة";$("sv").textContent="حفظ في السجل فقط";$("ct").innerHTML=symH(m)+" "+esc(m.name);
   $("prev").value=m.prev;$("pd").value=m.prevDate?dmyIn(m.prevDate):"";$("curr").value="";$("cd").value=dmyIn(today());
-  ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).value=m.s[k]});
+  ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).value=m.s[k]});$("tdet").classList.add("hide");tline();$("ibn").classList.add("hide");/*TEAM*/TM.pend=null;/*TEAM-END*/
   setDS("pd");setDS("cd");clr();days();show("calc");
 }
 function clr(){$("out").classList.add("hide");$("err").classList.add("hide");$("curr").classList.remove("bad");last=null}
@@ -623,7 +670,7 @@ function commit(){
   }
   last.no=nid();last.id=last.no;last.ts=Date.now();last.saved=true;
   var r=JSON.parse(JSON.stringify(last));delete r.saved;cur.rd.push(r);
-  cur.prev=String(last.curr);cur.prevDate=last.cd;save();return last;
+  cur.prev=String(last.curr);cur.prevDate=last.cd;save();/*TEAM*/tmCommitHook();/*TEAM-END*/return last;
 }
 $("sv").addEventListener("click",function(){if(!last)return;commit();toast("تم الحفظ في السجل");openHist(cur)});
 $("mk").addEventListener("click",function(){if(!last)return;commit();showInv(cur.rd[RD(last.no)],"calc")});
@@ -654,7 +701,7 @@ function openEdit(r){
   editNo=r.no;$("ct").textContent="✎ تعديل فاتورة — "+cur.name;
   $("mk").textContent="حفظ التعديل وإصدار الفاتورة";$("sv").textContent="حفظ التعديل فقط";
   $("prev").value=r.prev;$("pd").value=r.pd?dmyIn(r.pd):"";$("curr").value=r.curr;$("cd").value=dmyIn(r.cd);
-  $("p1").value=r.p1;$("p2").value=r.p2;$("fee").value=r.fee;$("tax").value=r.taxp;$("m1").value=r.u2>0?r.u1:cur.s.m1;
+  $("tdet").classList.remove("hide");$("tdet").open=false;$("tline").classList.add("hide");$("ibn").classList.add("hide");$("p1").value=r.p1;$("p2").value=r.p2;$("fee").value=r.fee;$("tax").value=r.taxp;$("m1").value=r.u2>0?r.u1:cur.s.m1;
   setDS("pd");setDS("cd");clr();days();show("calc");
 }
 function RD(no){for(var i=0;i<cur.rd.length;i++)if(cur.rd[i].no===no)return i;return -1}
@@ -1029,14 +1076,161 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden&&syO
 window.addEventListener("online",function(){if(syOn())schedSync(500)});
 setInterval(function(){if(!document.hidden&&syOn())schedSync(100)},10000);
 function syncInit(){updSStat();if(syOn())schedSync(1500)}
-(function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn","syncm","minfo","medit","pdw1","pdw2","pdw3"].every(function(i){return $(i).classList.contains("hide")})}
+(function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn","syncm","minfo","medit","pdw1","pdw2","pdw3","amenu","empm","lnkm"].every(function(i){var e=$(i);return !e||e.classList.contains("hide")})}
   function sw(el,fn){var x0=null,y0=0,t0=0;
     el.addEventListener("touchstart",function(e){if(e.touches.length!==1||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
     el.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=Math.abs(t.clientY-y0);x0=null;
       if(dx>90&&dy<60&&Date.now()-t0<700&&noModal()){fn();["home","calc","hist","inv"].forEach(function(i){var v=$(i);if(!v.classList.contains("hide")){v.style.animation="none";void v.offsetWidth;v.style.animation="slin .25s ease-out"}})}},{passive:true})}
-  sw($("calc"),function(){$("cb").click()});sw($("trash"),function(){$("trk").click()});sw($("inv"),function(){$("ib").click()});
+  sw($("calc"),function(){$("cb").click()});sw($("sett"),function(){$("stk").click()});sw($("trash"),function(){$("trk").click()});sw($("inv"),function(){$("ib").click()});
 })();
-save();home();chkBk();syncInit();
+
+/*V4-MENU*/
+function updMenu(){var n=trashList().length,t=$("am_tr");if(t){t.classList.toggle("hide",!n);$("am_trc").textContent=n}
+  var b=bkState();var a=$("am_bk");if(a)a.textContent=b.tx;
+  var dot="",s=$("am_sy");
+  if(typeof syOn==="function"){if(syOn()){dot=SY.err?"o":"g";if(s)s.textContent=$("sstat")?$("sstat").textContent:""}else{if(s)s.textContent="غير مفعّلة";if(b.st==="warn")dot="o"}}
+  else if(b.st==="warn")dot="o";
+  var d=$("mdot");if(d)d.className="mdot"+(dot?" "+dot:"");
+  var c=0;if(typeof tmPending==="function"){c=tmPending();var ic=$("am_ic");if(ic){ic.textContent=c;ic.classList.toggle("hide",!c)}
+    var em=$("am_em");if(em){var k=TM.emps.filter(function(e){return !e.revoked}).length;em.textContent=k?k+" نشط":"لا يوجد"}}
+  var g=$("mbad");if(g){g.textContent=c;g.classList.toggle("on",c>0)}}
+function amOpen(){updMenu();var m=$("amenu"),sh=$("ash");sh.style.top=sh.style.left="";m.classList.remove("hide");
+  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine) and (min-width:700px)").matches){var r=$("mbtn").getBoundingClientRect();sh.style.top=(r.bottom+6)+"px";sh.style.left=Math.max(8,r.left)+"px"}}
+function amClose(){$("amenu").classList.add("hide")}
+$("mbtn").addEventListener("click",function(e){e.stopPropagation();$("amenu").classList.contains("hide")?amOpen():amClose()});
+$("amenu").addEventListener("click",function(e){var b=e.target.closest("button.ami");
+  if(!b){if(e.target===$("amenu"))amClose();return}
+  var t=b.dataset.t;amClose();
+  setTimeout(function(){
+    if(t==="set")stOpen();
+    else if(t==="emp"&&typeof tmOpen==="function")tmOpen();
+    else if(t==="inb"&&typeof ibOpen==="function")ibOpen();
+    else if($(t))$(t).click()},0)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")amClose()});
+setInterval(updMenu,1500);
+// ---- settings per meter
+var stId=null;
+function stList(){return D.meters.filter(function(m){return !m.del})}
+function stOpen(id){var ms=stList();if(!ms.length)return toast("لا توجد عدادات بعد");
+  stId=(id&&M(id)&&!M(id).del)?id:((stId&&M(stId)&&!M(stId).del)?stId:ms[0].id);stRender();show("sett")}
+function stRender(){var ms=stList(),m=M(stId);
+  $("st_m").innerHTML=ms.map(function(x){return '<option value="'+x.id+'"'+(x.id===stId?" selected":"")+'>'+esc(x.name)+'</option>'}).join("");
+  var o=ms.filter(function(x){return x.id!==stId});
+  $("st_cw").classList.toggle("hide",!o.length);
+  $("st_c").innerHTML='<option value="">اختر العداد…</option>'+o.map(function(x){return '<option value="'+x.id+'">'+esc(x.name)+'</option>'}).join("");
+  $("st_n").textContent="الأسعار الخاصة بـ "+m.name;
+  ["p1","m1","p2","fee","tax"].forEach(function(k){var e=$("s_"+k);e.value=m.s[k];e.classList.toggle("dif",+m.s[k]!==DEF[k])})}
+["p1","m1","p2","fee","tax"].forEach(function(k){$("s_"+k).addEventListener("input",function(){var m=M(stId),v=parseFloat($("s_"+k).value.replace(",","."));
+  if(!m||isNaN(v))return;m.s[k]=v;save();$("s_"+k).classList.toggle("dif",v!==DEF[k])})});
+$("st_m").addEventListener("change",function(){stId=$("st_m").value;stRender()});
+$("st_c").addEventListener("change",function(){var src=M($("st_c").value),m=M(stId);if(!src||!m)return;
+  if(!confirm("نسخ أسعار «"+src.name+"» إلى «"+m.name+"»؟"))return stRender();
+  m.s=JSON.parse(JSON.stringify(src.s));save();stRender();toast("تم نسخ الأسعار")});
+$("st_rs").addEventListener("click",function(){var m=M(stId);if(!m)return;if(!confirm("إعادة أسعار «"+m.name+"» إلى الافتراضية؟"))return;
+  m.s=JSON.parse(JSON.stringify(DEF));save();stRender();toast("تمت إعادة الأسعار الافتراضية")});
+$("stk").addEventListener("click",function(){home()});
+function tline(){var s=cur.s,e=$("tline");e.textContent="التعرفة المطبقة: "+s.p1+" هللة حتى "+s.m1+" ك.و.س · "+s.p2+" هللة بعدها · رسوم العداد "+s.fee+" · ضريبة "+s.tax+"%";e.classList.remove("hide")}
+
+/*TEAM*/
+var TK="elec_team_v1",TM={emps:[],repo:"electricity-inbox",owner:"",items:{},done:{},pend:null};
+try{var _tr=JSON.parse(localStorage.getItem(TK)||"null");if(_tr)TM=Object.assign(TM,_tr)}catch(e){}
+function tmSave(){try{var c=Object.assign({},TM);delete c.busy;delete c.err;localStorage.setItem(TK,JSON.stringify(c))}catch(e){}}
+function tmOwner(){return TM.owner||(SY.cfg&&SY.cfg.owner)||""}
+function tmEmp(id){for(var i=0;i<TM.emps.length;i++)if(TM.emps[i].id===id)return TM.emps[i];return null}
+function tmMeters(e){return D.meters.filter(function(m){return !m.del&&(e.all||e.meters.indexOf(m.id)>-1)})}
+function tmMNames(e){if(e.all)return "كل العدادات";return tmMeters(e).map(function(m){return m.name}).join("، ")||"—"}
+function tmB64(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function tmLink(e){var base=location.href.split("#")[0].split("?")[0].replace(/[^\/]*$/,"")+"entry.html";
+  return base+"#"+tmB64({v:1,o:tmOwner(),r:TM.repo,t:e.token,e:e.id,n:e.name,l:e.lang,m:tmMeters(e).map(function(m){return[m.id,m.name]})})}
+function tmCopy(t){return (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){
+  var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()})}
+function tmOpen(){tmRender();show("team")}
+function tmRender(){$("tm_own").value=tmOwner();$("tm_repo").value=TM.repo;
+  $("tm_list").innerHTML=TM.emps.map(function(e){
+    return '<div class="tzc"><div class="eh"><b>'+esc(e.name)+'</b>'+(e.revoked?'<span class="est x">ملغى</span>':'<span class="est">نشط</span>')+'</div>'+
+    '<div class="tzm">'+(e.lang==="bn"?"বাংলা":"العربية")+' · العدادات: '+esc(tmMNames(e))+'<br>آخر إدخال: '+(e.last?agoTxt(e.last):"لا يوجد")+'</div>'+
+    '<div class="tzr">'+(e.revoked?'<button class="pd" data-a="rm" data-id="'+e.id+'">حذف من القائمة</button>':
+     '<button class="rs" data-a="lnk" data-id="'+e.id+'">الرابط</button><button class="rs" style="background:#9c6a3d" data-a="ed" data-id="'+e.id+'">تعديل</button><button class="pd" data-a="rv" data-id="'+e.id+'">إلغاء الوصول</button>')+'</div></div>'}).join("")||'<div class="empty">لا يوجد موظفون بعد</div>'}
+$("tmk").addEventListener("click",function(){home()});
+$("tm_add").addEventListener("click",function(){emOpen()});
+$("tm_own").addEventListener("change",function(){TM.owner=$("tm_own").value.trim();tmSave()});
+$("tm_repo").addEventListener("change",function(){TM.repo=$("tm_repo").value.trim()||"electricity-inbox";tmSave();TM.items={};TM.done={};ibCheck()});
+$("tm_list").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var em=tmEmp(b.dataset.id);if(!em)return;var a=b.dataset.a;
+  if(a==="lnk")lnkOpen(em);else if(a==="ed")emOpen(em.id);
+  else if(a==="rv"){if(!confirm("إلغاء وصول «"+em.name+"»؟\nلن تُقبل قراءاته بعد الآن. ولإبطال المفتاح نفسه احذفه أيضاً من GitHub."))return;em.revoked=true;tmSave();tmRender();updMenu();toast("تم إلغاء الوصول")}
+  else if(a==="rm"){TM.emps=TM.emps.filter(function(x){return x.id!==em.id});tmSave();tmRender();updMenu()}});
+var emEd=null,emLang="ar",emAll=true,emSel={};
+function emOpen(id){emEd=id?tmEmp(id):null;$("em_n").value=emEd?emEd.name:"";emLang=emEd?emEd.lang:"ar";emAll=emEd?!!emEd.all:true;emSel={};
+  if(emEd&&!emEd.all)emEd.meters.forEach(function(x){emSel[x]=1});
+  $("em_t").value="";$("em_t").placeholder=emEd?"اتركه فارغاً للإبقاء على الحالي":"github_pat_...";$("emt").textContent=emEd?"تعديل الموظف":"موظف جديد";emChips();$("empm").classList.remove("hide")}
+function emChips(){$("em_l").innerHTML='<button class="chp'+(emLang==="ar"?" on":"")+'" data-l="ar">العربية</button><button class="chp'+(emLang==="bn"?" on":"")+'" data-l="bn">বাংলা</button>';
+  $("em_m").innerHTML='<button class="chp'+(emAll?" on":"")+'" data-m="*">كل العدادات</button>'+stList().map(function(m){return '<button class="chp'+(!emAll&&emSel[m.id]?" on":"")+'" data-m="'+m.id+'">'+esc(m.name)+'</button>'}).join("")}
+$("empm").addEventListener("click",function(e){var b=e.target.closest(".chp");if(!b)return;
+  if(b.dataset.l)emLang=b.dataset.l;
+  else if(b.dataset.m==="*"){emAll=true;emSel={}}
+  else{emAll=false;if(emSel[b.dataset.m])delete emSel[b.dataset.m];else emSel[b.dataset.m]=1;if(!Object.keys(emSel).length)emAll=true}
+  emChips()});
+$("em_x").addEventListener("click",function(){$("empm").classList.add("hide")});
+$("em_ok").addEventListener("click",function(){var n=$("em_n").value.trim(),t=$("em_t").value.trim().replace(/\s+/g,"");
+  if(!n)return toast("أدخل اسم الموظف");
+  if(!emEd&&!t)return toast("أدخل مفتاح الموظف");
+  if(!tmOwner())return toast("أدخل اسم حساب GitHub في أسفل صفحة الموظفين أولاً");
+  var e=emEd||{id:nid(),created:Date.now(),revoked:false,token:""};
+  e.name=n;e.lang=emLang;e.all=emAll;e.meters=emAll?[]:Object.keys(emSel);if(t)e.token=t;
+  if(!emEd)TM.emps.push(e);tmSave();$("empm").classList.add("hide");tmRender();updMenu();lnkOpen(e)});
+var lnkE=null;
+function lnkOpen(e){lnkE=e;$("lk_t").textContent="رابط «"+e.name+"» جاهز";$("lnkm").classList.remove("hide")}
+$("lk_x").addEventListener("click",function(){$("lnkm").classList.add("hide")});
+$("lk_c").addEventListener("click",function(){if(lnkE)tmCopy(tmLink(lnkE)).then(function(){toast("تم نسخ الرابط")})});
+$("lk_s").addEventListener("click",function(){if(!lnkE)return;var u=tmLink(lnkE);
+  if(navigator.share)navigator.share({title:"إدخال قراءات الكهرباء",text:"رابط إدخال القراءات: «"+lnkE.name+"»",url:u}).catch(function(){});
+  else tmCopy(u).then(function(){toast("تم نسخ الرابط")})});
+// ---- inbox
+function ibUrl(p){return "https://api.github.com/repos/"+encodeURIComponent(tmOwner())+"/"+encodeURIComponent(TM.repo)+"/contents/"+p}
+function ibKeys(){return Object.keys(TM.items).filter(function(k){var o=TM.items[k],e=tmEmp(o.e);return e&&!e.revoked}).sort(function(a,b){return (TM.items[b].t||0)-(TM.items[a].t||0)})}
+function tmPending(){return ibKeys().filter(function(k){return !TM.items[k].imp}).length}
+async function ibCheck(){
+  if(typeof syOn!=="function"||!syOn()||!TM.emps.length||!tmOwner()||TM.busy)return;TM.busy=true;TM.err="";
+  try{var r=await fetch(ibUrl("in")+"?t="+Date.now(),{headers:ghHead(),cache:"no-store"}),L=[];
+    if(r.status!==404){if(!r.ok)throw httpErr(r.status);L=await r.json()}
+    if(!Array.isArray(L))L=[];var names={};
+    for(var i=0;i<L.length;i++){var f=L[i];if(f.type!=="file"||!/\.json$/.test(f.name))continue;names[f.name]=1;
+      if(TM.items[f.name]||TM.done[f.name])continue;
+      var rr=await fetch(f.url,{headers:ghHead(),cache:"no-store"});if(!rr.ok)continue;var j=await rr.json();
+      try{var o=JSON.parse(decodeURIComponent(escape(atob((j.content||"").replace(/\s/g,"")))));
+        if(!o||typeof o!=="object"||!tmEmp(o.e)){TM.done[f.name]=1;continue}
+        var img=/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(o.img||"")?o.img:"";
+        TM.items[f.name]={e:String(o.e),m:String(o.m),r:String(o.r),t:+o.t||Date.now(),img:img,sha:j.sha}}catch(x){TM.done[f.name]=1}}
+    Object.keys(TM.items).forEach(function(k){if(!names[k])delete TM.items[k]});
+    Object.keys(TM.done).forEach(function(k){if(!names[k])delete TM.done[k]});
+    Object.keys(TM.items).forEach(function(k){var o=TM.items[k],e=tmEmp(o.e);if(e&&o.t>(e.last||0))e.last=o.t});
+    tmSave()}catch(e){TM.err=errText(e)}
+  TM.busy=false;updMenu();if(!$("inbox").classList.contains("hide"))ibRender()}
+function ibOpen(){ibRender();show("inbox");ibCheck()}
+function ibRender(){var ks=ibKeys();
+  $("ib_msg").textContent=typeof syOn==="function"&&syOn()?(TM.err||(ks.length?"":"لا توجد قراءات واردة")):"فعّل المزامنة أولاً ليستطيع التطبيق قراءة الوارد";
+  $("ib_list").innerHTML=ks.map(function(k){var o=TM.items[k],e=tmEmp(o.e),m=M(o.m),ok=m&&!m.del,rd=parseFloat(o.r),pv=ok?parseFloat(m.prev):NaN,df=(!isNaN(rd)&&!isNaN(pv))?rd-pv:null;
+    return '<div class="tzc"><div class="ibh"><b>'+esc(e.name)+'</b> · '+esc(ok?m.name:"عداد غير موجود")+' · '+agoTxt(o.t)+(o.imp?'<span class="ibt">مستردة</span>':'')+'</div>'+
+    (o.img?'<img class="ibimg" alt="" src="'+o.img+'">':'')+'<div class="ibr">'+esc(o.r)+'</div>'+
+    '<div class="tzm" style="text-align:center">القراءة السابقة: '+(ok&&m.prev!==""?esc(m.prev):"—")+(df===null?"":' · الفرق: <b'+(df<0?' style="color:#c0392b"':'')+'>'+f2(df)+'</b> ك.و.س')+'</div>'+
+    '<div class="tzr">'+(ok?'<button class="rs" data-a="imp" data-k="'+esc(k)+'">استرداد وتسجيل</button>':'')+'<button class="pd" data-a="ig" data-k="'+esc(k)+'">تجاهل</button></div></div>'}).join("")}
+function tmDone(k){var o=TM.items[k];TM.done[k]=1;delete TM.items[k];tmSave();updMenu();
+  if(o&&o.sha&&typeof syOn==="function"&&syOn()){var h=ghHead();h["Content-Type"]="application/json";
+    fetch(ibUrl("in/"+encodeURIComponent(k)),{method:"DELETE",headers:h,body:JSON.stringify({message:"done",sha:o.sha})}).catch(function(){})}}
+$("ib_list").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var k=b.dataset.k,o=TM.items[k];if(!o)return;
+  if(b.dataset.a==="ig"){if(!confirm("تجاهل هذه القراءة؟"))return;tmDone(k);ibRender();return}
+  var m=M(o.m),em=tmEmp(o.e);if(!m||m.del)return;
+  openCalc(m);$("curr").value=o.r;chkCur();
+  $("ibn").textContent="📥 مستردة من "+(em?em.name:"")+" · "+fmtDT(o.t);$("ibn").classList.remove("hide");
+  o.imp=1;TM.pend={k:k,m:m.id};tmSave();updMenu()});
+$("ib_rf").addEventListener("click",function(){ibCheck()});
+$("ibk").addEventListener("click",function(){home()});
+function tmCommitHook(){if(TM.pend&&cur&&cur.id===TM.pend.m){var k=TM.pend.k;TM.pend=null;tmDone(k)}}
+document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(ibCheck,1200)});
+setInterval(function(){if(!document.hidden)ibCheck()},60000);
+setTimeout(ibCheck,2500);
+/*TEAM-END*/
+save();home();chkBk();syncInit();updMenu();
 })();
 </script>
 <script>
