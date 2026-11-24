@@ -42,6 +42,11 @@ input.fld{direction:ltr;background:linear-gradient(135deg,#b3d6a6,#aee89a);color
 .q{margin-top:14px;border:1.5px dashed #f5a623;background:rgba(245,166,35,.12);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.8}
 .lg2{display:inline-flex;background:rgba(255,255,255,.7);border:1px solid var(--bd);border-radius:999px;padding:3px;gap:2px;margin-top:10px}
 .lg2 button{border:0;background:transparent;padding:8px 20px;border-radius:999px;font:inherit;font-weight:800;font-size:15px;color:var(--mut);cursor:pointer}.lg2 button.on{background:#1f7a3a;color:#fff}
+.kic{width:68px;height:68px;border-radius:50%;background:rgba(31,122,58,.12);color:#1f7a3a;display:grid;place-items:center;margin:34px auto 14px}.kic.r{background:rgba(239,83,80,.13);color:#c0392b}
+.cdw{position:relative;margin:14px auto 12px;max-width:300px}.cells{display:flex;gap:7px;justify-content:center;direction:ltr}.cells i{width:40px;height:54px;border-radius:12px;background:var(--in);border:1.5px solid var(--bd);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:26px;font-family:ui-monospace,Menlo,monospace}
+.cells i.cur{border-color:#1f7a3a;box-shadow:0 0 0 3px rgba(31,122,58,.16)}.cells.bad i{border-color:#c0392b;background:rgba(239,83,80,.08)}.cells .sp{width:8px;background:none;border:0;box-shadow:none}
+#cin{position:absolute;inset:0;width:100%;height:100%;opacity:0;font-size:16px;border:0;background:transparent;color:transparent;caret-color:transparent}
+.rem{font-size:13px;color:var(--mut);font-weight:700;margin:0 0 12px}.send:disabled{opacity:.45}
 .bic{width:84px;height:84px;border-radius:50%;background:rgba(239,83,80,.15);color:#c0392b;display:grid;place-items:center;font-size:46px;margin:44px auto 16px}
 #bad{color:var(--fg);font-weight:400;font-size:16px;line-height:2;margin:0 0 10px}
 .tipb{background:var(--in);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.9;color:var(--mut)}
@@ -101,6 +106,13 @@ body.ltr .wrap{direction:ltr}
 <div id="cst" class="cst ok hide"><i></i><span id="cst_t"></span></div>
 <div id="vlang" class="wrap hide"><h1 style="margin-top:60px">اختر اللغة · ভাষা বেছে নিন</h1><div class="lgs"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div></div>
 <div id="vbad" class="wrap hide"><div style="text-align:center"><div class="lg2" id="badlg"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div><div class="bic">!</div><h1 data-k="badh" style="margin:0 0 10px"></h1><div class="err" id="bad" data-k="bad"></div><div class="tipb" data-k="badtip"></div></div></div>
+<div id="vcode" class="wrap hide"><div style="text-align:center"><div class="lg2" id="codelg"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div>
+<div id="cdform"><div class="kic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M16 7l3 3"/></svg></div>
+<h1 data-k="codeh" style="margin:0 0 6px"></h1><p class="hi" data-k="codep"></p><div class="err hide" id="cderr"></div>
+<div class="cdw"><div class="cells" id="cells"><i></i><i></i><i></i><i class="sp"></i><i></i><i></i><i></i></div><input id="cin" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" aria-label="code"></div>
+<div class="rem hide" id="cdrem"></div><button class="send" id="cdgo" data-k="codego" disabled></button></div>
+<div id="cdlock" class="hide"><div class="kic r"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M16 7l3 3"/></svg></div>
+<h1 data-k="lockh" style="margin:0 0 10px"></h1><div class="err" data-k="lockp"></div><button class="send" id="lockbtn" data-k="lockbtn"></button><div class="tipb" data-k="lockhint"></div></div></div></div>
 <div id="vmain" class="wrap hide" style="position:relative">
  <button class="lgt" id="lgt"></button>
  <h1 id="t_ttl"></h1><p class="hi" id="t_hi"></p>
@@ -145,7 +157,7 @@ body.ltr .wrap{direction:ltr}
 <script>
 var TX={
 ar:{tskip:"تخطي",tnext:"التالي",tprev:"السابق",tstart:"ابدأ",t1h:"١ · صوّر شاشة العداد",t1p:"اضغط «تصوير» ووجّه الكاميرا إلى الشاشة الخضراء حتى تدخل داخل الإطار الأصفر",t1q:"تأكد أن الرمز الصغير على الشاشة 1.8.0. وإن لم يكن، اضغط زر العداد حتى يظهر",t2h:"٢ · راجع الرقم وأرسل",t2p:"يقرأ التطبيق الرقم ويعرضه لك. إن كان مطابقاً لما في العداد اضغط «استخدام القراءة»",t2q:"بعد الإرسال تظهر شاشة ✓ «تم إرسال القراءة»",t3h:"٣ · إذا لم تُقرأ الصورة",t3a:"«الرمز ليس 1.8.0»",t3ap:"اضغط زر العداد حتى يظهر 1.8.0 ثم صوّر من جديد",t3b:"«لم أستطع قراءة الرقم»",t3bp:"قرّب الكاميرا وقلّل انعكاس الضوء، وأعد التصوير",t3c:"الحل البديل",t3cp:"اضغط «من الألبوم»، أو «تعديل يدوي» واكتب الرقم كما تراه على العداد",t4h:"٤ · معاني الألوان",t4a:"الإرسال يعمل",t4b:"تعذر الوصول للخدمة، وتُحفظ قراءتك إن أرسلت",t4c:"محفوظة في جهازك وتُرسل وحدها لاحقاً",t4d:"الكاميرا تأكدت أنها على الرمز الصحيح",t4e:"الرمز غير صحيح، غيّره وأعد التصوير",t5h:"أنت جاهز",t5p:"تستطيع الرجوع لهذا الشرح في أي وقت من أسفل الصفحة الرئيسية",t5c:"لا تُظهر هذه الشاشة مرة أخرى",help:"كيف أسجل القراءة؟",badh:"الرابط غير صالح",badtip:"تأكد أن الرابط منسوخ كاملاً وافتحه في Chrome",ok18:"✓ 1.8.0",onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا توجد صلاحية",pendn:"بانتظار الإرسال ({n})",qn:"إذا ضغطت «إرسال» الآن تُحفظ القراءة في جهازك وتُرسل تلقائياً حين يعود الاتصال",ph:"حُفظت القراءة",pp:"ستُرسل تلقائياً عند عودة الاتصال، ولا تحتاج أن تفعل شيئاً",pnow:"إرسال الآن",okauto:"أُرسلت تلقائياً بعد عودة الاتصال",ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
- okh:"تم إرسال القراءة",okp:"شكراً لك",again:"إرسال قراءة أخرى",lg:"বাংলা",bad:"لم يُفتح الرابط بشكل صحيح. اطلب من صاحب العمل رابطاً جديداً.",
+ okh:"تم إرسال القراءة",okp:"شكراً لك",again:"إرسال قراءة أخرى",lg:"বাংলা",codeh:"أدخل الرمز السري",codep:"الرمز وصلك من صاحب العمل. 6 أرقام",codego:"متابعة",codebad:"الرمز غير صحيح",codeleft:"المحاولات المتبقية: {n} من 5",lockh:"توقفت المحاولات",lockp:"أخطأت 5 مرات",lockbtn:"طلب الرمز من صاحب العمل",lockhint:"يفتح رسالة جاهزة ترسلها لصاحب العمل. وعند فتح الرابط من جديد تبدأ لك 5 محاولات جديدة",lockmsg:"لم أستطع إدخال الرمز السري لرابط إدخال القراءات. أرسله لي من فضلك.",nocrypto:"تعذر فتح الرابط على هذا المتصفح. افتحه في Chrome.",bad:"لم يُفتح الرابط بشكل صحيح. اطلب من صاحب العمل رابطاً جديداً.",
  need:"أدخل القراءة أولاً",net:"تعذر الإرسال. تأكد من الإنترنت وحاول مرة أخرى.",deny:"لا توجد صلاحية للإرسال. أخبر صاحب العمل.",
  mh:"ضع الشاشة الخضراء داخل الإطار",mh1:"وتأكد أن الرمز الصغير 1.8.0 ظاهر",mh2:"اضغط زر العداد حتى يظهر 1.8.0",
  re:"إعادة التصوير",man:"تعديل يدوي",use:"استخدام القراءة",
@@ -154,7 +166,7 @@ ar:{tskip:"تخطي",tnext:"التالي",tprev:"السابق",tstart:"ابدأ"
  w2:"الرمز الصغير غير واضح. قرّب الكاميرا أو قلّل انعكاس الضوء ثم صوّر من جديد.",
  w3:"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد."},
 bn:{tskip:"বাদ দিন",tnext:"পরের",tprev:"আগের",tstart:"শুরু করুন",t1h:"১ · মিটারের ছবি তুলুন",t1p:"«ছবি তুলুন» চাপুন এবং সবুজ স্ক্রিনটি হলুদ ফ্রেমের ভেতরে আনুন",t1q:"স্ক্রিনে ছোট কোড 1.8.0 আছে কিনা দেখুন। না থাকলে মিটারের বোতাম চেপে 1.8.0 আনুন",t2h:"২ · সংখ্যা মিলিয়ে পাঠান",t2p:"অ্যাপ সংখ্যাটি পড়ে দেখাবে। মিটারের সাথে মিললে «এই রিডিং ব্যবহার করুন» চাপুন",t2q:"পাঠানোর পর ✓ «রিডিং পাঠানো হয়েছে» দেখাবে",t3h:"৩ · ছবি পড়া না গেলে",t3a:"«কোডটি 1.8.0 নয়»",t3ap:"মিটারের বোতাম চেপে 1.8.0 আনুন, তারপর আবার ছবি তুলুন",t3b:"«সংখ্যা পড়া গেল না»",t3bp:"ক্যামেরা কাছে আনুন, আলোর প্রতিফলন কমান, আবার ছবি তুলুন",t3c:"বিকল্প উপায়",t3cp:"«অ্যালবাম থেকে» চাপুন, অথবা «নিজে লিখুন» চেপে মিটারে যা দেখছেন সেই সংখ্যা লিখুন",t4h:"৪ · রঙের অর্থ",t4a:"পাঠানো যাবে",t4b:"সার্ভিসে পৌঁছানো যাচ্ছে না; পাঠালে রিডিং সংরক্ষিত থাকবে",t4c:"ফোনে সংরক্ষিত, পরে নিজে থেকে পাঠানো হবে",t4d:"ক্যামেরা নিশ্চিত যে কোডটি সঠিক",t4e:"কোডটি ভুল, বদলে আবার ছবি তুলুন",t5h:"আপনি প্রস্তুত",t5p:"এই নির্দেশনা যেকোনো সময় প্রধান পাতার নিচ থেকে আবার দেখতে পারবেন",t5c:"এই পাতা আর দেখাবেন না",help:"কীভাবে রিডিং দেবেন?",badh:"লিংকটি সঠিক নয়",badtip:"লিংকটি পুরো কপি করা হয়েছে কিনা দেখুন এবং Chrome-এ খুলুন",ok18:"✓ 1.8.0",onl:"সংযুক্ত",offl:"সংযোগ নেই",denyl:"অনুমতি নেই",pendn:"পাঠানোর অপেক্ষায় ({n})",qn:"এখন «পাঠান» চাপলে রিডিং এই ফোনে সংরক্ষণ হবে এবং সংযোগ ফিরলে নিজে থেকে পাঠানো হবে",ph:"রিডিং সংরক্ষিত হয়েছে",pp:"সংযোগ ফিরলে নিজে থেকেই পাঠানো হবে, আপনাকে কিছু করতে হবে না",pnow:"এখনই পাঠান",okauto:"সংযোগ ফিরে আসার পর নিজে থেকে পাঠানো হয়েছে",ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
- okh:"রিডিং পাঠানো হয়েছে",okp:"ধন্যবাদ",again:"আরেকটি রিডিং পাঠান",lg:"العربية",bad:"লিংকটি ঠিকভাবে খোলেনি। মালিকের কাছ থেকে নতুন লিংক চেয়ে নিন।",
+ okh:"রিডিং পাঠানো হয়েছে",okp:"ধন্যবাদ",again:"আরেকটি রিডিং পাঠান",lg:"العربية",codeh:"গোপন কোড দিন",codep:"কোডটি মালিকের কাছ থেকে পেয়েছেন। ৬টি সংখ্যা",codego:"চালিয়ে যান",codebad:"কোড ঠিক নয়",codeleft:"বাকি চেষ্টা: {n}/৫",lockh:"চেষ্টা বন্ধ হয়েছে",lockp:"৫ বার ভুল হয়েছে",lockbtn:"মালিকের কাছ থেকে কোড চান",lockhint:"মালিককে পাঠানোর জন্য একটি তৈরি বার্তা খুলবে। লিংকটি আবার খুললে ৫টি নতুন চেষ্টা পাবেন",lockmsg:"আমি বিদ্যুৎ রিডিংয়ের লিংকের গোপন কোডটি দিতে পারছি না। অনুগ্রহ করে কোডটি পাঠান।",nocrypto:"এই ব্রাউজারে লিংকটি খোলা যায়নি। Chrome-এ খুলুন।",bad:"লিংকটি ঠিকভাবে খোলেনি। মালিকের কাছ থেকে নতুন লিংক চেয়ে নিন।",
  need:"আগে রিডিং লিখুন",net:"পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",deny:"পাঠানোর অনুমতি নেই। মালিককে জানান।",
  mh:"সবুজ স্ক্রিনটি ফ্রেমের ভেতরে রাখুন",mh1:"ছোট কোড 1.8.0 দেখা যাচ্ছে কিনা নিশ্চিত করুন",mh2:"মিটারের বোতাম চেপে 1.8.0 আনুন",
  re:"আবার তুলুন",man:"নিজে লিখুন",use:"এই রিডিং ব্যবহার করুন",
@@ -168,18 +180,24 @@ try{LANG=localStorage.getItem("elec_entry_lang")}catch(e){}
 if(LANG!=="ar"&&LANG!=="bn")LANG=null;
 function b64d(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return JSON.parse(decodeURIComponent(escape(atob(s))))}
 function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
-(function(){var h=location.hash.replace(/^#/,"");
-  if(h){try{var o=b64d(h);if(o&&o.t&&o.o&&o.r&&o.e&&Array.isArray(o.m)){CFG=o;try{localStorage.setItem("elec_entry_cfg",JSON.stringify(o))}catch(e){}}}catch(e){}
-    try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
+function b2u(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+var PEND=null;
+function okCfg(o){return o&&o.t&&o.o&&o.r&&o.e&&Array.isArray(o.m)}
+(function(){var h=location.hash.replace(/^#/,"");try{var qm=location.search.match(/[?&]c=([^&]+)/);if(qm)h=qm[1]}catch(e){}
+  if(h){try{var u=b2u(h);
+      if(u[0]===123){var o=b64d(h);if(okCfg(o)){CFG=o;PEND=null;try{localStorage.setItem("elec_entry_cfg",JSON.stringify(o));localStorage.removeItem("elec_entry_pend");localStorage.removeItem("elec_entry_att")}catch(e){}}}
+      else if(u[0]===2&&u.length>45){PEND=h;try{localStorage.setItem("elec_entry_pend",h);localStorage.setItem("elec_entry_att","0")}catch(e){}}}catch(e){}
+    try{history.replaceState(null,"",location.pathname)}catch(e){}}
+  if(!PEND&&!CFG){try{PEND=localStorage.getItem("elec_entry_pend")||null}catch(e){}}
   if(!CFG){try{CFG=JSON.parse(localStorage.getItem("elec_entry_cfg")||"null")}catch(e){}}
-  if(CFG&&!(CFG.t&&CFG.o&&CFG.r&&CFG.e&&Array.isArray(CFG.m)))CFG=null})();
-function view(v){["vlang","vbad","vmain","vok","vpend","vtut"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut");window.scrollTo(0,0)}
+  if(CFG&&!okCfg(CFG))CFG=null})();
+function view(v){["vlang","vbad","vmain","vok","vpend","vtut","vcode"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut"||v==="vcode");window.scrollTo(0,0)}
 function applyLang(){var t=TX[LANG];document.documentElement.lang=LANG;document.documentElement.dir=LANG==="bn"?"ltr":"rtl";document.body.classList.toggle("ltr",LANG==="bn");
   $("t_ttl").textContent=t.ttl;$("t_hi").textContent=t.hi.replace("{n}",CFG?CFG.n:"");$("t_met").textContent=t.met;$("t_rd").textContent=t.rd;
   $("camt").textContent=t.cam;$("albt").textContent=t.alb;$("send").textContent=t.send;$("lgt").textContent=t.lg;
   $("t_okh").textContent=t.okh;$("t_okp").textContent=t.okp;$("again").textContent=t.again;
   $("t_mh").textContent=t.mh;$("t_mh1").textContent=t.mh1;$("t_mh2").textContent=t.mh2;$("mre").textContent=t.re;$("mman").textContent=t.man;$("muse").textContent=t.use;
-  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst()}
+  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button,#codelg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst()}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2200)}
 </script>
 <script>
@@ -312,7 +330,30 @@ return {read:read,clean:clean,labelState:labelState,setTemplate:setTemplate,make
 </script>
 <script>
 function setLang(l){LANG=l;try{localStorage.setItem("elec_entry_lang",l)}catch(e){}applyLang()}
+var ATT=0;
+function attGet(){try{return parseInt(localStorage.getItem("elec_entry_att")||"0",10)||0}catch(e){return 0}}
+function digits(v){var m={"٠":0,"١":1,"٢":2,"٣":3,"٤":4,"٥":5,"٦":6,"٧":7,"٨":8,"٩":9,"০":0,"১":1,"২":2,"৩":3,"৪":4,"৫":5,"৬":6,"৭":7,"৮":8,"৯":9};return v.replace(/[٠-٩০-৯]/g,function(c){return m[c]}).replace(/\D/g,"").slice(0,6)}
+function cellsDraw(v,bad){var c=$("cells").children,j=0;for(var i=0;i<c.length;i++){if(c[i].classList.contains("sp"))continue;c[i].textContent=v[j]||"";c[i].classList.toggle("cur",j===v.length&&!bad);j++}$("cells").classList.toggle("bad",!!bad)}
+function showCode(){LANG=LANG||"ar";applyLang();ATT=attGet();var lk=ATT>=5;$("cdform").classList.toggle("hide",lk);$("cdlock").classList.toggle("hide",!lk);
+  $("cin").value="";cellsDraw("");$("cdgo").disabled=true;$("cderr").classList.add("hide");$("cdrem").classList.add("hide");view("vcode");if(!lk)setTimeout(function(){try{$("cin").focus()}catch(e){}},120)}
+async function tryCode(code){var u=b2u(PEND),salt=u.slice(1,17),iv=u.slice(17,29),ct=u.slice(29);
+  var km=await crypto.subtle.importKey("raw",new TextEncoder().encode(code),"PBKDF2",false,["deriveKey"]);
+  var key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:300000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  var pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:iv},key,ct);return JSON.parse(new TextDecoder().decode(pt))}
+$("cin").addEventListener("input",function(){var v=digits($("cin").value);$("cin").value=v;$("cderr").classList.add("hide");cellsDraw(v);$("cdgo").disabled=v.length!==6});
+async function cdSubmit(){var v=$("cin").value;if(v.length!==6||$("cdgo").disabled)return;$("cdgo").disabled=true;
+  if(!(window.crypto&&crypto.subtle)){$("cderr").textContent=T("nocrypto");$("cderr").classList.remove("hide");return}
+  var o=null;try{o=await tryCode(v)}catch(e){o=null}
+  if(okCfg(o)){CFG=o;PEND=null;try{localStorage.setItem("elec_entry_cfg",JSON.stringify(o));localStorage.removeItem("elec_entry_pend");localStorage.removeItem("elec_entry_att");if(!localStorage.getItem("elec_entry_lang"))LANG=null}catch(e){}start();return}
+  ATT=attGet()+1;try{localStorage.setItem("elec_entry_att",String(ATT))}catch(e){}
+  if(ATT>=5){showCode();return}
+  $("cin").value="";cellsDraw("",true);$("cderr").textContent=T("codebad");$("cderr").classList.remove("hide");$("cdrem").textContent=T("codeleft").replace("{n}",String(5-ATT));$("cdrem").classList.remove("hide");$("cdgo").disabled=true;
+  setTimeout(function(){cellsDraw("")},900);try{$("cin").focus()}catch(e){}}
+$("cdgo").addEventListener("click",cdSubmit);$("cin").addEventListener("keydown",function(e){if(e.key==="Enter")cdSubmit()});
+$("codelg").addEventListener("click",function(e){var b=e.target.closest("button");if(b){setLang(b.dataset.l);if(ATT<5)try{$("cin").focus()}catch(x){}}});
+$("lockbtn").addEventListener("click",function(){var t=T("lockmsg");if(navigator.share)navigator.share({text:t}).catch(function(){});else{try{navigator.clipboard.writeText(t)}catch(e){}toast(T("lockmsg"))}});
 function start(){
+  if(PEND){showCode();return}
   if(!CFG){LANG=LANG||"ar";applyLang();view("vbad");return}
   $("msel").innerHTML=CFG.m.map(function(m){return '<option value="'+String(m[0]).replace(/[&<>"]/g,"")+'">'+String(m[1]).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})+'</option>'}).join("");
   if(!LANG){var s=CFG.l==="bn"?"bn":"ar";document.querySelector('#vlang button[data-l="'+s+'"]').classList.add("sug");LANG=s;applyLang();LANG=null;view("vlang");return}
