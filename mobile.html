@@ -287,7 +287,24 @@ label.syl{display:block;text-align:right;font-size:13px;font-weight:600;margin:8
 .hbt{display:flex;align-items:center;gap:20px;flex:none}
 
 /*V4*/
-.tbar .ib:not(#mbtn){display:none!important}
+.tbar .ib:not(#mbtn):not(#blb){display:none!important}
+/*V45*/
+button.pd.o{background:#e8890c!important;color:#fff!important;border-color:#e8890c!important}
+button.pd.r{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important}
+button.pd.g{background:#1f7a3a!important;color:#fff!important;border-color:#1f7a3a!important}
+.rf button.sq,button.sq{flex:none;width:46px;padding:0;font-size:26px;line-height:1;display:grid;place-items:center}
+.ob{flex-direction:row!important;flex-wrap:wrap;gap:6px}.ob button.pd{flex:1 1 100%}.ob button.sq{flex:1 1 40%;width:auto;height:34px;font-size:22px}
+#blb .mbad{top:1px;left:auto;right:1px;min-width:16px;height:16px;font-size:10px;padding:0 3px}
+.rc.od{background:#fdecea;border-color:#eeb0aa}.rc.od .kv{border-bottom-color:#f0c6c2}
+.rc.hl{box-shadow:0 0 0 3px rgba(31,122,58,.35)}tr.hl td{box-shadow:inset 0 0 0 9999px rgba(31,122,58,.16)}tr.od td{background:#fdecea}@media (prefers-color-scheme:dark){tr.od td{background:#3a2423}}
+@media (prefers-color-scheme:dark){.rc.od{background:#3a2423;border-color:#6b3b37}.rc.od .kv{border-bottom-color:#5a3532}}
+.bdg.o{border-color:#f0cf93;background:#fff4e0;color:#9a5b00}.bdg.rr{border-color:#f2a9a3;background:#fdeceb;color:#c0392b}
+.pr2{display:flex;gap:6px;align-items:center}.pr2 .bdg{padding:5px 11px;font-size:13px}
+.sheet .grand{position:relative}.sheet .pst{position:absolute;left:5cqw;bottom:calc(100% - 4cqw);width:46cqw;height:auto;transform:rotate(-12deg);opacity:.8;pointer-events:none}
+.bli{display:flex;align-items:center;gap:10px;width:100%;background:var(--in);border:1px solid var(--bd);border-radius:14px;padding:10px 12px;margin-top:6px;text-align:right;font:inherit;color:var(--fg);cursor:pointer}
+.bli .d{width:10px;height:10px;border-radius:50%;flex:none}.bli .s{flex:1;font-size:14.5px;font-weight:700}.bli .s small{display:block;font-size:12px;font-weight:600;color:var(--mut)}.bli .a{font-weight:800;font-size:14px;direction:ltr}
+.blg{font-size:12.5px;font-weight:800;margin:10px 4px 0;text-align:right}.blg.r{color:#c0392b}.blg.o{color:#b8690a}
+
 #mbtn{display:inline-flex}
 .mdot{position:absolute;bottom:7px;right:7px;width:11px;height:11px;border-radius:50%;border:2px solid var(--bg);display:none;box-sizing:content-box}
 .mdot.g{display:block;background:#3ecf8e}.mdot.o{display:block;background:#f5a623}
@@ -353,7 +370,7 @@ button.kze{cursor:pointer}.kze .s{flex:1;font-size:14px}.kze .s b{display:block}
 <body>
 <div id="wideMsg" class="infobox"><span>ℹ️ شاشتك واسعة، يمكنك اختيار <a href="index.html">نسخة المتصفح</a> لتناسب حجم الشاشة.</span><button id="wx" aria-label="إغلاق">✕</button></div>
 <div id="home" class="wrap wide">
-  <div class="top"><h2 class="ttl"><svg class="bolt" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f5a623"/></svg><span>عدادات الكهرباء<small class="vtag2">V4.4</small></span></h2><div class="tbar"><button class="ib hide" id="trb" aria-label="سلة المحذوفات" title="سلة المحذوفات"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span class="tcnt" id="tcnt"></span></button><button class="ib off" id="synic" aria-label="المزامنة" title="المزامنة"><svg class="" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><g class="arr" stroke-width="1.5"><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2"/></g></svg></button><button class="ib" id="bkb" aria-label="النسخ الاحتياطي"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg><span class="bgx" id="bkdot"></span></button><button class="ib" id="addM" aria-label="إضافة عداد" title="إضافة عداد"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button><button class="ib" id="mbtn" aria-label="القائمة" aria-haspopup="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mdot" id="mdot"></span><span class="mbad" id="mbad"></span></button></div></div>
+  <div class="top"><h2 class="ttl"><svg class="bolt" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f5a623"/></svg><span>عدادات الكهرباء<small class="vtag2">V4.5</small></span></h2><div class="tbar"><button class="ib hide" id="trb" aria-label="سلة المحذوفات" title="سلة المحذوفات"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span class="tcnt" id="tcnt"></span></button><button class="ib off" id="synic" aria-label="المزامنة" title="المزامنة"><svg class="" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><g class="arr" stroke-width="1.5"><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2"/></g></svg></button><button class="ib" id="bkb" aria-label="النسخ الاحتياطي"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg><span class="bgx" id="bkdot"></span></button><button class="ib" id="addM" aria-label="إضافة عداد" title="إضافة عداد"><svg class="" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button><button class="ib" id="blb" aria-label="المطلوب متابعته" title="المطلوب متابعته"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a2 2 0 003.4 0"/></svg><span class="mbad" id="blc"></span></button><button class="ib" id="mbtn" aria-label="القائمة" aria-haspopup="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mdot" id="mdot"></span><span class="mbad" id="mbad"></span></button></div></div>
   <input type="file" id="fi" accept=".json,application/json" class="hide">
   <div class="grid" id="grid"></div>
 </div>
@@ -407,7 +424,7 @@ button.kze{cursor:pointer}.kze .s{flex:1;font-size:14px}.kze .s b{display:block}
 <div id="amenu" class="amn hide"><div class="ash" id="ash"><div class="ams">العدادات</div><button class="ami" data-t="addM"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="tx">إضافة عداد</span></button><button class="ami hide" data-t="trb" id="am_tr"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h18"/><path d="M8.2 6.5l.9-2.4a1.5 1.5 0 011.4-1h3a1.5 1.5 0 011.4 1l.9 2.4"/><path d="M5.6 9.5l.9 8.8a3 3 0 003 2.7h5a3 3 0 003-2.7l.9-8.8"/><path d="M10 12l.3 5M14 12l-.3 5"/></svg><span class="tx">سلة المحذوفات</span><span class="amc" id="am_trc"></span></button><div class="ams">البيانات</div><button class="ami" data-t="bkb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg><span class="tx">النسخ الاحتياطي<small id="am_bk"></small></span></button><!--SYROW--><button class="ami" data-t="synic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2" stroke-width="1.5"/></svg><span class="tx">المزامنة<small id="am_sy"></small></span><span class="sdw" id="am_sdw" role="button" tabindex="0" aria-label="معنى اللون"><i class="sdot n" id="am_sd"></i></span></button><div class="leg" id="am_leg"><div class="lg"><i class="sdot g"></i><span><b>أخضر:</b> المزامنة تعمل وآخر مزامنة نجحت</span></div><div class="lg"><i class="sdot o"></i><span><b>برتقالي:</b> هناك مشكلة، مثل انقطاع الاتصال أو تعطل GitHub. بياناتك آمنة وتُعاد المحاولة تلقائياً</span></div><div class="lg"><i class="sdot n"></i><span><b>رمادي:</b> المزامنة غير مفعّلة</span></div></div><!--SYROW-END--><!--TEAM--><div class="ams">الفريق</div><button class="ami" data-t="emp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5a3 3 0 010 6M18 14c2 .6 3.5 2.6 3.5 6"/></svg><span class="tx">الموظفون<small id="am_em"></small></span></button><button class="ami" data-t="code"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M16 7l3 3"/></svg><span class="tx">الرمز السري<small id="am_cd"></small></span></button><button class="ami" data-t="inb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 2h6l1-2h5"/></svg><span class="tx">صندوق الوارد</span><span class="amc red hide" id="am_ic"></span></button><!--TEAM-END--><div class="ams">الإعدادات</div><button class="ami" data-t="set"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="tx">شرائح الكهرباء والرسوم</span></button></div></div>
 <div id="mnu" class="mnu hide"><div class="mbx"><div class="mt" id="mnt"></div>
   <button class="mi pr" data-a="inv">طباعة</button><button class="mi" id="mcmp" data-a="cmp">مقارنة</button><button class="mi ed" data-a="edit">تعديل</button><button class="mi dl" data-a="del">حذف</button><button class="mi cx" data-a="x">إغلاق</button></div></div>
-<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><div class="bki"><div class="bln" id="bl1"><i class="dt"></i><span id="sstat"></span></div><div class="bln" id="bl2"><i class="dt"></i><span id="lbk"></span></div></div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi" id="synb"><svg class="" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2" stroke-width="1.5"/></svg><span>المزامنة</span></button><button class="mi cx" id="bkx">إغلاق</button><div class="vtag">V4.4</div></div></div>
+<div id="bkmod" class="mnu hide"><div class="mbx"><div class="mt">النسخ الاحتياطي</div><div class="bki"><div class="bln" id="bl1"><i class="dt"></i><span id="sstat"></span></div><div class="bln" id="bl2"><i class="dt"></i><span id="lbk"></span></div></div><button class="mi pr" id="bk">⬇ نسخ احتياطي</button><button class="mi sh" id="rs">⬆ استرجاع نسخة</button><button class="mi" id="synb"><svg class="" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19.2a4.5 4.5 0 0 1-.9-8.9 6.2 6.2 0 0 1 12 1.1 3.9 3.9 0 0 1-.7 7.8z"/><path d="M9.4 13.3a2.8 2.8 0 0 1 4.9-.9M14.5 10.6v2h-2M14.6 15.3a2.8 2.8 0 0 1-4.9.9M9.5 18v-2h2" stroke-width="1.5"/></svg><span>المزامنة</span></button><button class="mi cx" id="bkx">إغلاق</button><div class="vtag">V4.5</div></div></div>
 <div id="minfo" class="mnu hide"><div class="mbx wd"><div class="mt" id="mit"></div><div id="mib"></div><button class="mi cx" id="mix">إغلاق</button></div></div>
 <div id="medit" class="mnu hide"><div class="mbx wd"><div class="mt">تعديل العداد</div>
 <label class="ifl">اسم العداد<input id="me_n" maxlength="60"></label>
@@ -448,6 +465,7 @@ button.kze{cursor:pointer}.kze .s{flex:1;font-size:14px}.kze .s b{display:block}
 <div id="mres" class="mres hide"><div class="ms"><button type="button" id="mxx" class="mxx" aria-label="إلغاء"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><canvas id="mpv"></canvas><div class="mt"><span id="mtag"></span></div><div class="mn" id="mnum"></div><div class="mw" id="mwhy"></div>
 <div class="mb"><button type="button" id="mre">إعادة التصوير</button><button type="button" id="mman">تعديل يدوي</button><button type="button" class="p" id="muse">استخدام القراءة</button></div></div></div>
 <input type="file" id="mfile" accept="image/*" capture="environment" class="hide"><input type="file" id="malb" accept="image/*" class="hide">
+<div id="bellm" class="mnu hide"><div class="mbx wd sy"><div class="mt">مطلوب متابعته</div><div id="bl_list"></div><p class="lkn" id="bl_f">اضغط على أي سطر لفتح سجل العداد عند الفاتورة</p><button class="mi cx" id="bl_x" style="margin-top:10px">إغلاق</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -553,7 +571,7 @@ initDS("pd");initDS("cd");
 
 var cur=null,last=null,viewR=null,editNo=null,selMode=false,selSet={},histYear=null;
 function M(id){for(var i=0;i<D.meters.length;i++)if(D.meters[i].id===id)return D.meters[i];return null}
-function show(v){["home","calc","hist","inv","trash","sett"/*TEAM*/,"team","inbox"/*TEAM-END*/].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
+function show(v){if(v==="home"&&typeof updBell==="function")setTimeout(updBell,0);["home","calc","hist","inv","trash","sett"/*TEAM*/,"team","inbox"/*TEAM-END*/].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
 
 // ---- home
 function home(){selMode=false;selSet={};updLbk();updTrb();
@@ -561,7 +579,7 @@ function home(){selMode=false;selSet={};updLbk();updTrb();
   D.meters.forEach(function(m){if(m.del)return;
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
     if(l){var p=l.cd.split("-");ok=(+p[0])*12+(+p[1])>=n.getFullYear()*12+n.getMonth()+1}
-    h+='<div class="mc"><div class="h"><span class="nm">'+symH(m)+' '+esc(m.name)+infoBtn(m)+'<button class="pen" data-a="edit" data-id="'+m.id+'" aria-label="تعديل الاسم"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></button></span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
+    h+='<div class="mc"><div class="h"><span class="nm">'+symH(m)+' '+esc(m.name)+infoBtn(m)+'<button class="pen" data-a="edit" data-id="'+m.id+'" aria-label="تعديل الاسم"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></button></span>'+badgesHtml(m,ok)+'</div>'+
     '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة:<br>'+(l?f2(l.tot)+" ⃁":"—")+'</div><div class="pill">عدد القراءات:<br>'+m.rd.length+'</div></div>'+
     '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
     '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">'+HISTI+'السجل</button></div></div>';
@@ -690,7 +708,7 @@ function commit(){
   if(!last||last.saved)return last;
   if(editNo!==null){
     var ei=RD(editNo),old=cur.rd[ei];
-    last.no=old.no;last.id=old.id||old.no;last.ts=old.ts;last.saved=true;
+    last.no=old.no;last.id=old.id||old.no;last.ts=old.ts;last.saved=true;if(old.sent)last.sent=old.sent;if(old.paid){if(Math.abs((+last.tot)-(+old.tot))<0.005){last.paid=old.paid;last.pdd=old.pdd}else{last.paid=0;last.pdd="";setTimeout(function(){toast("أُلغي ختم الدفع لأن المبلغ تغيّر. اضغط «مدفوع» لإعادته")},400)}}
     var e=JSON.parse(JSON.stringify(last));delete e.saved;cur.rd[ei]=e;
     var L=cur.rd.slice().sort(function(x,y){return x.cd<y.cd?1:x.cd>y.cd?-1:y.ts-x.ts})[0];
     cur.prev=String(L.curr);cur.prevDate=L.cd;editNo=null;save();return last;
@@ -706,16 +724,49 @@ $("mk").addEventListener("click",function(){if(!last)return;commit();showInv(cur
 function sorted(m){return m.rd.slice().sort(function(x,y){return x.cd<y.cd?-1:x.cd>y.cd?1:(x.ts||0)-(y.ts||0)})}
 function yearSep(){return '<div class="yrsep"></div>'}
 function yearBand(y){return '<div class="yrb" style="margin:6px 0 12px"><b>ملخص عام '+ar(y)+'</b><button class="yrbtn" data-a="year" data-y="'+y+'">استعراض</button></div>'}
+/*V45*/
+var DAYMS=864e5;
+function todayS(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function payState(r){if(r.paid)return "g";if(!r.sent)return "w";return Math.floor((Date.now()-r.sent)/DAYMS)>=3?"r":"o"}
+function worstPay(m){var o=0,rr=0,g=0;m.rd.forEach(function(r){var s=payState(r);if(s==="r")rr++;else if(s==="o")o++;else if(s==="g")g++});return rr?"r":o?"o":g?"g":""}
+function badgesHtml(m,ok){if(!ok)return '<span class="bdg w">بانتظار القراءة</span>';var w=worstPay(m);if(!w)return '<span class="bdg">مقروء</span>';
+  return '<span class="pr2"><span class="bdg">مقروء</span><span class="bdg '+(w==="r"?"rr":w==="o"?"o":"")+'">'+({r:"متأخر",o:"غير مدفوع",g:"مدفوع"})[w]+'</span></span>'}
+function stampSvg(w,d){var c="#d62b2b";
+  var s='<svg xmlns="http://www.w3.org/2000/svg" width="300" height="140" viewBox="0 0 300 140"><defs><filter id="r" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.2 2.55" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter></defs>'+
+  '<g filter="url(#r)" fill="none" stroke="'+c+'"><rect x="6" y="6" width="288" height="128" rx="16" stroke-width="7"/><rect x="17" y="17" width="266" height="106" rx="10" stroke-width="3"/></g>'+
+  '<g filter="url(#r)" fill="'+c+'" font-family="Tahoma,Arial,sans-serif" text-anchor="middle" font-weight="900"><text x="150" y="82" font-size="'+(w.length>4?58:70)+'">'+w+'</text><text x="150" y="112" font-size="22" letter-spacing="2">'+d+'</text></g></svg>';
+  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(s)}
+function stampHtml(r){if(!r.paid)return "";var d=r.pdd||todayS();return '<img class="pst" alt="" src="'+stampSvg(iLang==="ar"?"مدفوع":"PAID",dmy(d))+'">'}
+function markSent(r){try{if(!r||!cur)return;var i=RD(r.no);var x=i>=0?cur.rd[i]:null;if(!x||x.sent)return;x.sent=Date.now();if(r!==x)r.sent=x.sent;save()}catch(e){}}
+function payTog(no){var i=RD(no);if(i<0)return;var r=cur.rd[i],y=window.scrollY;
+  if(r.paid){if(!confirm("إلغاء حالة «مدفوع» لهذه الفاتورة؟"))return;r.paid=0;r.pdd=""}
+  else{r.paid=Date.now();r.pdd=todayS()}
+  save();openHist(cur);window.scrollTo(0,y);updBell();toast(r.paid?"تم تسجيل الدفع":"أُلغي تسجيل الدفع")}
+function blList(){var L=[];D.meters.forEach(function(m){if(m.del)return;m.rd.forEach(function(r){var s=payState(r);if(s==="r"||s==="o")L.push({m:m,r:r,s:s})})});
+  L.sort(function(a,b){return a.r.sent-b.r.sent});return L}
+function updBell(){var b=$("blc");if(!b)return;var n=blList().filter(function(x){return x.s==="r"}).length;b.textContent=n||"";b.classList.toggle("on",n>0)}
+function dAgo(ms){var n=Math.floor((Date.now()-ms)/DAYMS);return n}
+function blRow(x){var n=dAgo(x.r.sent),t=x.s==="r"?"متأخرة "+(n===1?"يوم":n===2?"يومين":n+" أيام"):(n<=0?"أُرسلت اليوم":"أُرسلت قبل "+(n===1?"يوم":n===2?"يومين":n+" أيام"));
+  return '<button class="bli" data-m="'+x.m.id+'" data-n="'+esc(x.r.no)+'"><span class="d" style="background:'+(x.s==="r"?"#c0392b":"#e8890c")+'"></span><span class="s">'+esc(x.m.name)+'<small>فاتورة '+esc(invNo(x.r))+' · '+t+'</small></span><span class="a">'+f2(x.r.tot)+' ⃁</span></button>'}
+function blOpen(){var L=blList(),R=L.filter(function(x){return x.s==="r"}),O=L.filter(function(x){return x.s==="o"}),h="";
+  if(R.length)h+='<div class="blg r">متأخر (3 أيام فأكثر)</div>'+R.map(blRow).join("");
+  if(O.length)h+='<div class="blg o">بانتظار الدفع</div>'+O.map(blRow).join("");
+  $("bl_list").innerHTML=h||'<div class="empty">لا يوجد مطلوب متابعته</div>';$("bl_f").classList.toggle("hide",!h);$("bellm").classList.remove("hide")}
+function goRec(mid,no){var m=null;D.meters.forEach(function(x){if(x.id===mid)m=x});if(!m)return;var i=-1;m.rd.forEach(function(r,k){if(r.no===no)i=k});if(i<0)return;
+  cur=m;histYear=m.rd[i].cd.slice(0,4);selMode=false;selSet={};$("bellm").classList.add("hide");openHist(m);
+  setTimeout(function(){var c=document.querySelector('#tb [data-rn="'+no.replace(/"/g,"")+'"]');if(c){c.scrollIntoView({block:"center"});c.classList.add("hl");setTimeout(function(){c.classList.remove("hl")},1800)}},60)}
+$("blb").addEventListener("click",blOpen);$("bl_x").addEventListener("click",function(){$("bellm").classList.add("hide")});
+$("bl_list").addEventListener("click",function(e){var b=e.target.closest("button");if(b)goRec(b.dataset.m,b.dataset.n)});
 function openHist(m){
   cur=m;$("ht").innerHTML=HISTI+"سجل قراءات العداد"+'<span class="hn">'+esc(m.name)+'</span>';$("hid").textContent=m.ident;$("ynm").textContent=m.name;
   var h="";
   var dec=decYears(m),ys=yearsOf(m);if(ys.indexOf(String(histYear))<0)histYear=ys.length?ys[ys.length-1]:null;
   sorted(m).filter(function(r){return r.cd.slice(0,4)===String(histYear)}).forEach(function(r){
     function kv(a,b){return'<div class="kv"><span>'+a+'</span><b>'+b+'</b></div>'}
-    h+='<div class="rc"><div class="rt"><label class="ckl"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></label><span class="rn" dir="ltr">'+invNo(r)+'</span><span class="rtot">'+f2(r.tot)+' ⃁<span class="tip" data-tip="'+tipTxt(r.fee)+'">i</span></span></div>'+
+    h+='<div class="rc'+(payState(r)==="r"?" od":"")+'" data-rn="'+esc(r.no)+'"><div class="rt"><label class="ckl"><input type="checkbox" data-n="'+r.no+'"'+(selSet[r.no]?" checked":"")+'></label><span class="rn" dir="ltr">'+invNo(r)+'</span><span class="rtot">'+f2(r.tot)+' ⃁<span class="tip" data-tip="'+tipTxt(r.fee)+'">i</span></span></div>'+
     kv("تاريخ القراءة",dmy(r.cd))+kv("عدد أيام الاستهلاك",r.days==null?"—":r.days)+kv("القراءة السابقة",fm(r.prev))+kv("القراءة الحالية",fm(r.curr))+
-    kv('الاستهلاك <small class="sm2">(بالكيلو واط)</small>',fm(r.use))+kv("شريحة ١ ("+r.p1+" هللة)",fm(r.u1))+kv("شريحة ٢ ("+r.p2+" هللة)",fm(r.u2))+
-    '<div class="rf"><button class="bl" data-a="new">شهر جديد</button><button class="ot" data-a="more" data-n="'+r.no+'">أخرى</button></div></div>';
+    kv('الاستهلاك <small class="sm2">(بالكيلو واط)</small>',fm(r.use))+kv("شريحة ١ ("+r.p1+" هللة)",fm(r.u1))+(r.u2>0?kv("شريحة ٢ ("+r.p2+" هللة)",fm(r.u2)):"")+
+    '<div class="rf"><button class="pd '+payState(r)+'" data-a="pay" data-n="'+esc(r.no)+'">'+(r.paid?"✓ مدفوع":"مدفوع")+'</button><button class="sq" data-a="new" aria-label="شهر جديد">+</button><button class="sq" data-a="more" data-n="'+esc(r.no)+'" aria-label="أخرى" style="padding-bottom:9px">…</button></div></div>';
   });
   if(histYear&&dec[histYear])h+=yearBand(histYear);
   $("ytabs").className="ytabs"+(ys.length>4?" many":"");setTimeout(function(){try{var o=$("ytabs").querySelector(".on");if(o&&ys.length>4){var t=$("ytabs");t.scrollLeft+=(o.getBoundingClientRect().left+o.offsetWidth/2)-(t.getBoundingClientRect().left+t.offsetWidth/2)}ybarSt()}catch(e){}},30);$("ytabs").innerHTML=ys.map(function(y){return'<button class="yc'+(String(y)===String(histYear)?' on':'')+'" data-y="'+y+'">'+y+'</button>'}).join("");
@@ -735,6 +786,7 @@ function RD(no){for(var i=0;i<cur.rd.length;i++)if(cur.rd[i].no===no)return i;re
 $("tb").addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;var a=b.dataset.a,i=RD(b.dataset.n);if(a==="year")return openYear(b.dataset.y);
   if(a==="new")return openCalc(cur);
+  if(a==="pay")return payTog(b.dataset.n);
   if(a==="more")return openMenu(b.dataset.n);
 });
 var menuNo=null;
@@ -866,7 +918,7 @@ function showInv(r,from){
    row(t.prev,f2(r.prev),t.kwh)+row(t.curr,f2(r.curr),t.kwh)+row(t.use,f2(r.use),t.kwh)+'<div class="sep"></div>'+
    tr(0,r.u1,r.p1,r.t1)+(r.u2>0?'<div class="sep"></div><div class="t2box">'+tr(1,r.u2,r.p2,r.t2)+'</div>':'')+'<div class="sep"></div>'+
    row(t.fee,f2(r.fee),"⃁")+
-   '<div class="grand"><div class="tr"><span>'+t.due+'</span><span class="v">'+f2(r.tot)+'</span><span><span class="sar">⃁</span></span></div><small>'+t.vat(r.taxp)+f2(r.vat)+' <span class="sar">⃁</span></small></div></div><div class="bar"></div>';
+   '<div class="grand">'+stampHtml(r)+'<div class="tr"><span>'+t.due+'</span><span class="v">'+f2(r.tot)+'</span><span><span class="sar">⃁</span></span></div><small>'+t.vat(r.taxp)+f2(r.vat)+' <span class="sar">⃁</span></small></div></div><div class="bar"></div>';
   $("sheet").className="sheet "+(r.u2>0?"has2":"no2");
   show("inv");prepPdf(r);
 }
@@ -878,17 +930,17 @@ function showInv(r,from){
 $("ib").addEventListener("click",function(){back==="hist"?openHist(cur):back==="calc"?openHist(cur):home()});
 function txt(r){var t=T(),h=t.sh;if(r.kind==="year")return t.ys+r.y+"\n"+h.subs+r.name+"\n"+h.tu+f2(r.tu)+" "+t.kwh+"\n"+h.tp+f2(r.tp)+" "+t.cur;return t.title+"\n"+h.subs+r.name+"\n"+h.from+dmy(r.pd)+h.to+dmy(r.cd)+" ("+(r.days===null?"—":r.days)+h.d+")\n"+h.use+f2(r.use)+" "+t.kwh+"\n"+h.due+f2(r.tot)+" "+t.cur+h.vat}
 function share(r){
-  var t=txt(r);
+  markSent(r);var t=txt(r);
   if(navigator.share){navigator.share({text:t}).catch(function(){})}
   else{var w=window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank");if(!w){try{navigator.clipboard.writeText(t);toast("تم نسخ ملخص الفاتورة")}catch(e){toast("تعذرت المشاركة")}}}
 }
-$("prn").addEventListener("click",function(){window.print()});
+$("prn").addEventListener("click",function(){markSent(viewR);window.print()});
 var pdfBlob=null,pdfFor=null;
 function prepPdf(r){pdfBlob=null;pdfFor=r;setTimeout(function(){if(pdfFor!==r)return;buildPdf().then(function(b){if(pdfFor===r)pdfBlob=b},function(){})},450)}
 $("sh").addEventListener("click",function(){
   if(!viewR)return;
   if(!pdfBlob||pdfFor!==viewR){toast("جارٍ تجهيز الفاتورة، اضغط مرة أخرى بعد لحظة");return}
-  var f=null;try{f=new File([pdfBlob],invFile(viewR)+".pdf",{type:"application/pdf"})}catch(e){}
+  markSent(viewR);var f=null;try{f=new File([pdfBlob],invFile(viewR)+".pdf",{type:"application/pdf"})}catch(e){}
   if(f&&navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(function(e){if(!e||e.name!=="AbortError")share(viewR)});
   else share(viewR);
 });
@@ -918,7 +970,7 @@ function buildPdf(){
     html2canvas(cl,{scale:2.5,backgroundColor:"#ffffff",scrollX:0,scrollY:0}).then(function(cv){wrap.remove();res(mkPdf(cv))},function(e){wrap.remove();rej(e)});
   });
 }
-$("pdf").addEventListener("click",function(){
+$("pdf").addEventListener("click",function(){markSent(viewR);
   if(!viewR)return;
   if(!window.html2canvas)return toast("تعذر تحميل أداة التصدير، تأكد من الاتصال");
   toast("جارٍ تجهيز الملف...");
@@ -1103,7 +1155,7 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden&&syO
 window.addEventListener("online",function(){if(syOn())schedSync(500)});
 setInterval(function(){if(!document.hidden&&syOn())schedSync(100)},10000);
 function syncInit(){updSStat();if(syOn())schedSync(1500)}
-(function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn","syncm","minfo","medit","pdw1","pdw2","pdw3","amenu","empm","lnkm","codem","code1m"].every(function(i){var e=$(i);return !e||e.classList.contains("hide")})}
+(function(){function noModal(){return["mnu","bkmod","cmp","bkrem","dwarn","syncm","minfo","medit","pdw1","pdw2","pdw3","amenu","empm","lnkm","codem","code1m","bellm"].every(function(i){var e=$(i);return !e||e.classList.contains("hide")})}
   function sw(el,fn){var x0=null,y0=0,t0=0;
     el.addEventListener("touchstart",function(e){if(e.touches.length!==1||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
     el.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=Math.abs(t.clientY-y0);x0=null;
