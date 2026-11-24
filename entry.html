@@ -26,6 +26,15 @@ input.fld{direction:ltr;background:linear-gradient(135deg,#b3d6a6,#aee89a);color
 .camb svg,.albb svg{width:30px;height:30px}
 .send{display:block;width:100%;height:60px;border:0;border-radius:16px;background:#1f7a3a;color:#fff;font:inherit;font-weight:800;font-size:20px;margin-top:24px;cursor:pointer}
 .send:disabled{opacity:.55}
+.xb{margin-top:14px;border-radius:14px;padding:12px;font-weight:700;line-height:1.8;text-align:center;font-size:16px}
+.xe{background:#fdecec;border:1.5px solid #e57373;color:#a32020}.xw{background:#fff4e0;border:1.5px solid #f0b350;color:#7a4b00}
+.xp{background:var(--in);border:1.5px solid var(--bd);color:var(--fg)}.xp .xs{font-size:13px;font-weight:400;opacity:.8}
+.xg{background:#e6f4e7;border:1.5px solid #8bc48e;color:#256a29}
+.xbtn{display:block;width:100%;border:0;border-radius:14px;padding:14px;margin-top:12px;font:inherit;font-weight:800;font-size:17px;color:#fff;background:#e08a1e;cursor:pointer;text-align:center;text-decoration:none}
+.xbtn.tel{background:#1f6fb2}
+@media (prefers-color-scheme:dark){.xe{background:#3a1d1d;color:#ffb4b4}.xw{background:#3a2d12;color:#ffd391}.xg{background:#16301a;color:#a5e0a9}}
+.swh{position:fixed;left:0;top:50%;width:40px;height:40px;margin-top:-20px;border-radius:50%;background:#1f6fb2;color:#fff;display:flex;align-items:center;justify-content:center;transform:translateX(-50px);opacity:0;pointer-events:none;z-index:300}
+.help.bsh{text-decoration:none}
 .err{color:#c0392b;text-align:center;font-weight:700;margin-top:14px;line-height:1.7}
 .ok{text-align:center;padding:50px 10px}
 .ok .tick{width:96px;height:96px;border-radius:50%;background:#3ecf8e;color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-size:56px;font-weight:800}
@@ -105,7 +114,7 @@ body.ltr .wrap{direction:ltr}
 <body>
 <div id="cst" class="cst ok hide"><i></i><span id="cst_t"></span></div>
 <div id="vlang" class="wrap hide"><h1 style="margin-top:60px">اختر اللغة · ভাষা বেছে নিন</h1><div class="lgs"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div></div>
-<div id="vbad" class="wrap hide"><div style="text-align:center"><div class="lg2" id="badlg"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div><div class="bic">!</div><h1 data-k="badh" style="margin:0 0 10px"></h1><div class="err" id="bad" data-k="bad"></div><div class="tipb" data-k="badtip"></div></div></div>
+<div id="vbad" class="wrap hide"><div style="text-align:center"><div class="lg2" id="badlg"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div><div class="bic">!</div><h1 data-k="badh" style="margin:0 0 10px"></h1><div class="err" id="bad" data-k="bad"></div><div class="tipb" data-k="badtip"></div><button type="button" class="xbtn" id="bshare" style="margin-top:18px"></button></div></div>
 <div id="vcode" class="wrap hide"><div style="text-align:center"><div class="lg2" id="codelg"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div>
 <div id="cdform"><div class="kic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M16 7l3 3"/></svg></div>
 <h1 data-k="codeh" style="margin:0 0 6px"></h1><p class="hi" data-k="codep"></p><div class="err hide" id="cderr"></div>
@@ -119,8 +128,10 @@ body.ltr .wrap{direction:ltr}
  <label for="msel" id="t_met"></label><select id="msel" class="fld"></select>
  <label for="curr" id="t_rd"></label>
  <input id="curr" class="fld" type="text" inputmode="decimal" autocomplete="off" placeholder="0000.0">
+ <label for="rdt" id="t_dt"></label><input id="rdt" class="fld" type="date" style="font-size:20px">
  <div class="big2"><button type="button" id="camb" class="camb"></button><button type="button" id="albb" class="albb"></button></div>
  <div id="err" class="err hide"></div>
+ <div id="xbox" class="hide"><div id="xerr" class="xb xe hide"></div><button type="button" id="xreq" class="xbtn hide"></button><div id="xcall" class="xb xw hide"><span id="xcallt"></span><a id="xtel" class="xbtn tel" href="#"></a></div><div id="xp" class="xb xp hide"><div id="xpt"></div><div class="xs" id="xps"></div></div><div id="xo" class="xb xg hide"></div><div id="xfault" class="hide"><a id="ftel" class="xbtn tel hide" href="#"></a><button type="button" id="fshare" class="xbtn"></button><button type="button" id="fretry" class="help"></button></div></div>
  <button class="send" id="send"></button>
  <div id="qn" class="q hide"></div>
  <button type="button" class="help" id="helpb" data-k="help"></button>
@@ -156,7 +167,7 @@ body.ltr .wrap{direction:ltr}
 <div class="toast" id="toast"></div>
 <script>
 var TX={
-ar:{tskip:"تخطي",tnext:"التالي",tprev:"السابق",tstart:"ابدأ",t1h:"١ · صوّر شاشة العداد",t1p:"اضغط «تصوير» ووجّه الكاميرا إلى الشاشة الخضراء حتى تدخل داخل الإطار الأصفر",t1q:"تأكد أن الرمز الصغير على الشاشة 1.8.0. وإن لم يكن، اضغط زر العداد حتى يظهر",t2h:"٢ · راجع الرقم وأرسل",t2p:"يقرأ التطبيق الرقم ويعرضه لك. إن كان مطابقاً لما في العداد اضغط «استخدام القراءة»",t2q:"بعد الإرسال تظهر شاشة ✓ «تم إرسال القراءة»",t3h:"٣ · إذا لم تُقرأ الصورة",t3a:"«الرمز ليس 1.8.0»",t3ap:"اضغط زر العداد حتى يظهر 1.8.0 ثم صوّر من جديد",t3b:"«لم أستطع قراءة الرقم»",t3bp:"قرّب الكاميرا وقلّل انعكاس الضوء، وأعد التصوير",t3c:"الحل البديل",t3cp:"اضغط «من الألبوم»، أو «تعديل يدوي» واكتب الرقم كما تراه على العداد",t4h:"٤ · معاني الألوان",t4a:"الإرسال يعمل",t4b:"تعذر الوصول للخدمة، وتُحفظ قراءتك إن أرسلت",t4c:"محفوظة في جهازك وتُرسل وحدها لاحقاً",t4d:"الكاميرا تأكدت أنها على الرمز الصحيح",t4e:"الرمز غير صحيح، غيّره وأعد التصوير",t5h:"أنت جاهز",t5p:"تستطيع الرجوع لهذا الشرح في أي وقت من أسفل الصفحة الرئيسية",t5c:"لا تُظهر هذه الشاشة مرة أخرى",help:"كيف أسجل القراءة؟",badh:"الرابط غير صالح",badtip:"تأكد أن الرابط منسوخ كاملاً وافتحه في Chrome",ok18:"✓ 1.8.0",onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا توجد صلاحية",pendn:"بانتظار الإرسال ({n})",qn:"إذا ضغطت «إرسال» الآن تُحفظ القراءة في جهازك وتُرسل تلقائياً حين يعود الاتصال",ph:"حُفظت القراءة",pp:"ستُرسل تلقائياً عند عودة الاتصال، ولا تحتاج أن تفعل شيئاً",pnow:"إرسال الآن",okauto:"أُرسلت تلقائياً بعد عودة الاتصال",ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
+ar:{f401:"⛔ لا يمكن الإرسال.\nصلاحية رابطك منتهية أو ملغاة.\nتواصل مع المسؤول.",f404:"⛔ لا يمكن الإرسال.\nمشكلة في إعداد حسابك.\nتواصل مع المسؤول.",fshare:"📸 مشاركة الخطأ مع المسؤول",fretry:"إعادة المحاولة",fsaved:"تم حفظ الصورة ونسخ النص. أرسلهما للمسؤول",dt:"تاريخ القراءة",needd:"اختر تاريخ القراءة",dbefore:"التاريخ قبل تاريخ القراءة السابقة ({p}). اختر تاريخاً صحيحاً.",dday:"⛔ التاريخ غير مقبول.\nالقراءة السابقة كانت يوم {n}، فيجب أن تكون القراءة الجديدة في يوم {n} أو بعده من الشهر.",xreq:"📨 طلب استثناء من المسؤول",xcallm:"📞 اتصل بالمسؤول للموافقة على هذا التاريخ.\nأرسلنا له طلباً جديداً الآن.",xcallr:"📞 اتصل بالمسؤول للموافقة على هذا التاريخ.",xcall:"📞 اتصال بالمسؤول",xpend:"🕓 طلب الاستثناء بانتظار المسؤول\nالتاريخ: {d}",xpends:"سيصلك الرد هنا تلقائياً.",xok:"✅ وافق المسؤول على التاريخ {d}.\nيمكنك الإرسال الآن.",xno:"⛔ رفض المسؤول التاريخ {d}.\nاختر تاريخاً آخر أو اتصل به.",xnote:"يمكنك طلب استثناء مرة واحدة.",tskip:"تخطي",tnext:"التالي",tprev:"السابق",tstart:"ابدأ",t1h:"١ · صوّر شاشة العداد",t1p:"اضغط «تصوير» ووجّه الكاميرا إلى الشاشة الخضراء حتى تدخل داخل الإطار الأصفر",t1q:"تأكد أن الرمز الصغير على الشاشة 1.8.0. وإن لم يكن، اضغط زر العداد حتى يظهر",t2h:"٢ · راجع الرقم وأرسل",t2p:"يقرأ التطبيق الرقم ويعرضه لك. إن كان مطابقاً لما في العداد اضغط «استخدام القراءة»",t2q:"بعد الإرسال تظهر شاشة ✓ «تم إرسال القراءة»",t3h:"٣ · إذا لم تُقرأ الصورة",t3a:"«الرمز ليس 1.8.0»",t3ap:"اضغط زر العداد حتى يظهر 1.8.0 ثم صوّر من جديد",t3b:"«لم أستطع قراءة الرقم»",t3bp:"قرّب الكاميرا وقلّل انعكاس الضوء، وأعد التصوير",t3c:"الحل البديل",t3cp:"اضغط «من الألبوم»، أو «تعديل يدوي» واكتب الرقم كما تراه على العداد",t4h:"٤ · معاني الألوان",t4a:"الإرسال يعمل",t4b:"تعذر الوصول للخدمة، وتُحفظ قراءتك إن أرسلت",t4c:"محفوظة في جهازك وتُرسل وحدها لاحقاً",t4d:"الكاميرا تأكدت أنها على الرمز الصحيح",t4e:"الرمز غير صحيح، غيّره وأعد التصوير",t5h:"أنت جاهز",t5p:"تستطيع الرجوع لهذا الشرح في أي وقت من أسفل الصفحة الرئيسية",t5c:"لا تُظهر هذه الشاشة مرة أخرى",help:"كيف أسجل القراءة؟",badh:"الرابط غير صالح",badtip:"تأكد أن الرابط منسوخ كاملاً وافتحه في Chrome",ok18:"✓ 1.8.0",onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا توجد صلاحية",pendn:"بانتظار الإرسال ({n})",qn:"إذا ضغطت «إرسال» الآن تُحفظ القراءة في جهازك وتُرسل تلقائياً حين يعود الاتصال",ph:"حُفظت القراءة",pp:"ستُرسل تلقائياً عند عودة الاتصال، ولا تحتاج أن تفعل شيئاً",pnow:"إرسال الآن",okauto:"أُرسلت تلقائياً بعد عودة الاتصال",ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
  okh:"تم إرسال القراءة",okp:"شكراً لك",again:"إرسال قراءة أخرى",lg:"বাংলা",codeh:"أدخل الرمز السري",codep:"الرمز وصلك من صاحب العمل. 6 أرقام",codego:"متابعة",codebad:"الرمز غير صحيح",codeleft:"المحاولات المتبقية: {n} من 5",lockh:"توقفت المحاولات",lockp:"أخطأت 5 مرات",lockbtn:"طلب الرمز من صاحب العمل",lockhint:"يفتح رسالة جاهزة ترسلها لصاحب العمل. وعند فتح الرابط من جديد تبدأ لك 5 محاولات جديدة",lockmsg:"لم أستطع إدخال الرمز السري لرابط إدخال القراءات. أرسله لي من فضلك.",nocrypto:"تعذر فتح الرابط على هذا المتصفح. افتحه في Chrome.",bad:"لم يُفتح الرابط بشكل صحيح. اطلب من صاحب العمل رابطاً جديداً.",
  need:"أدخل القراءة أولاً",net:"تعذر الإرسال. تأكد من الإنترنت وحاول مرة أخرى.",deny:"لا توجد صلاحية للإرسال. أخبر صاحب العمل.",
  mh:"ضع الشاشة الخضراء داخل الإطار",mh1:"وتأكد أن الرمز الصغير 1.8.0 ظاهر",mh2:"اضغط زر العداد حتى يظهر 1.8.0",
@@ -165,7 +176,7 @@ ar:{tskip:"تخطي",tnext:"التالي",tprev:"السابق",tstart:"ابدأ"
  tun:"\u26a0 لم أتأكد أن الشاشة على 1.8.0",tno:"\u26a0 لم أستطع قراءة الرقم",
  w2:"الرمز الصغير غير واضح. قرّب الكاميرا أو قلّل انعكاس الضوء ثم صوّر من جديد.",
  w3:"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد."},
-bn:{tskip:"বাদ দিন",tnext:"পরের",tprev:"আগের",tstart:"শুরু করুন",t1h:"১ · মিটারের ছবি তুলুন",t1p:"«ছবি তুলুন» চাপুন এবং সবুজ স্ক্রিনটি হলুদ ফ্রেমের ভেতরে আনুন",t1q:"স্ক্রিনে ছোট কোড 1.8.0 আছে কিনা দেখুন। না থাকলে মিটারের বোতাম চেপে 1.8.0 আনুন",t2h:"২ · সংখ্যা মিলিয়ে পাঠান",t2p:"অ্যাপ সংখ্যাটি পড়ে দেখাবে। মিটারের সাথে মিললে «এই রিডিং ব্যবহার করুন» চাপুন",t2q:"পাঠানোর পর ✓ «রিডিং পাঠানো হয়েছে» দেখাবে",t3h:"৩ · ছবি পড়া না গেলে",t3a:"«কোডটি 1.8.0 নয়»",t3ap:"মিটারের বোতাম চেপে 1.8.0 আনুন, তারপর আবার ছবি তুলুন",t3b:"«সংখ্যা পড়া গেল না»",t3bp:"ক্যামেরা কাছে আনুন, আলোর প্রতিফলন কমান, আবার ছবি তুলুন",t3c:"বিকল্প উপায়",t3cp:"«অ্যালবাম থেকে» চাপুন, অথবা «নিজে লিখুন» চেপে মিটারে যা দেখছেন সেই সংখ্যা লিখুন",t4h:"৪ · রঙের অর্থ",t4a:"পাঠানো যাবে",t4b:"সার্ভিসে পৌঁছানো যাচ্ছে না; পাঠালে রিডিং সংরক্ষিত থাকবে",t4c:"ফোনে সংরক্ষিত, পরে নিজে থেকে পাঠানো হবে",t4d:"ক্যামেরা নিশ্চিত যে কোডটি সঠিক",t4e:"কোডটি ভুল, বদলে আবার ছবি তুলুন",t5h:"আপনি প্রস্তুত",t5p:"এই নির্দেশনা যেকোনো সময় প্রধান পাতার নিচ থেকে আবার দেখতে পারবেন",t5c:"এই পাতা আর দেখাবেন না",help:"কীভাবে রিডিং দেবেন?",badh:"লিংকটি সঠিক নয়",badtip:"লিংকটি পুরো কপি করা হয়েছে কিনা দেখুন এবং Chrome-এ খুলুন",ok18:"✓ 1.8.0",onl:"সংযুক্ত",offl:"সংযোগ নেই",denyl:"অনুমতি নেই",pendn:"পাঠানোর অপেক্ষায় ({n})",qn:"এখন «পাঠান» চাপলে রিডিং এই ফোনে সংরক্ষণ হবে এবং সংযোগ ফিরলে নিজে থেকে পাঠানো হবে",ph:"রিডিং সংরক্ষিত হয়েছে",pp:"সংযোগ ফিরলে নিজে থেকেই পাঠানো হবে, আপনাকে কিছু করতে হবে না",pnow:"এখনই পাঠান",okauto:"সংযোগ ফিরে আসার পর নিজে থেকে পাঠানো হয়েছে",ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
+bn:{f401:"⛔ পাঠানো যাচ্ছে না।\nআপনার লিংকের অনুমতি শেষ বা বাতিল হয়েছে।\nমালিকের সাথে যোগাযোগ করুন।",f404:"⛔ পাঠানো যাচ্ছে না।\nআপনার অ্যাকাউন্ট সেটআপে সমস্যা আছে।\nমালিকের সাথে যোগাযোগ করুন।",fshare:"📸 মালিককে ত্রুটি পাঠান",fretry:"আবার চেষ্টা করুন",fsaved:"ছবি সংরক্ষিত হয়েছে ও লেখা কপি হয়েছে। মালিককে পাঠান",dt:"রিডিং-এর তারিখ",needd:"রিডিং-এর তারিখ বেছে নিন",dbefore:"তারিখটি আগের রিডিং-এর ({p}) আগে। সঠিক তারিখ দিন।",dday:"⛔ তারিখ গ্রহণযোগ্য নয়।\nআগের রিডিং ছিল মাসের {n} তারিখে, তাই নতুন রিডিং মাসের {n} তারিখ বা তার পরে হতে হবে।",xreq:"📨 মালিকের কাছে ব্যতিক্রমের অনুরোধ",xcallm:"📞 এই তারিখ অনুমোদনের জন্য মালিককে ফোন করুন।\nআমরা এখন তাঁকে নতুন অনুরোধ পাঠিয়েছি।",xcallr:"📞 এই তারিখ অনুমোদনের জন্য মালিককে ফোন করুন।",xcall:"📞 মালিককে ফোন করুন",xpend:"🕓 ব্যতিক্রমের অনুরোধ মালিকের অপেক্ষায়\nতারিখ: {d}",xpends:"উত্তর এখানে নিজে থেকেই আসবে।",xok:"✅ মালিক {d} তারিখ অনুমোদন করেছেন।\nএখন পাঠাতে পারেন।",xno:"⛔ মালিক {d} তারিখ প্রত্যাখ্যান করেছেন।\nঅন্য তারিখ দিন বা ফোন করুন।",xnote:"আপনি একবার ব্যতিক্রমের অনুরোধ করতে পারবেন।",tskip:"বাদ দিন",tnext:"পরের",tprev:"আগের",tstart:"শুরু করুন",t1h:"১ · মিটারের ছবি তুলুন",t1p:"«ছবি তুলুন» চাপুন এবং সবুজ স্ক্রিনটি হলুদ ফ্রেমের ভেতরে আনুন",t1q:"স্ক্রিনে ছোট কোড 1.8.0 আছে কিনা দেখুন। না থাকলে মিটারের বোতাম চেপে 1.8.0 আনুন",t2h:"২ · সংখ্যা মিলিয়ে পাঠান",t2p:"অ্যাপ সংখ্যাটি পড়ে দেখাবে। মিটারের সাথে মিললে «এই রিডিং ব্যবহার করুন» চাপুন",t2q:"পাঠানোর পর ✓ «রিডিং পাঠানো হয়েছে» দেখাবে",t3h:"৩ · ছবি পড়া না গেলে",t3a:"«কোডটি 1.8.0 নয়»",t3ap:"মিটারের বোতাম চেপে 1.8.0 আনুন, তারপর আবার ছবি তুলুন",t3b:"«সংখ্যা পড়া গেল না»",t3bp:"ক্যামেরা কাছে আনুন, আলোর প্রতিফলন কমান, আবার ছবি তুলুন",t3c:"বিকল্প উপায়",t3cp:"«অ্যালবাম থেকে» চাপুন, অথবা «নিজে লিখুন» চেপে মিটারে যা দেখছেন সেই সংখ্যা লিখুন",t4h:"৪ · রঙের অর্থ",t4a:"পাঠানো যাবে",t4b:"সার্ভিসে পৌঁছানো যাচ্ছে না; পাঠালে রিডিং সংরক্ষিত থাকবে",t4c:"ফোনে সংরক্ষিত, পরে নিজে থেকে পাঠানো হবে",t4d:"ক্যামেরা নিশ্চিত যে কোডটি সঠিক",t4e:"কোডটি ভুল, বদলে আবার ছবি তুলুন",t5h:"আপনি প্রস্তুত",t5p:"এই নির্দেশনা যেকোনো সময় প্রধান পাতার নিচ থেকে আবার দেখতে পারবেন",t5c:"এই পাতা আর দেখাবেন না",help:"কীভাবে রিডিং দেবেন?",badh:"লিংকটি সঠিক নয়",badtip:"লিংকটি পুরো কপি করা হয়েছে কিনা দেখুন এবং Chrome-এ খুলুন",ok18:"✓ 1.8.0",onl:"সংযুক্ত",offl:"সংযোগ নেই",denyl:"অনুমতি নেই",pendn:"পাঠানোর অপেক্ষায় ({n})",qn:"এখন «পাঠান» চাপলে রিডিং এই ফোনে সংরক্ষণ হবে এবং সংযোগ ফিরলে নিজে থেকে পাঠানো হবে",ph:"রিডিং সংরক্ষিত হয়েছে",pp:"সংযোগ ফিরলে নিজে থেকেই পাঠানো হবে, আপনাকে কিছু করতে হবে না",pnow:"এখনই পাঠান",okauto:"সংযোগ ফিরে আসার পর নিজে থেকে পাঠানো হয়েছে",ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
  okh:"রিডিং পাঠানো হয়েছে",okp:"ধন্যবাদ",again:"আরেকটি রিডিং পাঠান",lg:"العربية",codeh:"গোপন কোড দিন",codep:"কোডটি মালিকের কাছ থেকে পেয়েছেন। ৬টি সংখ্যা",codego:"চালিয়ে যান",codebad:"কোড ঠিক নয়",codeleft:"বাকি চেষ্টা: {n}/৫",lockh:"চেষ্টা বন্ধ হয়েছে",lockp:"৫ বার ভুল হয়েছে",lockbtn:"মালিকের কাছ থেকে কোড চান",lockhint:"মালিককে পাঠানোর জন্য একটি তৈরি বার্তা খুলবে। লিংকটি আবার খুললে ৫টি নতুন চেষ্টা পাবেন",lockmsg:"আমি বিদ্যুৎ রিডিংয়ের লিংকের গোপন কোডটি দিতে পারছি না। অনুগ্রহ করে কোডটি পাঠান।",nocrypto:"এই ব্রাউজারে লিংকটি খোলা যায়নি। Chrome-এ খুলুন।",bad:"লিংকটি ঠিকভাবে খোলেনি। মালিকের কাছ থেকে নতুন লিংক চেয়ে নিন।",
  need:"আগে রিডিং লিখুন",net:"পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",deny:"পাঠানোর অনুমতি নেই। মালিককে জানান।",
  mh:"সবুজ স্ক্রিনটি ফ্রেমের ভেতরে রাখুন",mh1:"ছোট কোড 1.8.0 দেখা যাচ্ছে কিনা নিশ্চিত করুন",mh2:"মিটারের বোতাম চেপে 1.8.0 আনুন",
@@ -191,13 +202,13 @@ function okCfg(o){return o&&o.t&&o.o&&o.r&&o.e&&Array.isArray(o.m)}
   if(!PEND&&!CFG){try{PEND=localStorage.getItem("elec_entry_pend")||null}catch(e){}}
   if(!CFG){try{CFG=JSON.parse(localStorage.getItem("elec_entry_cfg")||"null")}catch(e){}}
   if(CFG&&!okCfg(CFG))CFG=null})();
-function view(v){["vlang","vbad","vmain","vok","vpend","vtut","vcode"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut"||v==="vcode");window.scrollTo(0,0)}
+function view(v){["vlang","vbad","vmain","vok","vpend","vtut","vcode"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut"||v==="vcode");if(v==="vmain"&&!$("rdt").value)$("rdt").value=todayS();window.scrollTo(0,0)}
 function applyLang(){var t=TX[LANG];document.documentElement.lang=LANG;document.documentElement.dir=LANG==="bn"?"ltr":"rtl";document.body.classList.toggle("ltr",LANG==="bn");
   $("t_ttl").textContent=t.ttl;$("t_hi").textContent=t.hi.replace("{n}",CFG?CFG.n:"");$("t_met").textContent=t.met;$("t_rd").textContent=t.rd;
   $("camt").textContent=t.cam;$("albt").textContent=t.alb;$("send").textContent=t.send;$("lgt").textContent=t.lg;
   $("t_okh").textContent=t.okh;$("t_okp").textContent=t.okp;$("again").textContent=t.again;
   $("t_mh").textContent=t.mh;$("t_mh1").textContent=t.mh1;$("t_mh2").textContent=t.mh2;$("mre").textContent=t.re;$("mman").textContent=t.man;$("muse").textContent=t.use;
-  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button,#codelg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst()}
+  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button,#codelg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst();$("t_dt").textContent=t.dt;$("bshare").textContent=t.fshare;if(CFG&&typeof mOpts==="function"){mOpts();renderX()}}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2200)}
 </script>
 <script>
@@ -355,9 +366,9 @@ $("lockbtn").addEventListener("click",function(){var t=T("lockmsg");if(navigator
 function start(){
   if(PEND){showCode();return}
   if(!CFG){LANG=LANG||"ar";applyLang();view("vbad");return}
-  $("msel").innerHTML=CFG.m.map(function(m){return '<option value="'+String(m[0]).replace(/[&<>"]/g,"")+'">'+String(m[1]).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})+'</option>'}).join("");
+  mOpts();
   if(!LANG){var s=CFG.l==="bn"?"bn":"ar";document.querySelector('#vlang button[data-l="'+s+'"]').classList.add("sug");LANG=s;applyLang();LANG=null;view("vlang");return}
-  applyLang();tutHidden()?view("vmain"):tutOpen()}
+  applyLang();tutHidden()?view("vmain"):tutOpen();stFetch().then(function(){mOpts();renderX()});if(xrGet().length)xPollStart()}
 document.querySelector("#vlang .lgs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setLang(b.dataset.l);tutHidden()?view("vmain"):tutOpen()});
 $("badlg").addEventListener("click",function(e){var b=e.target.closest("button");if(b)setLang(b.dataset.l)});
 $("lgt").addEventListener("click",function(){setLang(LANG==="bn"?"ar":"bn")});
@@ -387,34 +398,134 @@ function updCst(){if(!CFG)return;var q=qGet().length,c,t;
   if(q){c="wait";t=T("pendn").replace("{n}",q)}else if(NET==="bad"){c="bad";t=T("offl")}else if(NET==="deny"){c="bad";t=T("denyl")}else{c="ok";t=T("onl")}
   $("cst").className="cst "+c+($("cst").classList.contains("hide")?" hide":"");$("cst_t").textContent=t;$("qn").classList.toggle("hide",NET!=="bad")}
 async function chk(){if(!CFG)return;try{var r=await fetch(gh("")+"?t="+Date.now(),{headers:ghH(),cache:"no-store"});
-    NET=(r.status===401||r.status===403||r.status===404)?"deny":r.ok?"ok":"bad"}catch(e){NET="bad"}
+    NET=(r.status===401||r.status===403||r.status===404)?"deny":r.ok?"ok":"bad";if(NET==="deny")setFault(r.status);else if(FAULT)clearFault()}catch(e){NET="bad"}
   updCst();if(NET==="ok")flush()}
 async function flush(){if(FL)return;FL=true;var q=qGet(),sent=0;
   while(q.length){try{var r=await putFile(q[0].n,q[0].b);if(r.ok||r.status===422){q.shift();qSet(q);sent++}else break}catch(e){break}}
   FL=false;if(sent)NET="ok";updCst();
   if(sent&&!q.length&&!$("vpend").classList.contains("hide")){$("t_okp").textContent=T("okauto");view("vok")}}
 async function ping(){if(!CFG)return;var last=0;try{last=+(localStorage.getItem("elec_entry_ping")||0)}catch(e){}
-  if(Date.now()-last<36e5)return;var ts=Date.now(),name="open-"+CFG.e+"-"+ts+"-"+Math.random().toString(36).slice(2,6)+".json";
+  if(Date.now()-last<36e5)return;var ts=Date.now(),name="open-"+CFG.e+"-"+ts+"-s"+linkSig()+".json";
   try{var r=await putFile(name,JSON.stringify({v:1,k:"open",e:CFG.e,t:ts}));if(r.ok){try{localStorage.setItem("elec_entry_ping",String(ts))}catch(e){}}}catch(e){}}
 function netInit(){if(!CFG)return;NET=navigator.onLine===false?"bad":"ok";updCst();
   window.addEventListener("online",chk);window.addEventListener("offline",function(){NET="bad";updCst()});
   document.addEventListener("visibilitychange",function(){if(!document.hidden)chk()});setInterval(function(){if(!document.hidden)chk()},30000);
   chk();ping();try{if(navigator.serviceWorker)navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}}
+/*V46*/
+function todayS(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function dmyS(i){var p=String(i||"").split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:""}
+function lsg(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lss(k,v){try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
+function jget(k){try{return JSON.parse(lsg(k)||"null")}catch(e){return null}}
+var XS=jget("elec_entry_st"),VIOL=null;
+function arr(k){var a=jget(k);return Array.isArray(a)?a:[]}
+function xrGet(){return arr("elec_entry_xr")}function xrSet(a){lss("elec_entry_xr",a&&a.length?JSON.stringify(a):null)}
+function apvGet(){return arr("elec_entry_apv")}function apvSet(a){lss("elec_entry_apv",a&&a.length?JSON.stringify(a):null)}
+function xnGet(){return parseInt(lsg("elec_entry_xn")||"0",10)||0}function xnSet(n){lss("elec_entry_xn",n?String(n):null)}
+function tmHash(s){var h=5381,i;for(i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return ("000000"+(h>>>0).toString(36)).slice(-6)}
+function linkSig(){try{return tmHash(JSON.stringify([CFG.o,CFG.r,CFG.t,CFG.e,CFG.n,CFG.l,CFG.m.map(function(x){return x[0]}).sort()]))}catch(e){return "000000"}}
+function stM(id){return XS&&XS.m?XS.m.filter(function(x){return x.i===id})[0]:null}
+var NMW={"محل":["Shop","দোকান"],"شقة":["Apartment","ফ্ল্যাট"],"شقه":["Apartment","ফ্ল্যাট"]};
+function trName(n,l){n=String(n==null?"":n);if(l!=="en"&&l!=="bn")return n;var k=l==="en"?0:1,hit=false;
+  var s=n.replace(/(^|[\s\-_\/()\u060c,.])(محل|شقة|شقه)(?=$|[\s\-_\/()\u060c,.0-9\u0660-\u0669])/g,function(m,a,w){hit=true;return a+NMW[w][k]});
+  if(!hit)return n;
+  return s.replace(/[\u0660-\u0669]/g,function(d){var v=d.charCodeAt(0)-1632;return l==="bn"?"০১২৩৪৫৬৭৮৯".charAt(v):String(v)}).replace(/[0-9]/g,function(d){return l==="bn"?"০১২৩৪৫৬৭৮৯".charAt(+d):d})}
+function mNm(m){var s=stM(m[0]),ar=(s&&s.n&&s.n.ar)||m[1];return (LANG||"ar")==="bn"?trName(ar,"bn"):ar}
+function esc2(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function mOpts(){if(!CFG)return;var sel=$("msel"),cur=sel.value;sel.innerHTML=CFG.m.map(function(m){return '<option value="'+String(m[0]).replace(/[&<>"]/g,"")+'">'+esc2(mNm(m))+'</option>'}).join("");if(cur)sel.value=cur}
+async function stFetch(){if(!CFG)return XS;try{var r=await fetch(gh("/contents/out/state.json")+"?t="+Date.now(),{headers:ghH(),cache:"no-store"});
+  if(r.ok){var j=await r.json(),o=JSON.parse(decodeURIComponent(escape(atob((j.content||"").replace(/\s/g,"")))));if(o&&o.v===1&&Array.isArray(o.m)){XS=o;lss("elec_entry_st",JSON.stringify(o))}}}catch(e){}return XS}
+function dim(y,m){return new Date(y,m,0).getDate()}
+function chkDate(mid,d){var s=stM(mid);if(!s||!/^\d{4}-\d\d-\d\d$/.test(s.d||""))return null;
+  if(d<s.d)return{kind:"before",p:s.d};var p=s.d.split("-").map(Number),q=d.split("-").map(Number),need=Math.min(p[2],dim(q[0],q[1]));
+  if(q[2]<need)return{kind:"day",need:need,p:s.d};return null}
+function renderX(){if(FAULT)return renderFault();var pl=xrGet(),pend=pl[pl.length-1],apl=apvGet(),e=$("xerr"),rq=$("xreq"),cl=$("xcall"),p=$("xp"),o=$("xo");
+  [e,rq,cl,p,o].forEach(function(x){x.classList.add("hide")});
+  if(VIOL){var txt="",call=false,req=false;
+    if(VIOL.kind==="before"){txt=T("dbefore").replace("{p}",dmyS(VIOL.p))}
+    else if(VIOL.kind==="day"){txt=T("dday").split("{n}").join(VIOL.need);if(VIOL.auto)call=true;else req=true}
+    else if(VIOL.kind==="rej"){txt=T("xno").replace("{d}",dmyS(VIOL.d));call=true}
+    e.textContent=txt;e.style.whiteSpace="pre-line";e.classList.remove("hide");
+    if(req){rq.textContent=T("xreq");rq.classList.remove("hide")}
+    if(call){$("xcallt").textContent=VIOL.auto?T("xcallm"):T("xcallr");$("xcallt").style.whiteSpace="pre-line";var ph=(XS&&XS.ph)||"",a=$("xtel");a.textContent=T("xcall");a.classList.toggle("hide",!ph);if(ph)a.href="tel:"+ph.replace(/[^\d+]/g,"");cl.classList.remove("hide")}}
+  if(pend){$("xpt").textContent=T("xpend").replace("{d}",dmyS(pend.d));$("xpt").style.whiteSpace="pre-line";$("xps").textContent=T("xpends");p.classList.remove("hide")}
+  if(apl.length){o.textContent=T("xok").replace("{d}",apl.map(function(x){return dmyS(x.d)}).join(" ، "));o.style.whiteSpace="pre-line";o.classList.remove("hide")}
+  $("xbox").classList.toggle("hide",!VIOL&&!pend&&!apl.length)}
+async function sendReq(mid,dt,n){var ts=Date.now(),name="req-"+CFG.e+"-"+ts+"-"+Math.random().toString(36).slice(2,6)+".json",json=JSON.stringify({v:1,k:"x",e:CFG.e,m:mid,d:dt,n:n,t:ts});
+  var xl=xrGet();xl.push({id:name,m:mid,d:dt,t:ts});xrSet(xl);
+  try{var r=await putFile(name,json);if(!(r.ok||r.status===422))throw 0}catch(e){var q=qGet();q.push({n:name,b:json});qSet(q);NET="bad";updCst()}
+  renderX();xPollStart()}
+var XT=null;
+function xPollStart(){if(XT)return;XT=setInterval(xPoll,12000);xPoll()}
+async function xPoll(){var L=xrGet().filter(function(p){return Date.now()-p.t<=12*864e5});xrSet(L);
+  if(!L.length){renderX();clearInterval(XT);XT=null;return}
+  if(document.hidden)return;await stFetch();var rest=[],ch=false,ap=apvGet();
+  L.forEach(function(p){var a=XS&&XS.ap?XS.ap[p.id]:undefined;
+    if(a===1){ap.push({id:p.id,m:p.m,d:p.d});ch=true;VIOL=null}
+    else if(a===0){ch=true;VIOL={kind:"rej",d:p.d,m:p.m}}
+    else rest.push(p)});
+  if(!ch)return;apvSet(ap);xrSet(rest);renderX();if(!rest.length){clearInterval(XT);XT=null}}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&xrGet().length)xPollStart()});
+$("xreq").addEventListener("click",function(){if(!VIOL||VIOL.kind!=="day")return;var m=VIOL.m,d=VIOL.d;xnSet(1);VIOL=null;sendReq(m,d,1)});
+$("rdt").addEventListener("change",function(){VIOL=null;renderX()});
+$("msel").addEventListener("change",function(){VIOL=null;renderX()});
+async function dateGate(mid,dt){
+  if(!/^\d{4}-\d\d-\d\d$/.test(dt)){showErr(T("needd"));return{stop:1}}
+  await Promise.race([stFetch(),new Promise(function(r){setTimeout(r,2500)})]);
+  var v=chkDate(mid,dt);if(!v)return{};
+  if(v.kind==="day"){var a=apvGet().filter(function(x){return x.m===mid&&x.d===dt})[0];if(a)return{x:a.id};
+    var xn=xnGet(),pend=xrGet().filter(function(x){return x.m===mid&&x.d===dt})[0];v.m=mid;v.d=dt;
+    if(xn>=1){v.auto=true;if(!(pend&&pend.m===mid&&pend.d===dt)){xnSet(xn+1);sendReq(mid,dt,xn+1)}}
+    VIOL=v;renderX();return{stop:1}}
+  v.m=mid;v.d=dt;VIOL=v;renderX();return{stop:1}}
+function xDone(x){apvSet(apvGet().filter(function(a){return a.id!==x}));xnSet(0);VIOL=null;renderX()}
+/*V47*/
+var FAULT=null;
+function setFault(c){FAULT={code:c};renderFault()}
+function clearFault(){FAULT=null;renderFault()}
+function renderFault(){var on=!!FAULT;["curr","rdt","msel","camb","albb"].forEach(function(i){var e=$(i);e.disabled=on;e.style.opacity=on?".55":""});$("send").style.display=on?"none":"";$("xfault").classList.toggle("hide",!on);
+  if(on){["xreq","xcall","xp","xo"].forEach(function(i){$(i).classList.add("hide")});var e=$("xerr");e.textContent=T(FAULT.code===404?"f404":"f401");e.style.whiteSpace="pre-line";e.classList.remove("hide");$("xbox").classList.remove("hide");
+    var ph=(XS&&XS.ph)||"",a=$("ftel");a.textContent=T("xcall");a.classList.toggle("hide",!ph);if(ph)a.href="tel:"+ph.replace(/[^\d+]/g,"");$("fshare").textContent=T("fshare");$("fretry").textContent=T("fretry")}
+  else renderX()}
+function arMeter(mid){var m=CFG.m.filter(function(x){return x[0]===mid})[0],s=stM(mid);return (s&&s.n&&s.n.ar)||(m&&m[1])||"—"}
+function wrapTxt(ctx,t,mw){var w=t.split(" "),L=[],c="";w.forEach(function(x){var n=c?c+" "+x:x;if(ctx.measureText(n).width>mw&&c){L.push(c);c=x}else c=n});if(c)L.push(c);return L}
+async function shareFault(reason,code,rows){var nm=CFG?CFG.n:"",W=720,P=36,cv=document.createElement("canvas"),ctx=cv.getContext("2d"),FONT='Tahoma,"Segoe UI",Arial,sans-serif';
+  cv.width=W;cv.height=900;ctx.direction="rtl";ctx.font="700 30px "+FONT;
+  var title="⚠ يوجد خطأ لدى الموظف يحتاج تدخل المسؤول",tl=wrapTxt(ctx,title,W-2*P);
+  ctx.font="600 25px "+FONT;var rl=wrapTxt(ctx,reason,W-2*P-40);
+  var H=P+tl.length*42+16+rows.length*46+30+rl.length*38+40+70+P;cv.height=H;
+  ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);ctx.fillStyle="#c62828";ctx.fillRect(0,0,W,12);ctx.direction="rtl";ctx.textAlign="right";
+  var y=P+30;ctx.font="700 30px "+FONT;ctx.fillStyle="#a32020";tl.forEach(function(t){ctx.fillText(t,W-P,y);y+=42});y+=2;
+  ctx.font="600 25px "+FONT;rows.forEach(function(r){ctx.strokeStyle="#e5e9f0";ctx.beginPath();ctx.moveTo(P,y+14);ctx.lineTo(W-P,y+14);ctx.stroke();
+    ctx.fillStyle="#6f7a8a";ctx.textAlign="right";ctx.direction="rtl";ctx.fillText(r[0],W-P,y);ctx.fillStyle="#2c3e50";ctx.textAlign="left";ctx.direction="ltr";ctx.font="700 25px "+FONT;ctx.fillText(String(r[1]),P,y);ctx.font="600 25px "+FONT;y+=46});
+  y+=14;var bh=rl.length*38+24;ctx.fillStyle="#fdecec";ctx.fillRect(P,y-8,W-2*P,bh);ctx.fillStyle="#a32020";ctx.textAlign="right";ctx.direction="rtl";var ty=y+24;rl.forEach(function(t){ctx.fillText(t,W-P-14,ty);ty+=38});y+=bh+34;
+  ctx.font="500 20px "+FONT;ctx.fillStyle="#8a94a3";ctx.textAlign="center";ctx.fillText("لا يحتوي على التوكن ولا الرمز السري",W/2,y);
+  var blob=await new Promise(function(r){cv.toBlob(r,"image/png")}),fname="خطأ-"+(nm||"موظف")+".png",file=new File([blob],fname,{type:"image/png"}),
+  text="يوجد خطأ لدى الموظف"+(nm?" "+nm:"")+" يحتاج تدخل المسؤول — "+reason;
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text:text});return}}catch(e){if(e&&e.name==="AbortError")return}
+  try{var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500)}catch(e){}
+  try{await navigator.clipboard.writeText(text)}catch(e){}toast(T("fsaved"))}
+function nowS(){var d=new Date(),p=function(n){return ("0"+n).slice(-2)};return d.getFullYear()+"/"+p(d.getMonth()+1)+"/"+p(d.getDate())+" "+p(d.getHours())+":"+p(d.getMinutes())}
+$("fshare").addEventListener("click",function(){if(!FAULT)return;var c=FAULT.code,mid=$("msel").value;
+  shareFault(c===404?"المستودع غير موجود أو التوكن لا يشمله":"صلاحية الموظف منتهية أو ملغاة أو غير صالحة",c,[["الموظف",CFG.n],["العداد",arMeter(mid)],["القراءة",$("curr").value||"—"],["التاريخ",$("rdt").value||"—"],["رمز الخطأ",String(c)],["الوقت",nowS()]])});
+$("fretry").addEventListener("click",function(){chk()});
+$("bshare").addEventListener("click",function(){shareFault("رابط الموظف لا يعمل أو ناقص","link",[["رمز الخطأ","رابط"],["الوقت",nowS()]])});
 $("send").addEventListener("click",async function(){
   var v=$("curr").value.trim().replace(",",".").replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}),n=parseFloat(v);
   if(!v||isNaN(n)||n<=0)return showErr(T("need"));
   var mid=$("msel").value,mn=$("msel").options[$("msel").selectedIndex].text,img="";
+  var dt=$("rdt").value,gt=await dateGate(mid,dt);if(gt.stop)return;
   try{if(window.EIMG)img=window.EIMG.toDataURL("image/jpeg",.6)}catch(e){}
-  var ts=Date.now(),json=JSON.stringify({v:1,e:CFG.e,n:CFG.n,m:mid,mn:mn,r:String(n),t:ts,img:img}),
+  var ts=Date.now(),json=JSON.stringify({v:1,e:CFG.e,n:CFG.n,m:mid,mn:mn,r:String(n),d:dt,x:gt.x||"",t:ts,img:img}),
   name=CFG.e+"-"+ts+"-"+Math.random().toString(36).slice(2,6)+".json",btn=$("send");btn.disabled=true;btn.textContent=T("sending");$("err").classList.add("hide");
   try{var r=await putFile(name,json);
-    if(r.status===401||r.status===403||r.status===404){NET="deny";updCst();showErr(T("deny"))}
-    else if(r.ok){NET="ok";updCst();window.EIMG=null;$("t_okp").textContent=T("okp");view("vok")}
+    if(r.status===401||r.status===403||r.status===404){NET="deny";updCst();setFault(r.status)}
+    else if(r.ok){NET="ok";updCst();xDone(gt.x);window.EIMG=null;$("t_okp").textContent=T("okp");view("vok")}
     else throw 0}
-  catch(e){var q=qGet();q.push({n:name,b:json});qSet(q);NET="bad";window.EIMG=null;$("t_pd").textContent=n+" · "+mn;updCst();view("vpend")}
+  catch(e){var q=qGet();q.push({n:name,b:json});qSet(q);NET="bad";xDone(gt.x);window.EIMG=null;$("t_pd").textContent=n+" · "+mn;updCst();view("vpend")}
   btn.disabled=false;btn.textContent=T("send")});
 $("pnow").addEventListener("click",async function(){await flush();if(qGet().length)toast(T("net"))});
-$("again").addEventListener("click",function(){$("curr").value="";window.EIMG=null;view("vmain")});
+$("again").addEventListener("click",function(){$("curr").value="";$("rdt").value="";window.EIMG=null;view("vmain")});
 (function(){
 var g=function(i){return document.getElementById(i)},T0="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";MOCR.setTemplate(T0);
 var stream=null,cur=null;
@@ -491,6 +602,25 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&(!g("mcam")
 })()
 start();
 netInit();
+/*SWIPE-BACK*/
+/* أساسي: أي شاشة أو نافذة جديدة فيها زر رجوع تعمل بالسحب تلقائياً.
+   الشاشة: عنصر .wrap أو [data-view] وبداخله زر .bkb أو [data-back]. النافذة: .mnu/.amn وفيها [data-back] أو زر .cx. */
+(function(){var EDGE=28,sx=0,sy=0,dx=0,tr=false,el=null;
+function vis(e){return !e.classList.contains("hide")}
+function pick(c){return c.querySelector("[data-back]")||c.querySelector(".bkb:not(.del)")||c.querySelector("button.cx")}
+function target(){var o=[].slice.call(document.querySelectorAll(".mnu,.amn")).filter(vis);
+  if(o.length){var m=o[o.length-1];return pick(m)||m}
+  var v=[].slice.call(document.querySelectorAll(".wrap,[data-view]")).filter(vis);
+  for(var i=0;i<v.length;i++){var b=pick(v[i]);if(b)return b}
+  return null}
+function hint(x){if(!el){el=document.createElement("div");el.className="swh";el.innerHTML='<svg width="22" height="22" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"><path d="M320 125L190 255L320 385"/></svg>';document.body.appendChild(el)}
+  var p=Math.max(0,Math.min(x,110))/110;el.style.opacity=x>8&&target()?String(Math.min(1,p*1.6)):"0";el.style.transform="translateX("+(-50+p*80)+"px)"}
+document.addEventListener("touchstart",function(e){if(e.touches.length!==1){tr=false;return}var t=e.touches[0];tr=t.clientX<=EDGE;sx=t.clientX;sy=t.clientY;dx=0},{passive:true});
+document.addEventListener("touchmove",function(e){if(!tr)return;var t=e.touches[0];dx=t.clientX-sx;if(Math.abs(t.clientY-sy)>Math.max(46,dx)){tr=false;hint(0);return}hint(dx)},{passive:true});
+document.addEventListener("touchend",function(){if(!tr)return;tr=false;hint(0);if(dx>80){var b=target();if(b)b.click()}},{passive:true});
+document.addEventListener("touchcancel",function(){tr=false;hint(0)},{passive:true});
+window.swipeBackTarget=target})();
+/*SWIPE-BACK-END*/
 </script>
 </body>
 </html>
