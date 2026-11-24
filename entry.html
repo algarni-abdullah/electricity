@@ -40,6 +40,37 @@ input.fld{direction:ltr;background:linear-gradient(135deg,#b3d6a6,#aee89a);color
 .cst.bad{background:rgba(239,83,80,.15);color:#c0392b}.cst.bad i{background:#ef5350}
 .cst.wait{background:rgba(245,166,35,.2);color:#9a5b00}.cst.wait i{background:#f5a623}
 .q{margin-top:14px;border:1.5px dashed #f5a623;background:rgba(245,166,35,.12);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.8}
+.lg2{display:inline-flex;background:rgba(255,255,255,.7);border:1px solid var(--bd);border-radius:999px;padding:3px;gap:2px;margin-top:10px}
+.lg2 button{border:0;background:transparent;padding:8px 20px;border-radius:999px;font:inherit;font-weight:800;font-size:15px;color:var(--mut);cursor:pointer}.lg2 button.on{background:#1f7a3a;color:#fff}
+.bic{width:84px;height:84px;border-radius:50%;background:rgba(239,83,80,.15);color:#c0392b;display:grid;place-items:center;font-size:46px;margin:44px auto 16px}
+#bad{color:var(--fg);font-weight:400;font-size:16px;line-height:2;margin:0 0 10px}
+.tipb{background:var(--in);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.9;color:var(--mut)}
+.help{display:block;margin:26px auto 0;background:transparent;border:0;font:inherit;font-size:14px;font-weight:700;color:#2a56b8;text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:8px 12px}
+#vtut{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;background:radial-gradient(120% 60% at 20% 0%,rgba(63,157,107,.16) 0%,transparent 55%),var(--bg)}
+.tsk{align-self:flex-start;padding:14px 18px;background:transparent;border:0;font:inherit;font-size:14px;font-weight:700;color:var(--mut);cursor:pointer;min-height:48px}
+#tsc{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}#tsc::-webkit-scrollbar{display:none}
+.tsl{flex:0 0 100%;scroll-snap-align:start;padding:6px 24px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:520px;margin:0 auto;overflow-y:auto}
+.tsl h3{margin:20px 0 8px;font-size:22px}.tsl p{font-size:15px;line-height:1.9;color:var(--mut);margin:0 0 8px}
+.ill{width:100%;height:150px;border-radius:16px;background:var(--box);border:1px solid var(--bd);display:grid;place-items:center;margin-top:6px;position:relative}
+.ill .fr{position:absolute;width:190px;height:70px;border:3px solid #f5c400;border-radius:12px}.ill .lcd{width:160px;height:46px;border-radius:8px;background:linear-gradient(135deg,#b3d6a6,#aee89a);display:grid;place-items:center;font-weight:800;direction:ltr;color:#1d3a1d}
+.mb2{display:flex;gap:8px;width:100%;margin-top:8px}.mb2 div{flex:1;height:44px;border-radius:12px;border:2px solid #8fb97c;background:var(--in);display:grid;place-items:center;font-size:12px;font-weight:800;color:#1f5d2b}
+.msb{height:44px;width:100%;border-radius:12px;background:#1f7a3a;color:#fff;display:grid;place-items:center;font-weight:800;margin-top:8px}
+.mf{height:44px;border-radius:12px;background:linear-gradient(135deg,#b3d6a6,#aee89a);display:grid;place-items:center;font-weight:800;width:100%;direction:ltr;color:#1d3a1d}
+.li{width:100%;text-align:start;display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.7;margin:7px 0;background:var(--in);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;color:var(--fg)}
+.li b{display:block;font-size:15px}.li .nm{width:26px;height:26px;border-radius:50%;background:#1f7a3a;color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+.cl{width:100%;display:flex;gap:10px;align-items:center;margin:6px 0;font-size:13.5px;line-height:1.6;text-align:start;color:var(--fg)}
+.pl{font-size:12px;font-weight:700;border-radius:14px;padding:5px 10px;display:inline-flex;gap:6px;align-items:center;justify-content:center;white-space:nowrap;width:128px;flex:none}.pl i{width:9px;height:9px;border-radius:50%}
+.pl.ok{background:rgba(62,207,142,.18);color:#1c7f4a}.pl.ok i{background:#3ecf8e}.pl.bad{background:rgba(239,83,80,.15);color:#c0392b}.pl.bad i{background:#ef5350}.pl.wait{background:rgba(245,166,35,.2);color:#9a5b00}.pl.wait i{background:#f5a623}
+.bigok{width:84px;height:84px;border-radius:50%;background:#34c759;color:#fff;font-size:48px;display:grid;place-items:center;margin-top:40px;box-shadow:0 8px 20px rgba(52,199,89,.35)}
+.ga{display:inline-flex;align-items:center;gap:9px;margin-top:20px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.55);backdrop-filter:blur(14px) saturate(1.6);-webkit-backdrop-filter:blur(14px) saturate(1.6);border:1px solid rgba(255,255,255,.8);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 4px 14px rgba(0,0,0,.08);font:inherit;font-size:13px;font-weight:600;color:#3a3a3c;cursor:pointer}
+@media (prefers-color-scheme:dark){.ga{background:rgba(60,60,67,.55);border-color:rgba(255,255,255,.12);color:#e8ebef}}
+.rc{width:20px;height:20px;border-radius:50%;border:1.6px solid #b4bac4;background:rgba(255,255,255,.6);display:grid;place-items:center;flex:none}
+.ga.on .rc{background:#0a84ff;border-color:#0a84ff;box-shadow:0 2px 6px rgba(10,132,255,.4)}
+.ga.on .rc:after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.tdt{display:flex;gap:6px;justify-content:center;margin:8px 0 10px}.tdt i{width:8px;height:8px;border-radius:50%;background:#c4ccd8;transition:.2s}.tdt i.on{background:#1f7a3a;width:22px;border-radius:5px}
+.tnx{display:flex;gap:8px;padding:0 18px calc(16px + env(safe-area-inset-bottom,0px));max-width:520px;width:100%;margin:0 auto}
+.tnx button{flex:1;height:48px;border-radius:14px;font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+.tn1{background:#1f7a3a;color:#fff;border:0}.tn2{background:var(--in);color:var(--mut);border:1.5px solid var(--bd)}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:99}.toast.on{opacity:1}
 body.ltr .wrap{direction:ltr}
 .cw{position:relative}.cw .fld{padding-inline:90px}
@@ -69,7 +100,7 @@ body.ltr .wrap{direction:ltr}
 <body>
 <div id="cst" class="cst ok hide"><i></i><span id="cst_t"></span></div>
 <div id="vlang" class="wrap hide"><h1 style="margin-top:60px">اختر اللغة · ভাষা বেছে নিন</h1><div class="lgs"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div></div>
-<div id="vbad" class="wrap hide"><div class="err" id="bad" style="margin-top:80px"></div></div>
+<div id="vbad" class="wrap hide"><div style="text-align:center"><div class="lg2" id="badlg"><button data-l="ar">العربية</button><button data-l="bn">বাংলা</button></div><div class="bic">!</div><h1 data-k="badh" style="margin:0 0 10px"></h1><div class="err" id="bad" data-k="bad"></div><div class="tipb" data-k="badtip"></div></div></div>
 <div id="vmain" class="wrap hide" style="position:relative">
  <button class="lgt" id="lgt"></button>
  <h1 id="t_ttl"></h1><p class="hi" id="t_hi"></p>
@@ -80,7 +111,26 @@ body.ltr .wrap{direction:ltr}
  <div id="err" class="err hide"></div>
  <button class="send" id="send"></button>
  <div id="qn" class="q hide"></div>
+ <button type="button" class="help" id="helpb" data-k="help"></button>
 </div>
+<div id="vtut" class="hide"><button type="button" class="tsk" id="tskip" data-k="tskip"></button>
+<div id="tsc">
+<div class="tsl"><h3 data-k="t1h"></h3><p data-k="t1p"></p><div class="ill"><div class="fr"></div><div class="lcd">12118.8</div></div><p style="margin-top:12px" data-k="t1q"></p></div>
+<div class="tsl"><h3 data-k="t2h"></h3><p data-k="t2p"></p><div class="mf">12118.8</div><div class="mb2"><div data-k="cam"></div><div data-k="alb"></div></div><div class="msb" data-k="send"></div><p style="margin-top:12px" data-k="t2q"></p></div>
+<div class="tsl"><h3 data-k="t3h"></h3>
+<div class="li"><span class="nm">1</span><span><b data-k="t3a"></b><span data-k="t3ap"></span></span></div>
+<div class="li"><span class="nm">2</span><span><b data-k="t3b"></b><span data-k="t3bp"></span></span></div>
+<div class="li"><span class="nm">3</span><span><b data-k="t3c"></b><span data-k="t3cp"></span></span></div></div>
+<div class="tsl"><h3 data-k="t4h"></h3>
+<div class="cl"><span class="pl ok"><i></i><span data-k="onl"></span></span><span data-k="t4a"></span></div>
+<div class="cl"><span class="pl bad"><i></i><span data-k="offl"></span></span><span data-k="t4b"></span></div>
+<div class="cl"><span class="pl wait"><i></i><span data-k="pendn"></span></span><span data-k="t4c"></span></div>
+<div class="cl"><span class="pl ok"><span data-k="ok18"></span></span><span data-k="t4d"></span></div>
+<div class="cl"><span class="pl wait"><span data-k="t170"></span></span><span data-k="t4e"></span></div></div>
+<div class="tsl"><div class="bigok">&#10003;</div><h3 data-k="t5h"></h3><p data-k="t5p"></p><button type="button" class="ga" id="tchk" role="checkbox" aria-checked="false"><span class="rc"></span><span data-k="t5c"></span></button></div>
+</div>
+<div class="tdt" id="tdt"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="tnx"><button type="button" class="tn1" id="tnext"></button><button type="button" class="tn2" id="tprev" data-k="tprev"></button></div></div>
 <div id="vpend" class="wrap hide"><div class="ok"><div class="tick" style="background:#f5a623">&#8987;</div><h2 id="t_ph"></h2><p id="t_pd" style="margin-bottom:6px"></p><p id="t_pp"></p><button class="send" id="pnow" style="margin-top:0"></button></div></div>
 <div id="vok" class="wrap hide"><div class="ok"><div class="tick">&#10003;</div><h2 id="t_okh"></h2><p id="t_okp"></p><button class="send" id="again" style="margin-top:0"></button></div></div>
 
@@ -94,8 +144,8 @@ body.ltr .wrap{direction:ltr}
 <div class="toast" id="toast"></div>
 <script>
 var TX={
-ar:{onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا توجد صلاحية",pendn:"بانتظار الإرسال ({n})",qn:"إذا ضغطت «إرسال» الآن تُحفظ القراءة في جهازك وتُرسل تلقائياً حين يعود الاتصال",ph:"حُفظت القراءة",pp:"ستُرسل تلقائياً عند عودة الاتصال، ولا تحتاج أن تفعل شيئاً",pnow:"إرسال الآن",okauto:"أُرسلت تلقائياً بعد عودة الاتصال",ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
- okh:"تم إرسال القراءة",okp:"شكراً لك",again:"إرسال قراءة أخرى",lg:"বাংলা",bad:"الرابط غير صالح. اطلب من صاحب العمل رابطاً جديداً.",
+ar:{tskip:"تخطي",tnext:"التالي",tprev:"السابق",tstart:"ابدأ",t1h:"١ · صوّر شاشة العداد",t1p:"اضغط «تصوير» ووجّه الكاميرا إلى الشاشة الخضراء حتى تدخل داخل الإطار الأصفر",t1q:"تأكد أن الرمز الصغير على الشاشة 1.8.0. وإن لم يكن، اضغط زر العداد حتى يظهر",t2h:"٢ · راجع الرقم وأرسل",t2p:"يقرأ التطبيق الرقم ويعرضه لك. إن كان مطابقاً لما في العداد اضغط «استخدام القراءة»",t2q:"بعد الإرسال تظهر شاشة ✓ «تم إرسال القراءة»",t3h:"٣ · إذا لم تُقرأ الصورة",t3a:"«الرمز ليس 1.8.0»",t3ap:"اضغط زر العداد حتى يظهر 1.8.0 ثم صوّر من جديد",t3b:"«لم أستطع قراءة الرقم»",t3bp:"قرّب الكاميرا وقلّل انعكاس الضوء، وأعد التصوير",t3c:"الحل البديل",t3cp:"اضغط «من الألبوم»، أو «تعديل يدوي» واكتب الرقم كما تراه على العداد",t4h:"٤ · معاني الألوان",t4a:"الإرسال يعمل",t4b:"تعذر الوصول للخدمة، وتُحفظ قراءتك إن أرسلت",t4c:"محفوظة في جهازك وتُرسل وحدها لاحقاً",t4d:"الكاميرا تأكدت أنها على الرمز الصحيح",t4e:"الرمز غير صحيح، غيّره وأعد التصوير",t5h:"أنت جاهز",t5p:"تستطيع الرجوع لهذا الشرح في أي وقت من أسفل الصفحة الرئيسية",t5c:"لا تُظهر هذه الشاشة مرة أخرى",help:"كيف أسجل القراءة؟",badh:"الرابط غير صالح",badtip:"تأكد أن الرابط منسوخ كاملاً وافتحه في Chrome",ok18:"✓ 1.8.0",onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا توجد صلاحية",pendn:"بانتظار الإرسال ({n})",qn:"إذا ضغطت «إرسال» الآن تُحفظ القراءة في جهازك وتُرسل تلقائياً حين يعود الاتصال",ph:"حُفظت القراءة",pp:"ستُرسل تلقائياً عند عودة الاتصال، ولا تحتاج أن تفعل شيئاً",pnow:"إرسال الآن",okauto:"أُرسلت تلقائياً بعد عودة الاتصال",ttl:"إرسال قراءة العداد",hi:"مرحباً {n}",met:"العداد",rd:"قراءة العداد (ك.و.س)",cam:"تصوير",alb:"من الألبوم",send:"إرسال",sending:"جارٍ الإرسال...",
+ okh:"تم إرسال القراءة",okp:"شكراً لك",again:"إرسال قراءة أخرى",lg:"বাংলা",bad:"لم يُفتح الرابط بشكل صحيح. اطلب من صاحب العمل رابطاً جديداً.",
  need:"أدخل القراءة أولاً",net:"تعذر الإرسال. تأكد من الإنترنت وحاول مرة أخرى.",deny:"لا توجد صلاحية للإرسال. أخبر صاحب العمل.",
  mh:"ضع الشاشة الخضراء داخل الإطار",mh1:"وتأكد أن الرمز الصغير 1.8.0 ظاهر",mh2:"اضغط زر العداد حتى يظهر 1.8.0",
  re:"إعادة التصوير",man:"تعديل يدوي",use:"استخدام القراءة",
@@ -103,8 +153,8 @@ ar:{onl:"متصل",offl:"لا يوجد اتصال بالخدمة",denyl:"لا ت
  tun:"\u26a0 لم أتأكد أن الشاشة على 1.8.0",tno:"\u26a0 لم أستطع قراءة الرقم",
  w2:"الرمز الصغير غير واضح. قرّب الكاميرا أو قلّل انعكاس الضوء ثم صوّر من جديد.",
  w3:"قرّب الكاميرا حتى تملأ الشاشة الخضراء الإطار وقلّل انعكاس الضوء، ثم صوّر من جديد."},
-bn:{onl:"সংযুক্ত",offl:"সংযোগ নেই",denyl:"অনুমতি নেই",pendn:"পাঠানোর অপেক্ষায় ({n})",qn:"এখন «পাঠান» চাপলে রিডিং এই ফোনে সংরক্ষণ হবে এবং সংযোগ ফিরলে নিজে থেকে পাঠানো হবে",ph:"রিডিং সংরক্ষিত হয়েছে",pp:"সংযোগ ফিরলে নিজে থেকেই পাঠানো হবে, আপনাকে কিছু করতে হবে না",pnow:"এখনই পাঠান",okauto:"সংযোগ ফিরে আসার পর নিজে থেকে পাঠানো হয়েছে",ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
- okh:"রিডিং পাঠানো হয়েছে",okp:"ধন্যবাদ",again:"আরেকটি রিডিং পাঠান",lg:"العربية",bad:"লিংকটি সঠিক নয়। মালিকের কাছ থেকে নতুন লিংক নিন।",
+bn:{tskip:"বাদ দিন",tnext:"পরের",tprev:"আগের",tstart:"শুরু করুন",t1h:"১ · মিটারের ছবি তুলুন",t1p:"«ছবি তুলুন» চাপুন এবং সবুজ স্ক্রিনটি হলুদ ফ্রেমের ভেতরে আনুন",t1q:"স্ক্রিনে ছোট কোড 1.8.0 আছে কিনা দেখুন। না থাকলে মিটারের বোতাম চেপে 1.8.0 আনুন",t2h:"২ · সংখ্যা মিলিয়ে পাঠান",t2p:"অ্যাপ সংখ্যাটি পড়ে দেখাবে। মিটারের সাথে মিললে «এই রিডিং ব্যবহার করুন» চাপুন",t2q:"পাঠানোর পর ✓ «রিডিং পাঠানো হয়েছে» দেখাবে",t3h:"৩ · ছবি পড়া না গেলে",t3a:"«কোডটি 1.8.0 নয়»",t3ap:"মিটারের বোতাম চেপে 1.8.0 আনুন, তারপর আবার ছবি তুলুন",t3b:"«সংখ্যা পড়া গেল না»",t3bp:"ক্যামেরা কাছে আনুন, আলোর প্রতিফলন কমান, আবার ছবি তুলুন",t3c:"বিকল্প উপায়",t3cp:"«অ্যালবাম থেকে» চাপুন, অথবা «নিজে লিখুন» চেপে মিটারে যা দেখছেন সেই সংখ্যা লিখুন",t4h:"৪ · রঙের অর্থ",t4a:"পাঠানো যাবে",t4b:"সার্ভিসে পৌঁছানো যাচ্ছে না; পাঠালে রিডিং সংরক্ষিত থাকবে",t4c:"ফোনে সংরক্ষিত, পরে নিজে থেকে পাঠানো হবে",t4d:"ক্যামেরা নিশ্চিত যে কোডটি সঠিক",t4e:"কোডটি ভুল, বদলে আবার ছবি তুলুন",t5h:"আপনি প্রস্তুত",t5p:"এই নির্দেশনা যেকোনো সময় প্রধান পাতার নিচ থেকে আবার দেখতে পারবেন",t5c:"এই পাতা আর দেখাবেন না",help:"কীভাবে রিডিং দেবেন?",badh:"লিংকটি সঠিক নয়",badtip:"লিংকটি পুরো কপি করা হয়েছে কিনা দেখুন এবং Chrome-এ খুলুন",ok18:"✓ 1.8.0",onl:"সংযুক্ত",offl:"সংযোগ নেই",denyl:"অনুমতি নেই",pendn:"পাঠানোর অপেক্ষায় ({n})",qn:"এখন «পাঠান» চাপলে রিডিং এই ফোনে সংরক্ষণ হবে এবং সংযোগ ফিরলে নিজে থেকে পাঠানো হবে",ph:"রিডিং সংরক্ষিত হয়েছে",pp:"সংযোগ ফিরলে নিজে থেকেই পাঠানো হবে, আপনাকে কিছু করতে হবে না",pnow:"এখনই পাঠান",okauto:"সংযোগ ফিরে আসার পর নিজে থেকে পাঠানো হয়েছে",ttl:"মিটারের রিডিং পাঠান",hi:"স্বাগতম, {n}",met:"মিটার",rd:"মিটারের রিডিং (kWh)",cam:"ছবি তুলুন",alb:"অ্যালবাম থেকে",send:"পাঠান",sending:"পাঠানো হচ্ছে...",
+ okh:"রিডিং পাঠানো হয়েছে",okp:"ধন্যবাদ",again:"আরেকটি রিডিং পাঠান",lg:"العربية",bad:"লিংকটি ঠিকভাবে খোলেনি। মালিকের কাছ থেকে নতুন লিংক চেয়ে নিন।",
  need:"আগে রিডিং লিখুন",net:"পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",deny:"পাঠানোর অনুমতি নেই। মালিককে জানান।",
  mh:"সবুজ স্ক্রিনটি ফ্রেমের ভেতরে রাখুন",mh1:"ছোট কোড 1.8.0 দেখা যাচ্ছে কিনা নিশ্চিত করুন",mh2:"মিটারের বোতাম চেপে 1.8.0 আনুন",
  re:"আবার তুলুন",man:"নিজে লিখুন",use:"এই রিডিং ব্যবহার করুন",
@@ -123,13 +173,13 @@ function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
     try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
   if(!CFG){try{CFG=JSON.parse(localStorage.getItem("elec_entry_cfg")||"null")}catch(e){}}
   if(CFG&&!(CFG.t&&CFG.o&&CFG.r&&CFG.e&&Array.isArray(CFG.m)))CFG=null})();
-function view(v){["vlang","vbad","vmain","vok","vpend"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad");window.scrollTo(0,0)}
+function view(v){["vlang","vbad","vmain","vok","vpend","vtut"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut");window.scrollTo(0,0)}
 function applyLang(){var t=TX[LANG];document.documentElement.lang=LANG;document.documentElement.dir=LANG==="bn"?"ltr":"rtl";document.body.classList.toggle("ltr",LANG==="bn");
   $("t_ttl").textContent=t.ttl;$("t_hi").textContent=t.hi.replace("{n}",CFG?CFG.n:"");$("t_met").textContent=t.met;$("t_rd").textContent=t.rd;
   $("camt").textContent=t.cam;$("albt").textContent=t.alb;$("send").textContent=t.send;$("lgt").textContent=t.lg;
   $("t_okh").textContent=t.okh;$("t_okp").textContent=t.okp;$("again").textContent=t.again;
   $("t_mh").textContent=t.mh;$("t_mh1").textContent=t.mh1;$("t_mh2").textContent=t.mh2;$("mre").textContent=t.re;$("mman").textContent=t.man;$("muse").textContent=t.use;
-  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;if(typeof updCst==="function")updCst()}
+  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst()}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2200)}
 </script>
 <script>
@@ -266,11 +316,26 @@ function start(){
   if(!CFG){LANG=LANG||"ar";applyLang();view("vbad");return}
   $("msel").innerHTML=CFG.m.map(function(m){return '<option value="'+String(m[0]).replace(/[&<>"]/g,"")+'">'+String(m[1]).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})+'</option>'}).join("");
   if(!LANG){var s=CFG.l==="bn"?"bn":"ar";document.querySelector('#vlang button[data-l="'+s+'"]').classList.add("sug");LANG=s;applyLang();LANG=null;view("vlang");return}
-  applyLang();view("vmain")}
-document.querySelector("#vlang .lgs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setLang(b.dataset.l);view("vmain")});
+  applyLang();tutHidden()?view("vmain"):tutOpen()}
+document.querySelector("#vlang .lgs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setLang(b.dataset.l);tutHidden()?view("vmain"):tutOpen()});
+$("badlg").addEventListener("click",function(e){var b=e.target.closest("button");if(b)setLang(b.dataset.l)});
 $("lgt").addEventListener("click",function(){setLang(LANG==="bn"?"ar":"bn")});
 function showErr(t){var e=$("err");e.textContent=t;e.classList.remove("hide")}
 $("curr").addEventListener("input",function(){$("err").classList.add("hide")});
+var TUTK="elec_entry_tut",tutIdx=0,tutChk=false;
+function tutHidden(){try{return localStorage.getItem(TUTK)==="1"}catch(e){return false}}
+function tutUi(){var d=document.querySelectorAll("#tdt i");for(var i=0;i<d.length;i++)d[i].classList.toggle("on",i===tutIdx);
+  $("tnext").textContent=T(tutIdx===4?"tstart":"tnext");$("tprev").style.display=tutIdx===0?"none":"";$("tskip").style.visibility=tutIdx===4?"hidden":"visible";
+  $("tchk").classList.toggle("on",tutChk);$("tchk").setAttribute("aria-checked",tutChk?"true":"false")}
+function goTut(i,smooth){var sc=$("tsc");tutIdx=i;sc.scrollTo({left:(document.documentElement.dir==="rtl"?-1:1)*i*sc.clientWidth,behavior:smooth?"smooth":"auto"});tutUi()}
+function tutOpen(){tutChk=tutHidden();view("vtut");goTut(0,false)}
+function tutDone(save){if(save){try{if(tutChk)localStorage.setItem(TUTK,"1");else localStorage.removeItem(TUTK)}catch(e){}}view("vmain")}
+$("tsc").addEventListener("scroll",function(){var sc=$("tsc"),i=Math.round(Math.abs(sc.scrollLeft)/Math.max(1,sc.clientWidth));if(i!==tutIdx&&i>=0&&i<=4){tutIdx=i;tutUi()}});
+$("tnext").addEventListener("click",function(){if(tutIdx<4)goTut(tutIdx+1,true);else tutDone(true)});
+$("tprev").addEventListener("click",function(){if(tutIdx>0)goTut(tutIdx-1,true)});
+$("tskip").addEventListener("click",function(){tutDone(false)});
+$("tchk").addEventListener("click",function(){tutChk=!tutChk;tutUi()});
+$("helpb").addEventListener("click",tutOpen);
 var NET="ok",FL=false,QK="elec_entry_q";
 function qGet(){try{return JSON.parse(localStorage.getItem(QK)||"[]")}catch(e){return[]}}
 function qSet(a){try{localStorage.setItem(QK,JSON.stringify(a))}catch(e){}}
