@@ -1065,6 +1065,14 @@ $("bkremx").addEventListener("click",function(){$("bkrem").classList.add("hide")
 })();
 /*SYNC-CORE*/
 function clone(o){return JSON.parse(JSON.stringify(o))}
+/*V410M*/
+function tsMerge(a,b,out){
+  out.etomb={};[a.etomb,b.etomb].forEach(function(t){for(var k in (t||{}))out.etomb[k]=Math.max(out.etomb[k]||0,t[k])});
+  var M={},order=[];(a.emps||[]).forEach(function(e){M[e.id]=e;order.push(e.id)});
+  (b.emps||[]).forEach(function(e){var x=M[e.id];if(!x){M[e.id]=e;order.push(e.id)}else if((e.eu||0)>(x.eu||0))M[e.id]=e});
+  out.emps=[];order.forEach(function(id){var e=M[id];if(out.etomb[id]&&out.etomb[id]>=(e.eu||0))return;out.emps.push(e)});
+  var ca=a.tcfg,cb=b.tcfg;out.tcfg=!ca?cb:!cb?ca:((cb.u||0)>(ca.u||0)?cb:ca)}
+/*V410M-END*/
 function mergeData(a,b){
   var out={v:3,meters:[],tomb:{},mtomb:{}},k;
   [a.tomb,b.tomb].forEach(function(t){for(k in (t||{}))out.tomb[k]=Math.max(out.tomb[k]||0,t[k])});
@@ -1084,13 +1092,14 @@ function mergeData(a,b){
     m.rd.sort(function(x,y){return x.cd<y.cd?-1:x.cd>y.cd?1:(x.ts||0)-(y.ts||0)});
     if(m.rd.length){var l=m.rd[m.rd.length-1];m.prev=String(l.curr);m.prevDate=l.cd}
     out.meters.push(m)});
+  tsMerge(a,b,out);
   return out}
 function canon(d){var t=function(o){var r={};Object.keys(o||{}).sort().forEach(function(k){r[k]=o[k]});return r};
   var byId=function(x,y){return x.id<y.id?-1:x.id>y.id?1:0};
-  return JSON.stringify({meters:d.meters.slice().sort(byId).map(function(m){var c=t(m);c.s=t(m.s);c.rd=m.rd.slice().sort(byId).map(t);return c}),tomb:t(d.tomb),mtomb:t(d.mtomb)})}
-function exportState(){return{v:3,meters:clone(D.meters),tomb:clone(D.tomb||{}),mtomb:clone(D.mtomb||{})}}
+  return JSON.stringify({meters:d.meters.slice().sort(byId).map(function(m){var c=t(m);c.s=t(m.s);c.rd=m.rd.slice().sort(byId).map(t);return c}),tomb:t(d.tomb),mtomb:t(d.mtomb),emps:(d.emps||[]).slice().sort(byId).map(function(e){var c=t(e);c.meters=(e.meters||[]).slice();return c}),etomb:t(d.etomb),tcfg:t(d.tcfg)})}
+function exportState(){var o={v:3,meters:clone(D.meters),tomb:clone(D.tomb||{}),mtomb:clone(D.mtomb||{})};if(typeof tsExp==="function")Object.assign(o,tsExp());return o}
 function persistBase(){try{localStorage.setItem("elec_sync_base_v1",JSON.stringify(SY.base))}catch(e){}}
-function applyMerged(m){D.meters=m.meters;D.tomb=m.tomb;D.mtomb=m.mtomb;ensureIds();persist();SY.base=clone(m);persistBase();refreshAfterSync()}
+function applyMerged(m){D.meters=m.meters;D.tomb=m.tomb;D.mtomb=m.mtomb;ensureIds();persist();SY.base=clone(m);persistBase();if(typeof tsApply==="function")tsApply(m);refreshAfterSync()}
 /* --- crypto (AES-GCM, key from passphrase via PBKDF2) --- */
 function b64e(u){var s="";for(var i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)}
 function b64d(s){var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
@@ -1266,8 +1275,8 @@ $("st_rs").addEventListener("click",function(){var m=M(stId);if(!m)return;if(!co
   m.s=JSON.parse(JSON.stringify(DEF));save();stRender();toast("تمت إعادة الأسعار الافتراضية")});
 $("stk").addEventListener("click",function(){home()});
 /*V49-JS*/
-var AB_V="V4.9.1",AB_D="25/11/2026";
-var AB_L=[["V4.9.1","25/11/2026",["تحسينات في صفحة «عن التطبيق»: عرض آخر ٣ إصدارات مع نقاط لعرض المزيد","سجل إصدارات كامل يبدأ من 1.0.0"]],["V4.9.0","25/11/2026",["الاسم الجديد «قارئ»","صفحة «عن التطبيق» وقسم «ما الجديد»","إزالة رقم الإصدار من الصفحة الرئيسية"]],["V4.8.0","25/11/2026",["السحب للأسفل لإغلاق القوائم السفلية","§إرسال الموظف للقراءة مع صورة العداد","§مراجعة القراءة بالصورة ورفضها بقوالب جاهزة","ختم «مدفوع» أوضح وتاريخه أسفل الكلمة"]],["V4.7.0","25/11/2026",["ترجمة أسماء العدادات في الفواتير وصفحة الموظف","§تنبيه عند الحاجة لإرسال رابط جديد للموظف","زر مشاركة الخطأ مع المسؤول","خانة التوكن بشكل كلمة مرور"]],["V4.6.0","25/11/2026",["ختم الدفع على الفواتير السابقة","السحب من اليسار للرجوع في كل الشاشات","§تاريخ قراءة الموظف وطلب الاستثناء"]],["V4.5.0","24/11/2026",["تتبّع الدفع وختم «مدفوع»","شارات الدفع في الصفحة الرئيسية وجرس التنبيه"]],["V4.4.0","24/11/2026",["§رابط الموظف المشفّر برمز سري من ٦ أرقام"]],["V4.3.0","24/11/2026",["§تحسينات في صفحة الموظف"]],["V4.2.0","24/11/2026",["§شرح يظهر للموظف عند أول فتح","§صفحة الرابط الخاطئ بخيار العربية/البنغالية"]],["V4.1.0","24/11/2026",["§نقطة حالة المزامنة في قائمة ☰ مع شرح الألوان","§حالة الاتصال في صفحة الموظف وحفظ القراءة للإرسال لاحقاً","§حالات بطاقة الموظف (لم يفتح / فتح الرابط / نشط / ملغى)"]],["V4.0.0","24/11/2026",["قائمة ☰ الموحّدة","إعدادات الشرائح والرسوم لكل عداد","§الموظفون وصندوق الوارد"]],["V3.4.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.3.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.2.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.1.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا (زر ✕ والإغلاق بالضغط خارجها)"]],["V3.0.0","23/11/2026",["قراءة العداد بالكاميرا أو من الألبوم"]],["V2.0.0","",["§مزامنة مشفّرة بين الأجهزة عبر GitHub","§بقاء النسخة 1.0 بدون مزامنة"]],["V1.2.0","",["معلومات العداد (المحل والموظف والتواصل) وتعديل العداد","شريط الأعوام ومقارنة الشهر بالعام السابق في السجل","رقم الفاتورة وثلاث لغات: العربية والإنجليزية والبنغالية","سلة المحذوفات","شارة حالة النسخ الاحتياطي"]],["V1.1.0","",["شعار وأيقونة جديدان","تحسينات في ترويسة الفاتورة"]],["V1.0.0","",["حاسبة الفواتير بالشرائح والضريبة وعدّة عدادات","فاتورة للطباعة والمشاركة","نسخ احتياطي بملف"]]];
+var AB_V="V4.10.0",AB_D="25/11/2026";
+var AB_L=[["V4.10.0","25/11/2026",["§مزامنة الموظفين ورموزهم السرية بين الأجهزة"]],["V4.9.1","25/11/2026",["تحسينات في صفحة «عن التطبيق»: عرض آخر ٣ إصدارات مع نقاط لعرض المزيد","سجل إصدارات كامل يبدأ من 1.0.0"]],["V4.9.0","25/11/2026",["الاسم الجديد «قارئ»","صفحة «عن التطبيق» وقسم «ما الجديد»","إزالة رقم الإصدار من الصفحة الرئيسية"]],["V4.8.0","25/11/2026",["السحب للأسفل لإغلاق القوائم السفلية","§إرسال الموظف للقراءة مع صورة العداد","§مراجعة القراءة بالصورة ورفضها بقوالب جاهزة","ختم «مدفوع» أوضح وتاريخه أسفل الكلمة"]],["V4.7.0","25/11/2026",["ترجمة أسماء العدادات في الفواتير وصفحة الموظف","§تنبيه عند الحاجة لإرسال رابط جديد للموظف","زر مشاركة الخطأ مع المسؤول","خانة التوكن بشكل كلمة مرور"]],["V4.6.0","25/11/2026",["ختم الدفع على الفواتير السابقة","السحب من اليسار للرجوع في كل الشاشات","§تاريخ قراءة الموظف وطلب الاستثناء"]],["V4.5.0","24/11/2026",["تتبّع الدفع وختم «مدفوع»","شارات الدفع في الصفحة الرئيسية وجرس التنبيه"]],["V4.4.0","24/11/2026",["§رابط الموظف المشفّر برمز سري من ٦ أرقام"]],["V4.3.0","24/11/2026",["§تحسينات في صفحة الموظف"]],["V4.2.0","24/11/2026",["§شرح يظهر للموظف عند أول فتح","§صفحة الرابط الخاطئ بخيار العربية/البنغالية"]],["V4.1.0","24/11/2026",["§نقطة حالة المزامنة في قائمة ☰ مع شرح الألوان","§حالة الاتصال في صفحة الموظف وحفظ القراءة للإرسال لاحقاً","§حالات بطاقة الموظف (لم يفتح / فتح الرابط / نشط / ملغى)"]],["V4.0.0","24/11/2026",["قائمة ☰ الموحّدة","إعدادات الشرائح والرسوم لكل عداد","§الموظفون وصندوق الوارد"]],["V3.4.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.3.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.2.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.1.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا (زر ✕ والإغلاق بالضغط خارجها)"]],["V3.0.0","23/11/2026",["قراءة العداد بالكاميرا أو من الألبوم"]],["V2.0.0","",["§مزامنة مشفّرة بين الأجهزة عبر GitHub","§بقاء النسخة 1.0 بدون مزامنة"]],["V1.2.0","",["معلومات العداد (المحل والموظف والتواصل) وتعديل العداد","شريط الأعوام ومقارنة الشهر بالعام السابق في السجل","رقم الفاتورة وثلاث لغات: العربية والإنجليزية والبنغالية","سلة المحذوفات","شارة حالة النسخ الاحتياطي"]],["V1.1.0","",["شعار وأيقونة جديدان","تحسينات في ترويسة الفاتورة"]],["V1.0.0","",["حاسبة الفواتير بالشرائح والضريبة وعدّة عدادات","فاتورة للطباعة والمشاركة","نسخ احتياطي بملف"]]];
 var AB_N=3;
 function abSet(i,o){var x=document.querySelectorAll("#ab_n .abx")[i];if(!x)return;var b=x.querySelector(".abb");x.classList.toggle("o",o);b.style.maxHeight=o?b.scrollHeight+"px":"0px"}
 function abMoreUpd(){var xs=document.querySelectorAll("#ab_n .abx"),h=[].filter.call(xs,function(x){return x.classList.contains("hide")}).length,m=$("ab_m");if(m)m.classList.toggle("hide",!h)}
@@ -1285,10 +1294,28 @@ $("abk").addEventListener("click",function(){home()});
 function tline(){var s=cur.s,e=$("tline");e.textContent="التعرفة المطبقة: "+s.p1+" هللة حتى "+s.m1+" ك.و.س · "+s.p2+" هللة بعدها · رسوم العداد "+s.fee+" · ضريبة "+s.tax+"%";e.classList.remove("hide")}
 
 /*TEAM*/
-var TK="elec_team_v1",TM={emps:[],repo:"electricity-inbox",owner:"",req:true,items:{},done:{},pend:null};
+var TK="elec_team_v1",TM={emps:[],repo:"electricity-inbox",owner:"",req:true,items:{},done:{},pend:null,etomb:{}};
 try{var _tr=JSON.parse(localStorage.getItem(TK)||"null");if(_tr)TM=Object.assign(TM,_tr)}catch(e){}
 function tmSave(){try{var c=Object.assign({},TM);delete c.busy;delete c.err;localStorage.setItem(TK,JSON.stringify(c))}catch(e){}}
 function tmOwner(){return TM.owner||(SY.cfg&&SY.cfg.owner)||""}
+/*V410*/
+function tsSig(e){return JSON.stringify([e.name,e.lang,!!e.all,e.meters||[],e.token,!!e.prot,e.code||"",!!e.revoked])}
+function tsCsig(){return JSON.stringify([TM.owner||"",TM.repo||"",TM.req!==false,TM.phone||""])}
+function tsTouch(){if(typeof schedSync==="function"&&typeof syOn==="function"&&syOn())schedSync(2500)}
+function tsExp(){var now=Date.now(),ch=false;
+  TM.emps.forEach(function(e){var g=tsSig(e);if(e.esg!==g){e.esg=g;e.eu=now;ch=true}});
+  if(TM.owner||TM.phone){var cs=tsCsig();if(TM.csg!==cs){TM.csg=cs;TM.cu=now;ch=true}}
+  if(ch)tmSave();
+  return{emps:TM.emps.map(function(e){return{id:e.id,name:e.name,lang:e.lang,all:!!e.all,meters:(e.meters||[]).slice(),token:e.token,prot:!!e.prot,code:e.code||"",revoked:!!e.revoked,created:e.created||0,eu:e.eu||0}}),
+    etomb:clone(TM.etomb||{}),tcfg:{owner:TM.owner||"",repo:TM.repo||"",req:TM.req!==false,phone:TM.phone||"",u:TM.cu||0}}}
+function tsApply(m){if(!m||(m.emps==null&&!m.etomb&&!m.tcfg))return;
+  var old={};TM.emps.forEach(function(e){old[e.id]=e});
+  TM.emps=(m.emps||[]).map(function(r){var o=Object.assign({},old[r.id]||{},r);o.esg=tsSig(o);return o});
+  TM.etomb=Object.assign({},TM.etomb||{},m.etomb||{});
+  var c=m.tcfg;if(c&&(c.u||0)>0&&(c.u||0)>=(TM.cu||0)){TM.owner=c.owner;TM.repo=c.repo||"electricity-inbox";TM.req=c.req;TM.phone=c.phone;TM.cu=c.u;TM.csg=tsCsig()}
+  tmSave();tmInitSig();try{if(!$("team").classList.contains("hide"))tmRender();updMenu()}catch(e){}
+  if(typeof stPubSoon==="function")stPubSoon()}
+/*V410-END*/
 function tmEmp(id){for(var i=0;i<TM.emps.length;i++)if(TM.emps[i].id===id)return TM.emps[i];return null}
 function tmMeters(e){return D.meters.filter(function(m){return !m.del&&(e.all||e.meters.indexOf(m.id)>-1)})}
 function tmMNames(e){if(e.all)return "كل العدادات";return tmMeters(e).map(function(m){return m.name}).join("، ")||"—"}
@@ -1321,13 +1348,13 @@ function tmRender(){tmSyncSig();$("tm_ph").value=TM.phone||"";$("tm_own").value=
      '<button class="rs" data-a="lnk" data-id="'+e.id+'">الرابط</button><button class="rs" style="background:#9c6a3d" data-a="ed" data-id="'+e.id+'">تعديل</button><button class="pd" data-a="rv" data-id="'+e.id+'">إلغاء الوصول</button>')+'</div></div>'}).join("")||'<div class="empty">لا يوجد موظفون بعد</div>'}
 $("tmk").addEventListener("click",function(){home()});
 $("tm_add").addEventListener("click",function(){emOpen()});
-$("tm_ph").addEventListener("change",function(){TM.phone=$("tm_ph").value.trim().slice(0,25);tmSave();stPub(true)});
-$("tm_own").addEventListener("change",function(){TM.owner=$("tm_own").value.trim();tmSave();tmRender();updMenu();if(tmRsCount())toast("تغيّر رابط الموظفين، راجع القائمة")});
-$("tm_repo").addEventListener("change",function(){TM.repo=$("tm_repo").value.trim()||"electricity-inbox";tmSave();tmRender();updMenu();if(tmRsCount())toast("تغيّر رابط الموظفين، راجع القائمة");TM.items={};TM.done={};ibCheck()});
+$("tm_ph").addEventListener("change",function(){TM.phone=$("tm_ph").value.trim().slice(0,25);tmSave();tsTouch();stPub(true)});
+$("tm_own").addEventListener("change",function(){TM.owner=$("tm_own").value.trim();tmSave();tsTouch();tmRender();updMenu();if(tmRsCount())toast("تغيّر رابط الموظفين، راجع القائمة")});
+$("tm_repo").addEventListener("change",function(){TM.repo=$("tm_repo").value.trim()||"electricity-inbox";tmSave();tsTouch();tmRender();updMenu();if(tmRsCount())toast("تغيّر رابط الموظفين، راجع القائمة");TM.items={};TM.done={};ibCheck()});
 $("tm_list").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var em=tmEmp(b.dataset.id);if(!em)return;var a=b.dataset.a;
   if(a==="lnk")lnkOpen(em);else if(a==="ed")emOpen(em.id);
-  else if(a==="rv"){if(!confirm("إلغاء وصول «"+em.name+"»؟\nلن تُقبل قراءاته بعد الآن. ولإبطال المفتاح نفسه احذفه أيضاً من GitHub."))return;em.revoked=true;tmSave();tmRender();updMenu();toast("تم إلغاء الوصول")}
-  else if(a==="rm"){TM.emps=TM.emps.filter(function(x){return x.id!==em.id});tmSave();tmRender();updMenu()}});
+  else if(a==="rv"){if(!confirm("إلغاء وصول «"+em.name+"»؟\nلن تُقبل قراءاته بعد الآن. ولإبطال المفتاح نفسه احذفه أيضاً من GitHub."))return;em.revoked=true;tmSave();tsTouch();tmRender();updMenu();toast("تم إلغاء الوصول")}
+  else if(a==="rm"){TM.emps=TM.emps.filter(function(x){return x.id!==em.id});TM.etomb[em.id]=Date.now();tmSave();tsTouch();tmRender();updMenu()}});
 var emEd=null,emLang="ar",emAll=true,emSel={};
 function emOpen(id){emEd=id?tmEmp(id):null;$("em_n").value=emEd?emEd.name:"";emLang=emEd?emEd.lang:"ar";emAll=emEd?!!emEd.all:true;emSel={};
   if(emEd&&!emEd.all)emEd.meters.forEach(function(x){emSel[x]=1});
@@ -1346,7 +1373,7 @@ $("em_ok").addEventListener("click",function(){var n=$("em_n").value.trim(),t=$(
   if(!tmOwner())return toast("أدخل اسم حساب GitHub في أسفل صفحة الموظفين أولاً");
   var e=emEd||{id:nid(),created:Date.now(),revoked:false,token:""};
   e.name=n;e.lang=emLang;e.all=emAll;e.meters=emAll?[]:Object.keys(emSel);if(t)e.token=t;
-  var isNew=!emEd;if(isNew){TM.emps.push(e);if(TM.req!==false){e.prot=true;e.code=tmGen6()}}tmSave();$("empm").classList.add("hide");tmRender();updMenu();if(isNew)lnkOpen(e);else if(tmNeeds(e))rsOpen(e);else toast("تم الحفظ")});
+  var isNew=!emEd;if(isNew){TM.emps.push(e);if(TM.req!==false){e.prot=true;e.code=tmGen6()}}tmSave();tsTouch();$("empm").classList.add("hide");tmRender();updMenu();if(isNew)lnkOpen(e);else if(tmNeeds(e))rsOpen(e);else toast("تم الحفظ")});
 var lnkE=null,lnkU="";
 async function lnkOpen(e){lnkE=e;lnkU="";$("lk_t").textContent="رابط «"+e.name+"» جاهز";$("lk_u").textContent="…";var p=!!(e.prot&&e.code);
   $("lk_cw").classList.toggle("hide",!p);$("lk_n").classList.toggle("hide",p);if(p)$("lk_cd").textContent=cdFmt(e.code);$("lnkm").classList.remove("hide");
@@ -1364,13 +1391,13 @@ function cdRender(){var r=TM.req!==false;$("cd_req").classList.toggle("on",r);$(
   var L=TM.emps.filter(function(e){return !e.revoked});
   $("cd_list").innerHTML=L.map(function(e){return '<button class="kze" data-id="'+e.id+'"><div class="s"><b>'+esc(e.name)+'</b><small>'+(e.prot?"رابطه محمي برمز":"رابطه بالصيغة الحالية")+'</small></div><span class="est'+(e.prot?"":" g0")+'">'+(e.prot?"محمي":"بدون رمز")+'</span></button>'}).join("")||'<div class="empty">لا يوجد موظفون بعد</div>'}
 $("cd_x").addEventListener("click",function(){$("codem").classList.add("hide")});
-$("cd_req").addEventListener("click",function(){TM.req=TM.req===false;tmSave();cdRender()});
+$("cd_req").addEventListener("click",function(){TM.req=TM.req===false;tmSave();tsTouch();cdRender()});
 $("cd_list").addEventListener("click",function(ev){var b=ev.target.closest("button");if(!b)return;var e=tmEmp(b.dataset.id);if(e)c1Open(e)});
 function c1Open(e){c1E=e;c1Render();$("code1m").classList.remove("hide")}
 function c1Render(){var e=c1E,p=!!(e.prot&&e.code);$("c1_t").textContent="رمز «"+e.name+"»";$("c1_c").textContent=p?cdFmt(e.code):"—";
   $("c1_sw").classList.toggle("on",p);$("c1_sw").setAttribute("aria-checked",p?"true":"false");$("c1_cp").disabled=!p;$("c1_cp").style.opacity=p?"":".4";
   $("c1_n").textContent=p?"انسخ الرمز وأرسله بقناة غير قناة الرابط. «↻» يولّد رمزاً جديداً ورابطاً جديداً. وللإلغاء الكامل ألغِ وصول الموظف.":"الحماية متوقفة، ورابط الموظف بالصيغة العادية."}
-function c1Change(msg){tmSave();c1Render();cdRender();updMenu();toast(msg)}
+function c1Change(msg){tmSave();tsTouch();c1Render();cdRender();updMenu();toast(msg)}
 $("c1_x").addEventListener("click",function(){$("code1m").classList.add("hide")});
 $("c1_cp").addEventListener("click",function(){if(c1E&&c1E.code)tmCopy(c1E.code).then(function(){toast("تم نسخ الرمز")})});
 $("c1_rg").addEventListener("click",function(){if(!c1E)return;c1E.prot=true;c1E.code=tmGen6();c1Change("تولّد رمز جديد. أرسل للموظف الرابط الجديد والرمز")});
