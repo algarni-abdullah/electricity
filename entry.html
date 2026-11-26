@@ -162,6 +162,7 @@ body.ltr .wrap{direction:ltr}
 <div class="tdt" id="tdt"><i></i><i></i><i></i><i></i><i></i></div>
 <div class="tnx"><button type="button" class="tn1" id="tnext"></button><button type="button" class="tn2" id="tprev" data-k="tprev"></button></div></div>
 <div id="vpend" class="wrap hide"><div class="ok"><div class="tick" style="background:#f5a623">&#8987;</div><h2 id="t_ph"></h2><p id="t_pd" style="margin-bottom:6px"></p><p id="t_pp"></p><button class="send" id="pnow" style="margin-top:0"></button></div></div>
+<div id="vblk" class="wrap hide"><div class="ok"><div class="tick" style="background:#f5a623">&#9208;</div><h2 id="t_bt"></h2><p id="t_bp" style="margin-bottom:6px"></p><p id="t_bd"></p><button class="send" id="bkreq" style="margin-top:6px"></button><p id="t_bh" style="margin-top:12px;font-size:13px;opacity:.75"></p></div></div>
 <div id="vok" class="wrap hide"><div class="ok"><div class="tick">&#10003;</div><h2 id="t_okh"></h2><p id="t_okp"></p><button class="send" id="again" style="margin-top:0"></button></div></div>
 
 <div id="mcam" class="mcam hide"><video id="mvid" playsinline muted autoplay></video><div class="mfr"></div>
@@ -192,6 +193,11 @@ bn:{mlab:"মিটারে যে সংখ্যা দেখছেন তা
  tun:"\u26a0 নিশ্চিত নই স্ক্রিনে 1.8.0 আছে",tno:"\u26a0 সংখ্যা পড়া গেল না",
  w2:"ছোট কোডটি স্পষ্ট নয়। ক্যামেরা কাছে আনুন বা আলোর প্রতিফলন কমান, তারপর আবার ছবি তুলুন।",
  w3:"সবুজ স্ক্রিন যেন ফ্রেম ভরে যায় এমনভাবে ক্যামেরা কাছে আনুন, প্রতিফলন কমান, তারপর আবার ছবি তুলুন।"}};
+/*V415*/
+(function(){var A={blkt:"الإدخال متوقف مؤقتاً",blkp:"تم إيقاف الإدخال لحسابك مؤقتاً.",blkd:"سيُفتح الإدخال تلقائياً في {d}.",blkn:"سيُفتح الإدخال عندما يفعّله المسؤول.",blku:"لم يُحدد موعد الاستئناف",blkb:"طلب صلاحية الإدخال",blkh:"إن احتجت الإدخال قبل ذلك أرسل طلباً للمسؤول",blks:"تم إرسال طلبك",blksh:"عند الموافقة يُفتح الإدخال في رابطك",blkno:"لم تتم الموافقة على طلبك"},
+ B={blkt:"এন্ট্রি সাময়িকভাবে বন্ধ",blkp:"আপনার অ্যাকাউন্টের জন্য এন্ট্রি সাময়িকভাবে বন্ধ করা হয়েছে।",blkd:"এন্ট্রি স্বয়ংক্রিয়ভাবে {d}-এ খুলবে।",blkn:"অ্যাডমিন চালু করলে এন্ট্রি খুলবে।",blku:"পুনরায় চালুর সময় নির্ধারিত নেই",blkb:"এন্ট্রির অনুমতি চান",blkh:"এর আগে এন্ট্রি প্রয়োজন হলে অ্যাডমিনকে অনুরোধ পাঠান",blks:"আপনার অনুরোধ পাঠানো হয়েছে",blksh:"অনুমোদন হলে আপনার লিংকে এন্ট্রি খুলবে।",blkno:"আপনার অনুরোধ অনুমোদিত হয়নি"};
+ Object.assign(TX.ar,A);Object.assign(TX.bn,B)})();
+/*V415-END*/
 var LANG=null,CFG=null,$=function(i){return document.getElementById(i)};
 function T(k){return (TX[LANG]||TX.ar)[k]}
 try{LANG=localStorage.getItem("elec_entry_lang")}catch(e){}
@@ -209,13 +215,13 @@ function okCfg(o){return o&&o.t&&o.o&&o.r&&o.e&&Array.isArray(o.m)}
   if(!PEND&&!CFG){try{PEND=localStorage.getItem("elec_entry_pend")||null}catch(e){}}
   if(!CFG){try{CFG=JSON.parse(localStorage.getItem("elec_entry_cfg")||"null")}catch(e){}}
   if(CFG&&!okCfg(CFG))CFG=null})();
-function view(v){["vlang","vbad","vmain","vok","vpend","vtut","vcode"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut"||v==="vcode");if(v==="vmain"&&!$("rdt").value)$("rdt").value=todayS();window.scrollTo(0,0)}
+function view(v){["vlang","vbad","vmain","vok","vpend","vtut","vcode","vblk"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});$("cst").classList.toggle("hide",v==="vlang"||v==="vbad"||v==="vtut"||v==="vcode");if(v==="vmain"&&!$("rdt").value)$("rdt").value=todayS();window.scrollTo(0,0)}
 function applyLang(){var t=TX[LANG];document.documentElement.lang=LANG;document.documentElement.dir=LANG==="bn"?"ltr":"rtl";document.body.classList.toggle("ltr",LANG==="bn");
   $("t_ttl").textContent=t.ttl;$("t_hi").textContent=t.hi.replace("{n}",CFG?CFG.n:"");$("t_met").textContent=t.met;$("t_rd").textContent=t.rd;
   $("camt").textContent=t.cam;$("albt").textContent=t.alb;$("send").textContent=t.send;$("lgt").textContent=t.lg;
   $("t_okh").textContent=t.okh;$("t_okp").textContent=t.okp;$("again").textContent=t.again;
   $("t_mh").textContent=t.mh;$("t_mh1").textContent=t.mh1;$("t_mh2").textContent=t.mh2;$("mre").textContent=t.re;$("muse").textContent=t.use;$("mlabl").textContent=t.mlab;$("phtx").textContent=t.pho;
-  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button,#codelg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst();$("t_dt").textContent=t.dt;$("bshare").textContent=t.fshare;if(CFG&&typeof mOpts==="function"){mOpts();renderX()}}
+  $("bad").textContent=t.bad;$("t_ph").textContent=t.ph;$("t_pp").textContent=t.pp;$("pnow").textContent=t.pnow;$("qn").textContent=t.qn;Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(e){e.textContent=(t[e.dataset.k]||"").replace("{n}","1")});Array.prototype.forEach.call(document.querySelectorAll("#badlg button,#codelg button"),function(b){b.classList.toggle("on",b.dataset.l===LANG)});if(typeof tutUi==="function")tutUi();if(typeof updCst==="function")updCst();$("t_dt").textContent=t.dt;$("bshare").textContent=t.fshare;if(CFG&&typeof mOpts==="function"){mOpts();renderX()}if(typeof blkRender==="function")blkRender()}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2200)}
 </script>
 <script>
@@ -247,7 +253,7 @@ function start(){
   if(!CFG){LANG=LANG||"ar";applyLang();view("vbad");return}
   mOpts();
   if(!LANG){var s=CFG.l==="bn"?"bn":"ar";document.querySelector('#vlang button[data-l="'+s+'"]').classList.add("sug");LANG=s;applyLang();LANG=null;view("vlang");return}
-  applyLang();tutHidden()?view("vmain"):tutOpen();stFetch().then(function(){mOpts();renderX()});if(xrGet().length)xPollStart()}
+  applyLang();tutHidden()?view("vmain"):tutOpen();blkApply();stFetch().then(function(){mOpts();renderX();blkApply()});if(xrGet().length)xPollStart()}
 document.querySelector("#vlang .lgs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setLang(b.dataset.l);tutHidden()?view("vmain"):tutOpen()});
 $("badlg").addEventListener("click",function(e){var b=e.target.closest("button");if(b)setLang(b.dataset.l)});
 $("lgt").addEventListener("click",function(){setLang(LANG==="bn"?"ar":"bn")});
@@ -292,6 +298,27 @@ function netInit(){if(!CFG)return;NET=navigator.onLine===false?"bad":"ok";updCst
   chk();ping();try{if(navigator.serviceWorker)navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}}
 /*V46*/
 function todayS(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+/*V415*/
+function blkOn(){var b=XS&&XS.bl&&CFG?XS.bl[CFG.e]:null;return !!b&&(!b.u||todayS()<b.u)}
+function urGet(){try{var o=JSON.parse(localStorage.getItem("elec_entry_ur")||"null");return o&&Date.now()-o.t<12*864e5?o:null}catch(e){return null}}
+function urSet(o){try{o?localStorage.setItem("elec_entry_ur",JSON.stringify(o)):localStorage.removeItem("elec_entry_ur")}catch(e){}}
+var BKNO=false;
+function blkRender(){if(!CFG||!LANG)return;var b=XS&&XS.bl?XS.bl[CFG.e]:null,u=b&&b.u,ur=urGet();
+  $("t_bt").textContent=T("blkt");$("t_bp").textContent=T("blkp");
+  $("t_bd").textContent=u?T("blkd").replace("{d}",dmyS(u)):T("blkn")+"\n"+T("blku");$("t_bd").style.whiteSpace="pre-line";
+  var btn=$("bkreq");btn.disabled=!!ur;btn.textContent=ur?T("blks"):T("blkb");btn.style.background=ur?"#1f9d55":"";
+  $("t_bh").textContent=ur?T("blksh"):(BKNO?T("blkno"):T("blkh"))}
+function blkApply(){if(!CFG||!LANG||PEND)return;var ur=urGet();
+  if(ur&&XS&&XS.ap&&XS.ap[ur.id]===0){urSet(null);BKNO=true}
+  if(blkOn()){if($("vblk").classList.contains("hide"))view("vblk");blkRender()}
+  else if(!$("vblk").classList.contains("hide")){urSet(null);BKNO=false;view("vmain")}}
+async function sendUreq(){var ts=Date.now(),name="req-"+CFG.e+"-"+ts+"-"+Math.random().toString(36).slice(2,6)+".json",json=JSON.stringify({v:1,k:"u",e:CFG.e,t:ts});
+  urSet({id:name,t:ts});BKNO=false;blkRender();
+  try{var r=await putFile(name,json);if(!(r.ok||r.status===422))throw 0}catch(e){var q=qGet();q.push({n:name,b:json});qSet(q);NET="bad";updCst()}}
+$("bkreq").addEventListener("click",function(){if(!urGet())sendUreq()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&CFG)stFetch().then(blkApply)});
+setInterval(function(){if(!document.hidden&&CFG&&!$("vblk").classList.contains("hide"))stFetch().then(blkApply)},20000);
+/*V415-END*/
 function dmyS(i){var p=String(i||"").split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:""}
 function lsg(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lss(k,v){try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
