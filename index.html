@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="قارئ">
 <meta name="theme-color" content="#5b9bd5">
 <title>قارئ</title>
-<meta name="app-version" content="4.18.0">
+<meta name="app-version" content="4.19.0">
 <link rel="icon" href="favicon.ico?v=5" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=5">
 <link rel="icon" type="image/png" sizes="128x128" href="favicon.png?v=5">
@@ -291,6 +291,35 @@ button.pd.g{background:#1f7a3a!important;color:#fff!important;border-color:#1f7a
 .bli{display:flex;align-items:center;gap:10px;width:100%;background:var(--in);border:1px solid var(--bd);border-radius:14px;padding:10px 12px;margin-top:6px;text-align:right;font:inherit;color:var(--fg);cursor:pointer}
 .bli .d{width:10px;height:10px;border-radius:50%;flex:none}.bli .s{flex:1;font-size:14.5px;font-weight:700}.bli .s small{display:block;font-size:12px;font-weight:600;color:var(--mut)}.bli .a{font-weight:800;font-size:14px;direction:ltr}
 .blg{font-size:12.5px;font-weight:800;margin:10px 4px 0;text-align:right}.blg.r{color:#c0392b}.blg.o{color:#b8690a}
+/*V419*/#ncb{width:min(380px,100%);padding:12px 12px 10px;gap:8px;position:relative;max-height:88vh;overflow:hidden}
+.nch{display:flex;align-items:center;justify-content:space-between}.nch .mt{margin:0}
+.ncx{width:30px;height:30px;border-radius:9px;border:1px solid var(--bd);background:var(--in);color:var(--mut);font-size:15px;cursor:pointer;line-height:1;padding:0}
+#ncb #bl_list{overflow:auto;flex:1 1 auto;min-height:170px;max-height:54vh}
+.nctabs{display:flex;gap:2px;border:1px solid var(--bd);border-radius:14px;background:var(--in);padding:4px;order:3}
+.nctb{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:10.5px;font-weight:700;cursor:pointer;border-radius:10px;min-width:0}
+.nctb.on{color:#1f7a6a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nctb.on{color:#4cc7b0}}
+:root[data-theme="dark"] .nctb.on{color:#4cc7b0}
+.nctb .nbd{position:absolute;top:-1px;left:3px;min-width:16px;height:16px;border-radius:8px;background:#e53935;color:#fff;font-size:10px;padding:0 4px;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
+.ncr{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;background:transparent;border:0;border-radius:10px;padding:9px 6px;text-align:right;font:inherit;font-size:14.5px;font-weight:700;color:var(--fg)}
+button.ncr{cursor:pointer}button.ncr:active{background:var(--in)}
+.ncr>i{width:10px;height:10px;border-radius:50%;flex:none}.ncr>span{flex:1;min-width:0}.ncr small{display:block;font-size:12px;font-weight:600;color:var(--mut)}
+.ncr .ncb2{font-size:11px;font-weight:800;border-radius:8px;padding:2px 8px;background:rgba(224,138,30,.18);color:#8a4f00;flex:none}
+.blg.gm{color:var(--mut)}
+.nctbl{display:grid;grid-template-columns:64px 1fr 1fr 1fr;align-items:center;border:1px solid var(--bd);border-radius:14px;background:var(--in);padding:4px 8px;text-align:center}
+.nctbl>div{padding:7px 0;display:flex;justify-content:center;align-items:center;font-size:12px;font-weight:700;color:var(--mut)}
+.nctbl>div.nn{justify-content:flex-start;font-size:13.5px;color:var(--fg);font-weight:800;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:block;line-height:32px}
+.ncdot{width:26px;height:26px;border-radius:50%;border:0;padding:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;gap:1.7px}
+.ncdot.ok{background:#2f9e66}.ncdot.no{background:#c0392b}.ncdot.wt{background:#e8890c}.ncdot.na{background:#c3cad6;cursor:default}
+.ncdot svg{width:14px;height:14px}.ncdot i{width:2px;height:2px;border-radius:50%;background:#fff;display:block}
+@keyframes ncpop{0%{transform:scale(.4);opacity:.2}60%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+.ncdot.pop{animation:ncpop .5s ease-out}
+@media (prefers-reduced-motion:reduce){.ncdot.pop{animation:none}}
+#nc_tip{position:absolute;z-index:5;background:#222;color:#fff;font-size:12.5px;font-weight:700;padding:6px 10px;border-radius:9px;pointer-events:none;white-space:nowrap;max-width:90%;display:none}
+#nc_tip.on{display:block}
+#bl_f.nct{text-align:center}
+@media (hover:hover) and (pointer:fine) and (min-width:700px){#bellm.ncp{background:transparent;align-items:flex-start;justify-content:flex-start;padding:0}#bellm.ncp #ncb{position:fixed;width:380px;border:1px solid var(--bd);box-shadow:0 12px 36px rgba(0,0,0,.28)}#bellm.ncp .nctabs{order:0}#bellm.ncp #bl_list{max-height:58vh}}
+
 
 #mbtn{display:inline-flex}
 .mdot{position:absolute;bottom:7px;right:7px;width:11px;height:11px;border-radius:50%;border:2px solid var(--bg);display:none;box-sizing:content-box}
@@ -554,7 +583,7 @@ button.pb{cursor:pointer}.pb:focus{background:#2f9e66;color:#fff;border-color:#2
 <div id="mres" class="mres hide"><div class="ms"><button type="button" id="mxx" class="mxx" aria-label="إلغاء"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><canvas id="mpv"></canvas><div class="mt"><span id="mtag"></span></div><div class="mn" id="mnum"></div><div class="mw" id="mwhy"></div>
 <div class="mb"><button type="button" id="mre">إعادة التصوير</button><button type="button" id="mman">تعديل يدوي</button><button type="button" class="p" id="muse">استخدام القراءة</button></div></div></div>
 <input type="file" id="mfile" accept="image/*" capture="environment" class="hide"><input type="file" id="malb" accept="image/*" class="hide">
-<div id="bellm" class="mnu hide"><div class="mbx wd sy"><div class="mt">مطلوب متابعته</div><div id="bl_list"></div><p class="lkn" id="bl_f">اضغط على أي سطر لفتح سجل العداد عند الفاتورة</p><button class="mi cx" id="bl_x" style="margin-top:10px">إغلاق</button></div></div>
+<div id="bellm" class="mnu hide"><div class="mbx wd sy" id="ncb"><div class="nch"><div class="mt" id="bl_t">الإشعارات</div><button class="cx ncx" id="bl_x" aria-label="إغلاق">✕</button></div><div class="nctabs hide" id="nc_tabs" role="tablist"></div><div id="bl_list"></div><p class="lkn" id="bl_f"></p><div id="nc_tip"></div></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -833,19 +862,76 @@ function payTog(no){var i=RD(no);if(i<0)return;var r=cur.rd[i],y=window.scrollY;
   save();openHist(cur);window.scrollTo(0,y);updBell();toast(r.paid?"تم تسجيل الدفع":"أُلغي تسجيل الدفع")}
 function blList(){var L=[];D.meters.forEach(function(m){if(m.del)return;m.rd.forEach(function(r){var s=payState(r);if(s==="r"||s==="o")L.push({m:m,r:r,s:s})})});
   L.sort(function(a,b){return a.r.sent-b.r.sent});return L}
-function updBell(){var b=$("blc");if(!b)return;var n=blList().filter(function(x){return x.s==="r"}).length;b.textContent=n||"";b.classList.toggle("on",n>0)}
-function dAgo(ms){var n=Math.floor((Date.now()-ms)/DAYMS);return n}
 function blRow(x){var n=dAgo(x.r.sent),t=x.s==="r"?"متأخرة "+(n===1?"يوم":n===2?"يومين":n+" أيام"):(n<=0?"أُرسلت اليوم":"أُرسلت قبل "+(n===1?"يوم":n===2?"يومين":n+" أيام"));
   return '<button class="bli" data-m="'+x.m.id+'" data-n="'+esc(x.r.no)+'"><span class="d" style="background:'+(x.s==="r"?"#c0392b":"#e8890c")+'"></span><span class="s">'+esc(x.m.name)+'<small>فاتورة '+esc(invNo(x.r))+' · '+t+'</small></span><span class="a">'+f2(x.r.tot)+' ⃁</span></button>'}
-function blOpen(){var L=blList(),R=L.filter(function(x){return x.s==="r"}),O=L.filter(function(x){return x.s==="o"}),h="";
-  if(R.length)h+='<div class="blg r">متأخر (3 أيام فأكثر)</div>'+R.map(blRow).join("");
-  if(O.length)h+='<div class="blg o">بانتظار الدفع</div>'+O.map(blRow).join("");
-  $("bl_list").innerHTML=h||'<div class="empty">لا يوجد مطلوب متابعته</div>';$("bl_f").classList.toggle("hide",!h);$("bellm").classList.remove("hide")}
+function ncSvg(p){return '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>'}
+var NCP={all:'<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>',rd:'<path d="M4 13l2-8h12l2 8v5H4z"/><path d="M4 13h5l1 2h4l1-2h5"/>',rm:'<path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a2 2 0 003.4 0"/>',py:'<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18"/>',ac:'<path d="M21 3L10.5 13.5"/><path d="M21 3l-6.5 18-4-7.5L3 9.5z"/>',ot:'<circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/>'};
+var NCL={all:"الكل",rd:"القراءات",rm:"التذكير",py:"الدفع",ac:"الوصول",ot:"أخرى"};
+var NC={tab:"all",d:null},NCT=0,NCK="elec_nc",NCTM=null;
+function ncS(){try{return JSON.parse(localStorage.getItem(NCK))||{}}catch(e){return {}}}
+function ncW(o){try{localStorage.setItem(NCK,JSON.stringify(o))}catch(e){}}
+function ncD(){var t=typeof ncTeam==="function"?ncTeam():null,L=blList();return {t:t,pr:L.filter(function(x){return x.s==="r"}),po:L.filter(function(x){return x.s==="o"})}}
+function ncBad(d){return d.t?d.t.rs.filter(function(x){return x.s==="no"}).length:0}
+function updBell(){var b=$("blc");if(!b)return;var d=ncD(),n=d.pr.length+(d.t?d.t.rd.length+d.t.ot.length+ncBad(d):0);b.textContent=n||"";b.classList.toggle("on",n>0)}
+function dAgo(ms){var n=Math.floor((Date.now()-ms)/DAYMS);return n}
+function ncRow(c,a,o){o=o||{};var at=(o.m?' data-m="'+o.m+'" data-n="'+esc(o.n)+'"':"")+(o.go?' data-go="'+o.go+'"':""),tg=(o.m||o.go)?"button":"div";return '<'+tg+' class="ncr"'+at+'><i style="background:'+c+'"></i><span>'+a+(o.sm?'<small>'+o.sm+'</small>':"")+'</span>'+(o.bd?'<em class="ncb2" style="font-style:normal">'+o.bd+'</em>':"")+'</'+tg+'>'}
+function ncPay(x){return ncRow(x.s==="r"?"#c0392b":"#e8890c",esc(x.m.name),{m:x.m.id,n:x.r.no})}
+function ncTip0(w){return {bl:"الموظف حظر البوت",nl:"الموظف لم يبدأ المحادثة مع البوت"}[w]||"تعذّر الإرسال"}
+var NCCK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',NCXX='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+function ncDot(st,tip,pop){var c=st==="ok"?NCCK:st==="no"?NCXX:st==="wt"?'<i></i><i></i><i></i>':"";return '<button class="ncdot '+st+(pop?" pop":"")+'" data-tip="'+esc(tip)+'" aria-label="'+esc(tip)+'">'+c+'</button>'}
+function ncSig(x){return x.s+"|"+x.v+"|"+x.t}
+function ncTbl(rs,old){if(!rs.length)return '<div class="empty">لا توجد تذكيرات حديثة</div>';
+  var h='<div class="nctbl"><div></div><div>الإرسال</div><div>الوصول</div><div>المشاهدة</div>';
+  rs.forEach(function(x){var ch=old&&old[x.id]!==ncSig(x),ok=x.s==="ok";
+    h+='<div class="nn">'+esc(x.n)+'</div><div>'+ncDot("ok","تم الإرسال",false)+'</div><div>'+(ok?ncDot("ok","وصل إلى تيليجرام",ch):ncDot("no","لم يصل: "+ncTip0(x.w),ch))+'</div><div>'+(!ok?ncDot("na","لم يصل التذكير",false):x.v==="ok"?ncDot("ok","شاهد التذكير",ch):ncDot("wt","لم يشاهد بعد",false))+'</div>'});
+  return h+'</div>'}
+function ncAcRows(rs){var h="";rs.forEach(function(x){if(x.s==="no")h+=ncRow("#c0392b",esc(x.n),{bd:"لم يصل"});else if(x.v!=="ok")h+=ncRow("#e8890c",esc(x.n),{bd:"لم يشاهد"})});return h}
+function ncCnt(d){var t=d.t;if(!t)return {py:d.pr.length+d.po.length};
+  var ac=t.rs.filter(function(x){return x.s!=="ok"||x.v!=="ok"}).length,py=d.pr.length+d.po.length,c={rd:t.rd.length,rm:t.rm.length,py:py,ac:ac,ot:t.ot.length};c.all=c.rd+c.rm+c.py+c.ac+c.ot;return c}
+function ncBody(d,tab,old){var t=d.t,h="";
+  function sec(ti,cl,rows){return rows?'<div class="blg '+cl+'">'+ti+'</div>'+rows:""}
+  var pay=(d.pr.length?'<div class="blg r">متأخر (3 أيام فأكثر)</div>'+d.pr.map(ncPay).join(""):"")+(d.po.length?'<div class="blg o">بانتظار الدفع (أقل من 3 أيام)</div>'+d.po.map(ncPay).join(""):"");
+  if(!t)return pay||'<div class="empty">لا يوجد مطلوب متابعته</div>';
+  var rd=t.rd.map(function(x){return ncRow("#2f9e66",esc(x.a),{go:"ib",bd:x.dup?"مكررة":""})}).join(""),
+      rm=t.rm.map(function(x){return ncRow("#e8890c",esc(x.a))}).join(""),
+      ot=t.ot.map(function(x){return ncRow("#e8890c",esc(x.a),{go:"ib",sm:esc(x.b)})}).join("");
+  if(tab==="rd")return rd||'<div class="empty">لا توجد قراءات جديدة</div>';
+  if(tab==="rm")return rm||'<div class="empty">كل العدادات قُرئت</div>';
+  if(tab==="py")return pay||'<div class="empty">لا يوجد مطلوب دفعه</div>';
+  if(tab==="ac")return ncTbl(t.rs,old);
+  if(tab==="ot")return ot||'<div class="empty">لا يوجد</div>';
+  h=sec("القراءات","gm",rd)+sec("تذكيرات القراءات","gm",rm)+(pay?pay:"")+sec("وصول التذكيرات","gm",ncAcRows(t.rs))+sec("أخرى","gm",ot);
+  return h||'<div class="empty">لا توجد إشعارات</div>'}
+function ncRender(){var d=NC.d=ncD(),S=ncS(),old=S.open||{};
+  var c=ncCnt(d),tabs=$("nc_tabs");
+  if(d.t){tabs.classList.remove("hide");$("bl_t").textContent="الإشعارات";
+    tabs.innerHTML=["all","rd","rm","py","ac","ot"].map(function(k){return '<button class="nctb'+(NC.tab===k?" on":"")+'" role="tab" data-t="'+k+'" aria-selected="'+(NC.tab===k)+'" title="'+NCL[k]+'">'+ncSvg(NCP[k])+'<span>'+NCL[k]+'</span>'+(c[k]?'<b class="nbd">'+c[k]+'</b>':"")+'</button>'}).join("")}
+  else{tabs.classList.add("hide");$("bl_t").textContent="مطلوب متابعته";NC.tab="py"}
+  $("bl_list").innerHTML=ncBody(d,NC.tab,old);
+  var f=$("bl_f");if(d.t){f.className="lkn nct";f.textContent=NCT?"آخر تحديث: "+agoTxt(NCT):"";f.classList.toggle("hide",!NCT)}else{f.className="lkn";f.textContent="اضغط على أي سطر لفتح سجل العداد عند الفاتورة";f.classList.toggle("hide",!(d.pr.length+d.po.length))}
+  if(d.t&&NC.tab==="ac"||d.t&&NC.tab==="all"){var o={};d.t.rs.forEach(function(x){o[x.id]=ncSig(x)});S.open=o;ncW(S)}}
+function ncTipHide(){clearTimeout(NCTM);$("nc_tip").classList.remove("on")}
+function ncTip(b){var tp=$("nc_tip"),box=$("ncb").getBoundingClientRect(),r=b.getBoundingClientRect();tp.textContent=b.dataset.tip;tp.classList.add("on");
+  var w=tp.offsetWidth,l=r.left-box.left+r.width/2-w/2;l=Math.max(6,Math.min(box.width-w-6,l));tp.style.left=l+"px";tp.style.top=(r.top-box.top-tp.offsetHeight-6)+"px";
+  clearTimeout(NCTM);NCTM=setTimeout(ncTipHide,2600)}
+function ncPos(){var bx=$("ncb"),m=$("bellm");bx.style.top=bx.style.left="";
+  if(!(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine) and (min-width:700px)").matches)){m.classList.remove("ncp");return}
+  m.classList.add("ncp");var r=$("blb").getBoundingClientRect(),w=bx.offsetWidth||380;bx.style.top=(r.bottom+8)+"px";bx.style.left=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2))+"px"}
+function ncOpen(){NC.tab="all";ncTipHide();ncRender();$("bellm").classList.remove("hide");ncPos();
+  if(typeof ncAck==="function")ncAck();if(typeof ibCheck==="function")try{ibCheck()}catch(e){}}
+function ncClose(){ncTipHide();$("bellm").classList.add("hide")}
+function ncRef(){updBell();if(!$("bellm").classList.contains("hide")){ncRender();ncPos()}}
+function blOpen(){ncOpen()}
 function goRec(mid,no){var m=null;D.meters.forEach(function(x){if(x.id===mid)m=x});if(!m)return;var i=-1;m.rd.forEach(function(r,k){if(r.no===no)i=k});if(i<0)return;
   cur=m;histYear=m.rd[i].cd.slice(0,4);selMode=false;selSet={};$("bellm").classList.add("hide");openHist(m);
   setTimeout(function(){var c=document.querySelector('#tb [data-rn="'+no.replace(/"/g,"")+'"]');if(c){c.scrollIntoView({block:"center"});c.classList.add("hl");setTimeout(function(){c.classList.remove("hl")},1800)}},60)}
-$("blb").addEventListener("click",blOpen);$("bl_x").addEventListener("click",function(){$("bellm").classList.add("hide")});
-$("bl_list").addEventListener("click",function(e){var b=e.target.closest("button");if(b)goRec(b.dataset.m,b.dataset.n)});
+$("blb").addEventListener("click",ncOpen);$("bl_x").addEventListener("click",ncClose);
+$("bellm").addEventListener("click",function(e){if(e.target===this)ncClose()});
+$("nc_tabs").addEventListener("click",function(e){var b=e.target.closest(".nctb");if(!b)return;NC.tab=b.dataset.t;ncTipHide();ncRender()});
+window.addEventListener("resize",function(){if(!$("bellm").classList.contains("hide"))ncPos()});
+$("bl_list").addEventListener("click",function(e){var d=e.target.closest(".ncdot");if(d){if(d.classList.contains("na")&&!d.dataset.tip)return;ncTip(d);return}ncTipHide();var b=e.target.closest("button.ncr");if(!b)return;
+  if(b.dataset.m)goRec(b.dataset.m,b.dataset.n);else if(b.dataset.go==="ib"&&typeof ibOpen==="function"){ncClose();ibOpen()}});
+
 /*V47*/
 var NMW={"محل":["Shop","দোকান"],"شقة":["Apartment","ফ্ল্যাট"],"شقه":["Apartment","ফ্ল্যাট"]};
 function trName(n,l){n=String(n==null?"":n);if(l!=="en"&&l!=="bn")return n;var k=l==="en"?0:1,hit=false;
@@ -1391,8 +1477,8 @@ $("st_rs").addEventListener("click",function(){var m=M(stId);if(!m)return;if(!co
   m.s=JSON.parse(JSON.stringify(DEF));save();stRender();toast("تمت إعادة الأسعار الافتراضية")});
 $("stk").addEventListener("click",function(){home()});
 /*V49-JS*/
-var AB_V="V4.18.0",AB_D="25/11/2026";
-var AB_L=[["V4.18.0","27/11/2026",["سؤال الموظف عن سبب إرسال قراءة مكررة لنفس العداد وإظهار السبب للمسؤول","إيقاف تذكير الساعة عند اختيار «المحل مغلق»"]],["V4.17.1","27/11/2026",["تحسينات في تصميم موعد التذكير"]],["V4.17.0","26/11/2026",["إضافة الدقائق إلى موعد التذكير (كل 30 دقيقة)","الإرسال صار يعمل كل 30 دقيقة"]],["V4.16.1","26/11/2026",["تحسينات في شاشة التنبيهات"]],["V4.16.0","26/11/2026",["إبلاغ الموظف بتعذّر قراءة العداد مع السبب","إعادة التذكير بعد ساعة وإيقافه عند منتصف الليل","تحسينات في رسالة التذكير","تحسينات في صفحة الموظف وشرح الاستخدام"]],["V4.15.0","26/11/2026",["تذكير تلقائي لقراءة العداد عبر Telegram","شاشة «التنبيهات» في قائمة الفريق","إيقاف التذكيرات عاماً ولكل موظف مع تاريخ استئناف","منع الإدخال أثناء الإيقاف وطلب صلاحية الإدخال من الموظف","§«بانتظار القراءة» تظهر من يوم 26 من الشهر"]],["V4.14.1","26/11/2026",["تحسينات في أيقونة الموقع بتبويب المتصفح لتظهر في Safari"]],["V4.14.0","25/11/2026",["أيقونة جديدة للموقع في تبويب المتصفح","§ظهور شرح المزامنة عند التمرير بالمؤشر في المتصفح"]],["V4.13.0","25/11/2026",["نقطة زرقاء تدل على وجود تحديث، وزر «تحديث الآن» في «عن التطبيق»","§نقل نقطة المزامنة بجانب «قارئ» مع شرح الألوان بالضغط عليها"]],["V4.12.0","25/11/2026",["تحديث التطبيق تلقائياً بدون إغلاقه وفتحه، مع شريط تنبيه عند وجود عمل مفتوح"]],["V4.11.0","25/11/2026",["قائمة جانبية تُفتح بالسحب من اليسار، وتتحول ☰ إلى ✕ بحركة سلسة"]],["V4.10.1","25/11/2026",["تحسينات في القوائم السفلية: منع تحرّك الصفحة الرئيسية خلفها عند السحب للإغلاق"]],["V4.10.0","25/11/2026",["§مزامنة الموظفين ورموزهم السرية بين الأجهزة"]],["V4.9.1","25/11/2026",["تحسينات في صفحة «عن التطبيق»: عرض آخر ٣ إصدارات مع نقاط لعرض المزيد","سجل إصدارات كامل يبدأ من 1.0.0"]],["V4.9.0","25/11/2026",["الاسم الجديد «قارئ»","صفحة «عن التطبيق» وقسم «ما الجديد»","إزالة رقم الإصدار من الصفحة الرئيسية"]],["V4.8.0","25/11/2026",["السحب للأسفل لإغلاق القوائم السفلية","§إرسال الموظف للقراءة مع صورة العداد","§مراجعة القراءة بالصورة ورفضها بقوالب جاهزة","ختم «مدفوع» أوضح وتاريخه أسفل الكلمة"]],["V4.7.0","25/11/2026",["ترجمة أسماء العدادات في الفواتير وصفحة الموظف","§تنبيه عند الحاجة لإرسال رابط جديد للموظف","زر مشاركة الخطأ مع المسؤول","خانة التوكن بشكل كلمة مرور"]],["V4.6.0","25/11/2026",["ختم الدفع على الفواتير السابقة","السحب من اليسار للرجوع في كل الشاشات","§تاريخ قراءة الموظف وطلب الاستثناء"]],["V4.5.0","24/11/2026",["تتبّع الدفع وختم «مدفوع»","شارات الدفع في الصفحة الرئيسية وجرس التنبيه"]],["V4.4.0","24/11/2026",["§رابط الموظف المشفّر برمز سري من ٦ أرقام"]],["V4.3.0","24/11/2026",["§تحسينات في صفحة الموظف"]],["V4.2.0","24/11/2026",["§شرح يظهر للموظف عند أول فتح","§صفحة الرابط الخاطئ بخيار العربية/البنغالية"]],["V4.1.0","24/11/2026",["§نقطة حالة المزامنة في قائمة ☰ مع شرح الألوان","§حالة الاتصال في صفحة الموظف وحفظ القراءة للإرسال لاحقاً","§حالات بطاقة الموظف (لم يفتح / فتح الرابط / نشط / ملغى)"]],["V4.0.0","24/11/2026",["قائمة ☰ الموحّدة","إعدادات الشرائح والرسوم لكل عداد","§الموظفون وصندوق الوارد"]],["V3.4.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.3.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.2.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.1.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا (زر ✕ والإغلاق بالضغط خارجها)"]],["V3.0.0","23/11/2026",["قراءة العداد بالكاميرا أو من الألبوم"]],["V2.0.0","",["§مزامنة مشفّرة بين الأجهزة عبر GitHub","§بقاء النسخة 1.0 بدون مزامنة"]],["V1.2.0","",["معلومات العداد (المحل والموظف والتواصل) وتعديل العداد","شريط الأعوام ومقارنة الشهر بالعام السابق في السجل","رقم الفاتورة وثلاث لغات: العربية والإنجليزية والبنغالية","سلة المحذوفات","شارة حالة النسخ الاحتياطي"]],["V1.1.0","",["شعار وأيقونة جديدان","تحسينات في ترويسة الفاتورة"]],["V1.0.0","",["حاسبة الفواتير بالشرائح والضريبة وعدّة عدادات","فاتورة للطباعة والمشاركة","نسخ احتياطي بملف"]]];
+var AB_V="V4.19.0",AB_D="25/11/2026";
+var AB_L=[["V4.19.0","28/11/2026",["مركز إشعارات في الجرس بأقسام (القراءات والتذكيرات والدفع والوصول)","عرض حالة التذكير لكل موظف: الإرسال، الوصول، المشاهدة","إشعار عند دخول التطبيق بمشاهدة الموظف للتذكير"]],["V4.18.0","27/11/2026",["سؤال الموظف عن سبب إرسال قراءة مكررة لنفس العداد وإظهار السبب للمسؤول","إيقاف تذكير الساعة عند اختيار «المحل مغلق»"]],["V4.17.1","27/11/2026",["تحسينات في تصميم موعد التذكير"]],["V4.17.0","26/11/2026",["إضافة الدقائق إلى موعد التذكير (كل 30 دقيقة)","الإرسال صار يعمل كل 30 دقيقة"]],["V4.16.1","26/11/2026",["تحسينات في شاشة التنبيهات"]],["V4.16.0","26/11/2026",["إبلاغ الموظف بتعذّر قراءة العداد مع السبب","إعادة التذكير بعد ساعة وإيقافه عند منتصف الليل","تحسينات في رسالة التذكير","تحسينات في صفحة الموظف وشرح الاستخدام"]],["V4.15.0","26/11/2026",["تذكير تلقائي لقراءة العداد عبر Telegram","شاشة «التنبيهات» في قائمة الفريق","إيقاف التذكيرات عاماً ولكل موظف مع تاريخ استئناف","منع الإدخال أثناء الإيقاف وطلب صلاحية الإدخال من الموظف","§«بانتظار القراءة» تظهر من يوم 26 من الشهر"]],["V4.14.1","26/11/2026",["تحسينات في أيقونة الموقع بتبويب المتصفح لتظهر في Safari"]],["V4.14.0","25/11/2026",["أيقونة جديدة للموقع في تبويب المتصفح","§ظهور شرح المزامنة عند التمرير بالمؤشر في المتصفح"]],["V4.13.0","25/11/2026",["نقطة زرقاء تدل على وجود تحديث، وزر «تحديث الآن» في «عن التطبيق»","§نقل نقطة المزامنة بجانب «قارئ» مع شرح الألوان بالضغط عليها"]],["V4.12.0","25/11/2026",["تحديث التطبيق تلقائياً بدون إغلاقه وفتحه، مع شريط تنبيه عند وجود عمل مفتوح"]],["V4.11.0","25/11/2026",["قائمة جانبية تُفتح بالسحب من اليسار، وتتحول ☰ إلى ✕ بحركة سلسة"]],["V4.10.1","25/11/2026",["تحسينات في القوائم السفلية: منع تحرّك الصفحة الرئيسية خلفها عند السحب للإغلاق"]],["V4.10.0","25/11/2026",["§مزامنة الموظفين ورموزهم السرية بين الأجهزة"]],["V4.9.1","25/11/2026",["تحسينات في صفحة «عن التطبيق»: عرض آخر ٣ إصدارات مع نقاط لعرض المزيد","سجل إصدارات كامل يبدأ من 1.0.0"]],["V4.9.0","25/11/2026",["الاسم الجديد «قارئ»","صفحة «عن التطبيق» وقسم «ما الجديد»","إزالة رقم الإصدار من الصفحة الرئيسية"]],["V4.8.0","25/11/2026",["السحب للأسفل لإغلاق القوائم السفلية","§إرسال الموظف للقراءة مع صورة العداد","§مراجعة القراءة بالصورة ورفضها بقوالب جاهزة","ختم «مدفوع» أوضح وتاريخه أسفل الكلمة"]],["V4.7.0","25/11/2026",["ترجمة أسماء العدادات في الفواتير وصفحة الموظف","§تنبيه عند الحاجة لإرسال رابط جديد للموظف","زر مشاركة الخطأ مع المسؤول","خانة التوكن بشكل كلمة مرور"]],["V4.6.0","25/11/2026",["ختم الدفع على الفواتير السابقة","السحب من اليسار للرجوع في كل الشاشات","§تاريخ قراءة الموظف وطلب الاستثناء"]],["V4.5.0","24/11/2026",["تتبّع الدفع وختم «مدفوع»","شارات الدفع في الصفحة الرئيسية وجرس التنبيه"]],["V4.4.0","24/11/2026",["§رابط الموظف المشفّر برمز سري من ٦ أرقام"]],["V4.3.0","24/11/2026",["§تحسينات في صفحة الموظف"]],["V4.2.0","24/11/2026",["§شرح يظهر للموظف عند أول فتح","§صفحة الرابط الخاطئ بخيار العربية/البنغالية"]],["V4.1.0","24/11/2026",["§نقطة حالة المزامنة في قائمة ☰ مع شرح الألوان","§حالة الاتصال في صفحة الموظف وحفظ القراءة للإرسال لاحقاً","§حالات بطاقة الموظف (لم يفتح / فتح الرابط / نشط / ملغى)"]],["V4.0.0","24/11/2026",["قائمة ☰ الموحّدة","إعدادات الشرائح والرسوم لكل عداد","§الموظفون وصندوق الوارد"]],["V3.4.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.3.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.2.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا"]],["V3.1.0","23/11/2026",["تحسينات في نافذة نتيجة قراءة الكاميرا (زر ✕ والإغلاق بالضغط خارجها)"]],["V3.0.0","23/11/2026",["قراءة العداد بالكاميرا أو من الألبوم"]],["V2.0.0","",["§مزامنة مشفّرة بين الأجهزة عبر GitHub","§بقاء النسخة 1.0 بدون مزامنة"]],["V1.2.0","",["معلومات العداد (المحل والموظف والتواصل) وتعديل العداد","شريط الأعوام ومقارنة الشهر بالعام السابق في السجل","رقم الفاتورة وثلاث لغات: العربية والإنجليزية والبنغالية","سلة المحذوفات","شارة حالة النسخ الاحتياطي"]],["V1.1.0","",["شعار وأيقونة جديدان","تحسينات في ترويسة الفاتورة"]],["V1.0.0","",["حاسبة الفواتير بالشرائح والضريبة وعدّة عدادات","فاتورة للطباعة والمشاركة","نسخ احتياطي بملف"]]];
 var AB_N=3;
 function abSet(i,o){var x=document.querySelectorAll("#ab_n .abx")[i];if(!x)return;var b=x.querySelector(".abb");x.classList.toggle("o",o);b.style.maxHeight=o?b.scrollHeight+"px":"0px"}
 function abMoreUpd(){var xs=document.querySelectorAll("#ab_n .abx"),h=[].filter.call(xs,function(x){return x.classList.contains("hide")}).length,m=$("ab_m");if(m)m.classList.toggle("hide",!h)}
@@ -1463,7 +1549,7 @@ function tmOpen(){tmRender();show("team");ibCheck()}
 function tmRender(){tmSyncSig();$("tm_ph").value=TM.phone||"";$("tm_own").value=tmOwner();$("tm_repo").value=TM.repo;
   $("tm_list").innerHTML=TM.emps.map(function(e){
     return '<div class="tzc"><div class="eh"><b>'+esc(e.name)+'</b>'+tmSt(e)+'</div>'+
-    '<div class="tzm">'+(e.lang==="bn"?"বাংলা":"العربية")+' · العدادات: '+esc(tmMNames(e))+(e.opened?'<br>آخر فتح: '+agoTxt(e.opened):'')+'<br>آخر إدخال: '+(e.last?agoTxt(e.last):"لا يوجد")+'</div>'+tmWarn(e)+tmRsWarn(e)+
+    '<div class="tzm">'+(e.lang==="bn"?"বাংলা":"العربية")+' · العدادات: '+esc(tmMNames(e))+(e.opened?'<br>آخر فتح: '+agoTxt(e.opened):'')+'<br>آخر إدخال: '+(e.last?agoTxt(e.last):"لا يوجد")+ncLine(e)+'</div>'+tmWarn(e)+tmRsWarn(e)+
     '<div class="tzr">'+(e.revoked?'<button class="pd" data-a="rm" data-id="'+e.id+'">حذف من القائمة</button>':
      '<button class="rs" data-a="lnk" data-id="'+e.id+'">الرابط</button><button class="rs" style="background:#9c6a3d" data-a="ed" data-id="'+e.id+'">تعديل</button><button class="pd" data-a="rv" data-id="'+e.id+'">إلغاء الوصول</button>')+'</div></div>'}).join("")||'<div class="empty">لا يوجد موظفون بعد</div>'}
 $("tmk").addEventListener("click",function(){home()});
@@ -1550,7 +1636,7 @@ async function ibCheck(){
     Object.keys(TM.done).forEach(function(k){if(!names[k])delete TM.done[k]});
     Object.keys(TM.items).forEach(function(k){var o=TM.items[k],e=tmEmp(o.e);if(e&&!o.nr&&o.t>(e.last||0))e.last=o.t});
     tmSave()}catch(e){TM.err=errText(e)}
-  TM.busy=false;stPub();try{tgFetch()}catch(e){}updMenu();if(!$("inbox").classList.contains("hide"))ibRender();if(!$("team").classList.contains("hide"))tmRender()}
+  TM.busy=false;if(!TM.err)NCT=Date.now();stPub();try{tgFetch()}catch(e){}updMenu();ncRef();if(!$("inbox").classList.contains("hide"))ibRender();if(!$("team").classList.contains("hide"))tmRender()}
 function ibOpen(){ibRender();show("inbox");ibCheck()}
 function ibRender(){var ks=ibKeys();
   $("ib_msg").textContent=typeof syOn==="function"&&syOn()?(TM.err||(ks.length?"":"لا توجد قراءات واردة")):"فعّل المزامنة أولاً ليستطيع التطبيق قراءة الوارد";
@@ -1760,7 +1846,7 @@ $("sp_ok").addEventListener("click",function(){if(!spE)return;var u="";if(spMode
 // ---- ربط Telegram (يكتبه ملف الإرسال في المستودع)
 async function tgFetch(){if(typeof syOn!=="function"||!syOn()||!tmOwner())return;
   try{var r=await fetch(ibUrl("out/tg.json")+"?t="+Date.now(),{headers:ghHead(),cache:"no-store"});if(!r.ok)return;var j=await r.json(),o=JSON.parse(decodeURIComponent(escape(atob((j.content||"").replace(/\s/g,"")))));
-    if(o&&Array.isArray(o.l)){TM.tgl=o.l.map(function(x){return String(x).toLowerCase()});tmSave();if(!$("alm").classList.contains("hide"))alRender()}}catch(e){}}
+    if(o&&Array.isArray(o.l)){TM.tgl=o.l.map(function(x){return String(x).toLowerCase()});TM.rs=(o.rs&&typeof o.rs==="object")?o.rs:{};tmSave();if(!$("alm").classList.contains("hide"))alRender();if(!$("team").classList.contains("hide"))tmRender();ncRef();ncAlert()}}catch(e){}}
 // ---- نشر بيانات الإرسال (للملف المجدول)
 var RMT=null;function rmSoon(){clearTimeout(RMT);RMT=setTimeout(function(){rmPub()},4000)}
 var NMW2={"محل":["Shop","দোকান"],"شقة":["Apartment","ফ্ল্যাট"],"شقه":["Apartment","ফ্ল্যাট"]};
@@ -1778,6 +1864,32 @@ async function rmPub(){if(typeof syOn!=="function"||!syOn()||!tmOwner()||!TM.emp
     if(r.status===409||r.status===422){var gg=await fetch(ibUrl("out/remind.json")+"?t="+Date.now(),{headers:ghHead(),cache:"no-store"});sha=gg.ok?(await gg.json()).sha:undefined;r=await put()}
     if(r.ok){var x=await r.json();TM.rmSha=x.content&&x.content.sha;TM.rmLast=sig;tmSave()}}catch(e){}}
 function blMap(){var o={};TM.emps.forEach(function(e){if(!e.revoked&&stBl(e))o[e.id]={u:e.stop.u||""}});return o}
+// ---- مركز الإشعارات: بيانات الفريق
+function ncTeam(){if(typeof syOn!=="function"||!syOn()||!TM.emps||!TM.emps.length)return null;
+  var o={rd:[],ot:[],rm:[],rs:[]},now=Date.now();
+  ibKeys().forEach(function(k){var x=TM.items[k];if(x.imp)return;var e=tmEmp(x.e),m=M(x.m),mn=m&&!m.del?m.name:"",a=e.name+(mn?" · "+mn:"");
+    if(x.u)o.ot.push({k:k,a:e.name,b:"طلب صلاحية الإدخال"});
+    else if(x.x)o.ot.push({k:k,a:a,b:"طلب استثناء التاريخ"});
+    else if(x.nr)o.ot.push({k:k,a:a,b:{c:"أبلغ: المحل مغلق",a:"أبلغ: صاحب المحل غير موجود",b:"أبلغ: المحل مشغول"}[x.r]||"تعذّرت القراءة"});
+    else o.rd.push({k:k,a:a,dup:!!x.dr})});
+  var R=TM.rs||{};
+  TM.emps.forEach(function(e){if(e.revoked||!e.tg)return;var r=R[e.id];if(!r||now-r.t>3*864e5)return;
+    o.rs.push({id:e.id,n:e.name,t:r.t,s:r.ok?"ok":"no",w:r.w||"",v:(r.ok&&(e.opened||0)>r.t)?"ok":"wt"})});
+  var g=alG(),d=new Date();
+  if(g.on&&d.getDate()>=g.day){var ym=d.getFullYear()+"-"+pad2(d.getMonth()+1);
+    D.meters.forEach(function(m){if(m.del)return;if(!TM.emps.some(function(e){return !e.revoked&&tmMeters(e).some(function(z){return z.id===m.id})}))return;
+      if(!(m.prevDate&&String(m.prevDate).slice(0,7)>=ym))o.rm.push({k:m.id,a:m.name})})}
+  return o}
+function ncHm(t){var d=new Date(t);return pad2(d.getHours())+":"+pad2(d.getMinutes())}
+function ncLine(e){var r=(TM.rs||{})[e.id];if(!r||Date.now()-r.t>3*864e5)return "";
+  if(!r.ok)return '<br>التذكير: <b style="color:#c0392b">لم يصل ('+esc(ncTip0(r.w))+')</b>';
+  return (e.opened||0)>r.t?'<br>التذكير: وصل · <b style="color:#2f9e66">شاهد</b>':'<br>التذكير: وصل · لم يشاهد'}
+function ncAck(){var S=ncS(),T=S.toast||{};Object.keys(TM.rs||{}).forEach(function(id){var r=TM.rs[id],e=tmEmp(id);if(r&&r.ok&&e&&(e.opened||0)>r.t)T[id]=r.t});S.toast=T;S.init=1;ncW(S)}
+function ncAlert(){var S=ncS(),T=S.toast||{},nm=[],tm="";
+  Object.keys(TM.rs||{}).forEach(function(id){var r=TM.rs[id],e=tmEmp(id);if(!r||!r.ok||!e||e.revoked||!((e.opened||0)>r.t))return;if((T[id]||0)>=r.t)return;T[id]=r.t;nm.push(e.name);tm=ncHm(r.t)});
+  S.toast=T;var first=!S.init;S.init=1;ncW(S);if(first||!nm.length)return;
+  var t=$("toast");t.textContent=nm.length===1?"شاهد «"+nm[0]+"» تذكير الساعة "+tm:"شاهد "+nm.length+" موظفين التذكير";t.classList.add("on");setTimeout(function(){t.classList.remove("on")},4500)}
+
 // ---- طلب صلاحية الإدخال من الموظف
 function uqCard(k,o,e){return '<div class="tzc xq"><div class="ibh"><b>'+esc(e.name)+'</b> · '+agoTxt(o.t)+'<span class="ibt xr">طلب صلاحية الإدخال</span></div>'+
   '<div class="tzm" style="text-align:center">الإدخال موقوف لـ «'+esc(e.name)+'»'+(stA(e)&&e.stop.u?' حتى '+esc(alDt(e.stop.u)):'')+'<br>طلب السماح بالإدخال الآن</div>'+

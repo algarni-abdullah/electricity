@@ -320,7 +320,7 @@ async function flush(){if(FL)return;FL=true;var q=qGet(),sent=0;
   FL=false;if(sent)NET="ok";updCst();
   if(sent&&!q.length&&!$("vpend").classList.contains("hide")){$("t_okp").textContent=T("okauto");view("vok")}}
 async function ping(){if(!CFG)return;var last=0;try{last=+(localStorage.getItem("elec_entry_ping")||0)}catch(e){}
-  if(Date.now()-last<36e5)return;var ts=Date.now(),name="open-"+CFG.e+"-"+ts+"-s"+linkSig()+".json";
+  if(Date.now()-last<6e5)return;var ts=Date.now(),name="open-"+CFG.e+"-"+ts+"-s"+linkSig()+".json";
   try{var r=await putFile(name,JSON.stringify({v:1,k:"open",e:CFG.e,t:ts}));if(r.ok){try{localStorage.setItem("elec_entry_ping",String(ts))}catch(e){}}}catch(e){}}
 function netInit(){if(!CFG)return;NET=navigator.onLine===false?"bad":"ok";updCst();
   window.addEventListener("online",chk);window.addEventListener("offline",function(){NET="bad";updCst()});
